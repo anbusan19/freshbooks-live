@@ -10,11 +10,56 @@ const AddBook = () => {
     const [imageFile, setimageFile] = useState(null);
     const [addBook, {isLoading, isError}] = useAddBookMutation()
     const [imageFileName, setimageFileName] = useState('')
+    const [imageUrl, setImageUrl] = useState('');
+    const [uploading, setUploading] = useState(false);
+
+    const handleFileUpload = async(event) => {
+        const file = event.target.files[0];
+        if(!file) return;
+        
+        try {
+            setUploading(true);
+            const data = new FormData();
+            data.append('file', file);
+            data.append('upload_preset', 'freshbooks');
+            data.append('cloud_name', 'dh5fgqqte');
+            
+            const res = await fetch("https://api.cloudinary.com/v1_1/dh5fgqqte/image/upload", {
+                method: 'POST',
+                body: data
+            });
+            
+            const uploadedImage = await res.json();
+            setImageUrl(uploadedImage.url);
+            setimageFile(file);
+            setimageFileName(file.name);
+            console.log(uploadedImage.url);
+            setUploading(false);
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            Swal.fire({
+                title: "Upload Failed",
+                text: "Failed to upload image. Please try again.",
+                icon: "error"
+            });
+            setUploading(false);
+        }
+        
+    }
+
     const onSubmit = async (data) => {
- 
+        if (!imageUrl) {
+            Swal.fire({
+                title: "Missing Image",
+                text: "Please upload a cover image for the book",
+                icon: "warning"
+            });
+            return;
+        }
+
         const newBookData = {
             ...data,
-            coverImage: imageFileName
+            coverImage: imageUrl
         }
         try {
             await addBook(newBookData).unwrap();
@@ -28,7 +73,8 @@ const AddBook = () => {
                 confirmButtonText: "Yes, It's Okay!"
               });
               reset();
-              setimageFileName('')
+              setImageUrl('');
+              setimageFileName('');
               setimageFile(null);
         } catch (error) {
             console.error(error);
@@ -36,14 +82,7 @@ const AddBook = () => {
         }
       
     }
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if(file) {
-            setimageFile(file);
-            setimageFileName(file.name);
-        }
-    }
+    
   return (
     <div className="max-w-lg   mx-auto md:p-6 p-3 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Add New Book</h2>
@@ -66,6 +105,13 @@ const AddBook = () => {
           type="textarea"
           register={register}
 
+        />
+
+        <InputField
+          label="Author"
+          name="author"
+          placeholder="Enter author name"
+          register={register}
         />
 
         {/* Reusable Select Field for Category */}
@@ -119,8 +165,9 @@ const AddBook = () => {
         {/* Cover Image Upload */}
         <div className="mb-4">
           <label className="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
-          <input type="file" accept="image/*" onChange={handleFileChange} className="mb-2 w-full" />
+          <input type="file" accept="image/*" onChange={handleFileUpload} className="mb-2 w-full" />
           {imageFileName && <p className="text-sm text-gray-500">Selected: {imageFileName}</p>}
+          {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
         </div>
 
         {/* Submit Button */}

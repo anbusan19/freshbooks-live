@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputField from '../addBook/InputField'
 import SelectField from '../addBook/SelectField'
 import { useForm } from 'react-hook-form';
@@ -12,9 +12,13 @@ import getBaseUrl from '../../../utils/baseURL';
 const UpdateBook = () => {
   const { id } = useParams();
   const { data: bookData, isLoading, isError, refetch } = useFetchBookByIdQuery(id);
-  // console.log(bookData)
   const [updateBook] = useUpdateBookMutation();
   const { register, handleSubmit, setValue, reset } = useForm();
+  
+  const [imageUrl, setImageUrl] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [imageFileName, setImageFileName] = useState('');
+
   useEffect(() => {
     if (bookData) {
       setValue('title', bookData.title);
@@ -23,9 +27,44 @@ const UpdateBook = () => {
       setValue('trending', bookData.trending);
       setValue('oldPrice', bookData.oldPrice);
       setValue('newPrice', bookData.newPrice);
-      setValue('coverImage', bookData.coverImage)
+      setValue('coverImage', bookData.coverImage);
+      setImageUrl(bookData.coverImage);
+      setImageFileName(bookData.coverImage.split('/').pop());
     }
   }, [bookData, setValue])
+
+  const handleFileUpload = async(event) => {
+    const file = event.target.files[0];
+    if(!file) return;
+    
+    try {
+        setUploading(true);
+        const data = new FormData();
+        data.append('file', file);
+        data.append('upload_preset', 'freshbooks');
+        data.append('cloud_name', 'dh5fgqqte');
+        
+        const res = await fetch("https://api.cloudinary.com/v1_1/dh5fgqqte/image/upload", {
+            method: 'POST',
+            body: data
+        });
+        
+        const uploadedImage = await res.json();
+        setImageUrl(uploadedImage.url);
+        setImageFileName(file.name);
+        setValue('coverImage', uploadedImage.url);
+        console.log(uploadedImage.url);
+        setUploading(false);
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        Swal.fire({
+            title: "Upload Failed",
+            text: "Failed to upload image. Please try again.",
+            icon: "error"
+        });
+        setUploading(false);
+    }
+  }
 
   const onSubmit = async (data) => {
     const updateBookData = {
@@ -35,7 +74,7 @@ const UpdateBook = () => {
       trending: data.trending,
       oldPrice: Number(data.oldPrice),
       newPrice: Number(data.newPrice),
-      coverImage: data.coverImage || bookData.coverImage,
+      coverImage: imageUrl || bookData.coverImage,
     };
     try {
       await axios.put(`${getBaseUrl()}/api/books/edit/${id}`, updateBookData, {
@@ -121,13 +160,17 @@ const UpdateBook = () => {
           register={register}
         />
 
-        <InputField
-          label="Cover Image URL"
-          name="coverImage"
-          type="text"
-          placeholder="Cover Image URL"
-          register={register}
-        />
+        <div className="mb-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
+          <input type="file" accept="image/*" onChange={handleFileUpload} className="mb-2 w-full" />
+          {imageFileName && <p className="text-sm text-gray-500">Current image: {imageFileName}</p>}
+          {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
+          {imageUrl && (
+            <div className="mt-2">
+              <img src={imageUrl} alt="Book cover" className="w-32 h-32 object-cover rounded-md" />
+            </div>
+          )}
+        </div>
 
         <button type="submit" className="w-full py-2 bg-blue-500 text-white font-bold rounded-md">
           Update Book
