@@ -17,9 +17,11 @@ app.use(
       "https://freshbooks-live.vercel.app",
       "https://appsail-50024742513.development.catalystappsail.in"
     ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   })
 );
 

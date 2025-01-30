@@ -5,22 +5,22 @@ import getBaseUrl from "../../../utils/baseURL";
 const ordersApi = createApi({
     reducerPath: 'ordersApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: getBaseUrl(),
+        baseUrl: `${getBaseUrl()}/api/orders`,
         credentials: 'include'
     }),
     tagTypes: ['Orders'],
     endpoints: (builder) => ({
-        createOrder: builder.mutation({
+        createOrder: (builder.mutation) ({
             query: (newOrder) => ({
-                url: "/orders",
+                url: "/",
                 method: "POST",
                 body: newOrder,
                 credentials: 'include',
             })
         }),
-        getOrderByEmail: builder.query({
+        getOrderByEmail: (builder.query) ({
             query: (email) => ({
-                url: `/orders/email/${email}`
+                url: `/email/${email}`
             }),
             providesTags: ['Orders']
         })
