@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import getBaseUrl from '../../../utils/baseURL'
 
-const  baseQuery = fetchBaseQuery({
-    baseUrl: `${getBaseUrl()}/api/books`,
+const baseQuery = fetchBaseQuery({
+    baseUrl: getBaseUrl(),
     credentials: 'include',
     prepareHeaders: (Headers) => {
-        const token =  localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         if(token) {
             Headers.set('Authorization', `Bearer ${token}`);
         }
@@ -19,16 +19,16 @@ const booksApi = createApi({
     tagTypes: ['Books'],
     endpoints: (builder) =>({
         fetchAllBooks: builder.query({
-            query: () => "/",
+            query: () => "/books",
             providesTags: ["Books"]
         }),
         fetchBookById: builder.query({
-            query: (id) => `/${id}`,
+            query: (id) => `/books/${id}`,
             providesTags: (result, error, id) => [{ type: "Books", id }],
         }),
         addBook: builder.mutation({
             query: (newBook) => ({
-                url: `/create-book`,
+                url: `/books/create-book`,
                 method: "POST",
                 body: newBook
             }),
@@ -36,7 +36,7 @@ const booksApi = createApi({
         }),
         updateBook: builder.mutation({
             query: ({id, ...rest}) => ({
-                url: `/edit/${id}`,
+                url: `/books/edit/${id}`,
                 method: "PUT",
                 body: rest,
                 headers: {
@@ -47,7 +47,7 @@ const booksApi = createApi({
         }),
         deleteBook: builder.mutation({
             query: (id) => ({
-                url: `/${id}`,
+                url: `/books/${id}`,
                 method: "DELETE"
             }),
             invalidatesTags: ["Books"]

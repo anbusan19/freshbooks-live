@@ -18,6 +18,8 @@ app.use(
       "https://appsail-50024742513.development.catalystappsail.in"
     ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
   })
 );
 

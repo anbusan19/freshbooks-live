@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
+import getBaseUrl from '../utils/baseURL'
 
 const AdminLogin = () => {
     const [message, setMessage] = useState("")
@@ -17,7 +18,7 @@ const AdminLogin = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(`http://localhost:5000/api/auth/admin`, data)
+            const response = await axios.post(`${getBaseUrl()}/auth/admin`, data)
             const auth = response.data;
             console.log(auth)
             if (auth.token) {
