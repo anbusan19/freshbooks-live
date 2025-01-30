@@ -10,20 +10,16 @@ require("dotenv").config();
 
 // middleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://freshbooks-live.vercel.app",
-      "https://appsail-50024742513.development.catalystappsail.in"
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-  })
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "https://freshbooks-live.vercel.app",
+//       "https://appsail-50024742513.development.catalystappsail.in"
+//     ],
+//     credentials: true,
+//   })
+// );
 
 const bookRoutes = require("./src/books/book.route");
 const orderRoutes = require("./src/orders/order.route");
