@@ -17,7 +17,7 @@ const AdminLogin = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_PROD_BACKEND_BASEURL}/api/auth/admin`, data)
+            const response = await axios.post(`${getBaseUrl()}/api/auth/admin`, data)
             const auth = response.data;
             console.log(auth)
             if (auth.token) {
