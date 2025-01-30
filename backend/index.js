@@ -4,7 +4,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
-const port = process.env.PORT || 5000;
+const port = process.env.X_ZOHO_CATALYST_LISTEN_PORT || 5000;
 
 require("dotenv").config();
 
@@ -14,7 +14,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://book-app-frontend-tau.vercel.app",
+      "https://freshbooks-live.vercel.app",
+      "https://appsail-50024742513.development.catalystappsail.in"
     ],
     credentials: true,
   })
