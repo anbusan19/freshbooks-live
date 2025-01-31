@@ -23,9 +23,10 @@ const Banner = () => {
       {/* Header Section */}
       <div className='text-center mb-12'>
         <h2 className='text-sm uppercase tracking-wider text-dark/60 mb-4'>A TOP BOOK SELECTION FOR 2024</h2>
-        <h1 className='md:text-6xl text-4xl font-bold mb-6 text-dark tracking-tight'>
-          DISCOVER THE DIFFERENCE
-        </h1>
+        <h1 className="md:text-6xl text-4xl font-bold mb-6 tracking-tight animated-text">
+  DISCOVER THE DIFFERENCE
+</h1>
+
       </div>
 
       {/* Book Rows with Animation */}
@@ -57,7 +58,7 @@ const Banner = () => {
                 key={index} 
                 className='group relative w-40 flex-none aspect-[3/4] overflow-hidden rounded-lg transition-transform duration-300  rotate-90hover:-translate-y-2'
                 // w-48 is a Tailwind CSS utility class that sets the width of an element to 12rem (192px)
-w-48
+w-48='true'
               >
                 <img 
                   src={book} 
@@ -72,11 +73,12 @@ w-48
       </div>
 
       {/* CTA Button */}
-      <div className='text-center mt-12'>
-        <button className='bg-primary hover:bg-dark text-white px-8 py-3 rounded-lg transition-colors duration-300 font-medium'>
-          Explore Now
-        </button>
-      </div>
+      <div className="text-center mt-12">
+  <button className="animated-button hover:opacity-80 text-white px-8 py-3 rounded-lg transition duration-300 font-medium">
+    Explore Now
+  </button>
+</div>
+
     </div>
   )
 }

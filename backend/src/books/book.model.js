@@ -25,6 +25,10 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    rating: {
+        type: Number,
+        required: true,
+    },
     oldPrice: {
         type: Number,
         required: true,

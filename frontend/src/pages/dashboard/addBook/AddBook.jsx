@@ -142,6 +142,15 @@ const AddBook = () => {
           </label>
         </div>
 
+        {/* Rating */}
+        <InputField
+          label="Rating"
+          name="rating"
+          type="number"
+          placeholder="Rating"
+          register={register}
+         
+        />
         {/* Old Price */}
         <InputField
           label="Old Price"

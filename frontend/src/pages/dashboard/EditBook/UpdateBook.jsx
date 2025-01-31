@@ -144,6 +144,15 @@ const UpdateBook = () => {
           </label>
         </div>
 
+
+        <InputField
+          label="Rating"
+          name="rating"
+          type="number"
+          placeholder="Rating"
+          register={register}
+        />
+
         <InputField
           label="Old Price"
           name="oldPrice"

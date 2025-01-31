@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import BookCard from '../books/BookCard';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // import required modules
-import { Pagination, Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
