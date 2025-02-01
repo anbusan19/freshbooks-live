@@ -1,89 +1,75 @@
 import React, { useState } from 'react';
 import BookCard from '../books/BookCard';
-
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// import required modules
 import { Navigation, Pagination } from 'swiper/modules';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
+import { FiChevronDown } from 'react-icons/fi';
 
 const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
 
 const TopSellers = () => {
     const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
-    const {data: books = []} = useFetchAllBooksQuery();
+    const { data: books = [] } = useFetchAllBooksQuery();
   
     const filteredBooks = selectedCategory === "Choose a genre" 
         ? books 
         : books.filter(book => book.category === selectedCategory.toLowerCase());
 
     return (
-        <div className='py-10'>
-            <h2 className='text-3xl font-semibold mb-6 text-primary-dark dark:text-primary-light'>
-                Top Sellers
-            </h2>
-            
-            {/* category filtering */}
-            <div className='mb-8 flex items-center'>
-                <select
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    name="category" 
-                    id="category" 
-                    className='bg-primary-light/20 dark:bg-dark-secondary/30 
-                             text-primary-dark dark:text-primary-light
-                             border border-primary-light/20 dark:border-primary-light/10
-                             rounded-md px-4 py-2
-                             focus:outline-none focus:ring-2 focus:ring-primary/30 dark:focus:ring-primary-light/30
-                             cursor-pointer transition-all duration-200
-                             hover:bg-primary-light/30 dark:hover:bg-dark-secondary/50'
-                >
-                    {categories.map((category, index) => (
-                        <option 
-                            key={index} 
-                            value={category}
-                            className='bg-surface-light dark:bg-dark-secondary text-primary-dark dark:text-primary-light'
-                        >
-                            {category}
-                        </option>
-                    ))}
-                </select>
+        <div className='relative py-16 px-4 md:px-8 dark:bg-black/40 bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl'>
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Background gradients */}
+                <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-100/30 dark:bg-purple-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-100/30 dark:bg-indigo-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+                <div className="absolute top-40 left-40 w-96 h-96 bg-pink-100/30 dark:bg-pink-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
             </div>
 
-            <Swiper
-                slidesPerView={1}
-                spaceBetween={30}
-                navigation={true}
-                breakpoints={{
-                    640: {
-                        slidesPerView: 1,
-                        spaceBetween: 20,
-                    },
-                    768: {
-                        slidesPerView: 3,
-                        spaceBetween: 30,
-                    },
-                    1024: {
-                        slidesPerView: 4,
-                        spaceBetween: 30,
-                    },
-                }}
-                modules={[Pagination, Navigation]}
-                className="mySwiper min-h-[400px] w-full"
-            >
-                {filteredBooks.map((book) => (
-                    <SwiperSlide key={book._id} className="flex items-center justify-center h-full">
-                        <div className="w-full h-full flex items-center justify-center">
+            <div className="max-w-7xl mx-auto relative z-10">
+                {/* Header Section */}
+                <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-12'>
+                    <h2 className='text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 mb-6 md:mb-0'>
+                        Top Sellers
+                    </h2>
+                    
+                    {/* Category Filtering */}
+                    <div className='relative'>
+                        <select
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            name="category" 
+                            id="category" 
+                            className='appearance-none bg-white/80 dark:bg-[#1a1a1a]/80 text-gray-800 dark:text-gray-200
+                                     border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-6 py-3 pr-12
+                                     focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30
+                                     cursor-pointer transition-all duration-300
+                                     hover:bg-gray-50 dark:hover:bg-gray-800/50
+                                     backdrop-blur-xl'
+                        >
+                            {categories.map((category, index) => (
+                                <option 
+                                    key={index} 
+                                    value={category}
+                                    className='bg-white dark:bg-[#1a1a1a] text-gray-800 dark:text-gray-200'
+                                >
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                        <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none" />
+                    </div>
+                </div>
+
+                {/* Books Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+                    {filteredBooks.map((book) => (
+                        <div key={book._id} className="h-full">
                             <BookCard book={book} />
                         </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }

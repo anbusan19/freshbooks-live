@@ -25,12 +25,12 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvide>
-        <div className="min-h-screen bg-surface-light dark:bg-surface-dark transition-colors duration-200">
+        <div className="min-h-screen bg-surface-light dark:bg-black transition-colors duration-200">
           <Navbar />
-          <main className='max-w-screen-2xl mx-auto px-4 py-6 font-primary text-primary-dark dark:text-primary-light'>
+          <main className='max-w-screen-2xl mx-auto px-4 pt-8 pb-16 font-primary text-gray-800 dark:text-white'>
             <Outlet />
           </main>
-          <Footer/> {/* Ensure w-48 is passed as a string */}
+          <Footer />
         </div>
       </AuthProvide>
     </ThemeProvider>

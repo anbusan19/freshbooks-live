@@ -1,12 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
+/* Dark mode base colors */
+.dark {
+  --dark-bg: #000000;
+  --dark-surface: #111111;
+  --dark-surface-2: #1a1a1a;
+  --dark-text: #ffffff;
+  --dark-text-2: #e5e5e5;
+  --dark-border: rgba(255, 255, 255, 0.1);
+}
+
 /* Base styles */
 :root {
   --transition-duration: 200ms;
 }
 
 body {
-  @apply bg-surface-light dark:bg-surface-dark text-primary-dark dark:text-primary-light;
+  @apply bg-surface-light dark:bg-black text-primary-dark dark:text-white;
   transition: background-color var(--transition-duration), color var(--transition-duration);
 }
 
@@ -54,37 +64,194 @@ body {
 
 /* Logo Loader Styles */
 .logo-loader-container {
-  @apply bg-surface-light dark:bg-surface-dark;
+  @apply bg-white dark:bg-black;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
   transition: background-color var(--transition-duration);
+}
+
+/* Background Effects */
+.logo-loader-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(199, 210, 254, 0.15), transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(167, 139, 250, 0.15), transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(147, 197, 253, 0.15), transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(196, 181, 253, 0.15), transparent 50%);
+  opacity: 0;
+  animation: fadeIn 2s ease-out forwards;
+}
+
+.dark .logo-loader-container::before {
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.1), transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.1), transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.1), transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(167, 139, 250, 0.1), transparent 50%);
 }
 
 .logo-loader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2.5rem;
+  position: relative;
+  z-index: 10;
 }
 
 .logo-fade {
   width: 300px;
   height: auto;
   opacity: 0;
-  animation: fadeIn 1.5s ease-in forwards;
+  filter: drop-shadow(0 10px 15px rgba(79, 70, 229, 0.1));
+  animation: simpleFadeIn 1.2s ease-out forwards;
+}
+
+.dark .logo-fade {
+  filter: drop-shadow(0 10px 15px rgba(99, 102, 241, 0.2));
 }
 
 .tagline-fade {
-  @apply text-primary-dark dark:text-primary-light;
+  @apply text-gray-800 dark:text-white;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1rem;
+  font-size: 1.75rem;
+  font-weight: 500;
   letter-spacing: 0.2em;
   opacity: 0;
-  animation: fadeIn 1.5s ease-in forwards;
+  margin-top: 0;
+  transform: translateY(10px);
+  animation: taglineFadeIn 1.2s ease-out forwards;
+  animation-delay: 0.3s;
+  text-align: center;
+  background: linear-gradient(to right, #4f46e5, #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+}
+
+.dark .tagline-fade {
+  background: linear-gradient(to right, #818cf8, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Updated animation keyframes */
+@keyframes simpleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes taglineFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Floating Bubbles for Loader */
+.loader-bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(20px);
+  animation: floatBubble 20s ease-in-out infinite, fadeInBubble 2s ease-out forwards;
+}
+
+.loader-bubble-1 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle at center, rgba(79, 70, 229, 0.2), transparent);
+  top: 20%;
+  right: 15%;
+  animation-delay: 0s;
+}
+
+.loader-bubble-2 {
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle at center, rgba(129, 140, 248, 0.2), transparent);
+  bottom: 25%;
+  left: 10%;
   animation-delay: 0.5s;
-  transition: color var(--transition-duration);
+}
+
+.loader-bubble-3 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.2), transparent);
+  top: 30%;
+  left: 20%;
+  animation-delay: 1s;
+}
+
+.dark .loader-bubble-1 {
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15), transparent);
+}
+
+.dark .loader-bubble-2 {
+  background: radial-gradient(circle at center, rgba(129, 140, 248, 0.15), transparent);
+}
+
+.dark .loader-bubble-3 {
+  background: radial-gradient(circle at center, rgba(167, 139, 250, 0.15), transparent);
+}
+
+@keyframes floatBubble {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(10deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(-10deg);
+  }
+}
+
+@keyframes fadeInBubble {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .logo-fade {
+    width: 200px;
+  }
+  
+  .tagline-fade {
+    font-size: 1.25rem;
+    padding: 0 1rem;
+  }
+  
+  .logo-loader {
+    gap: 2rem;
+  }
+  
+  .loader-bubble {
+    transform: scale(0.7);
+  }
 }
 
 /* Header Logo Styles */
@@ -144,4 +311,694 @@ header img:hover {
   -webkit-background-clip: text;
   color: transparent;
 }
+
+/* Animation keyframes for the new login/register design */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.2) rotate(120deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.8) rotate(240deg);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(360deg);
+  }
+}
+
+@keyframes shine {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-blob {
+  animation: blob 20s ease infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.shine {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shine 1.5s infinite;
+}
+
+/* Fluid animation for book cards */
+@keyframes fluid {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.fluid-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.fluid-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #4f46e5, #818cf8, #6366f1, #4f46e5);
+  background-size: 200% 200%;
+  animation: fluid 15s ease infinite;
+  z-index: -2;
+  border-radius: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fluid-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  border-radius: 1rem;
+  z-index: -1;
+}
+
+.fluid-card:hover::before {
+  opacity: 1;
+}
+
+.fluid-hover {
+  transition: all 0.3s ease;
+}
+
+.fluid-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+}
+
+/* Fluid background for the section */
+.fluid-bg {
+  background: linear-gradient(-45deg, #e6e6ff, #f0f7ff, #e5e7ff, #f5f3ff);
+  background-size: 400% 400%;
+  animation: fluid 15s ease infinite;
+}
+
+/* Enhanced bubble animations */
+@keyframes float-bubble {
+  0%, 100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05) rotate(5deg);
+  }
+}
+
+@keyframes pulse-bubble {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) translateY(-10px);
+  }
+}
+
+@keyframes rotate-bubble {
+  from {
+    transform: rotate(0deg) translate(15px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) translate(15px) rotate(-180deg) scale(1.1);
+  }
+  to {
+    transform: rotate(360deg) translate(15px) rotate(-360deg) scale(1);
+  }
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(79, 70, 229, 0.1), rgba(99, 102, 241, 0.1));
+  pointer-events: none;
+}
+
+.bubble-1 {
+  width: 150px;
+  height: 150px;
+  top: 20%;
+  left: 10%;
+  animation: float-bubble 8s ease-in-out infinite;
+}
+
+.bubble-2 {
+  width: 100px;
+  height: 100px;
+  top: 60%;
+  right: 15%;
+  animation: pulse-bubble 6s ease-in-out infinite;
+}
+
+.bubble-3 {
+  width: 80px;
+  height: 80px;
+  bottom: 20%;
+  left: 20%;
+  animation: rotate-bubble 12s linear infinite;
+}
+
+.bubble-4 {
+  width: 120px;
+  height: 120px;
+  top: 30%;
+  right: 25%;
+  animation: float-bubble 10s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.bubble-5 {
+  width: 70px;
+  height: 70px;
+  bottom: 30%;
+  right: 30%;
+  animation: pulse-bubble 7s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+/* Update logo animation */
+.logo-animation {
+  animation: float 6s ease-in-out infinite;
+  transform-origin: center;
+  width: 240px !important;
+  height: auto;
+}
+
+/* Additional colored bubbles */
+.bubble-blue-1 {
+  width: 130px;
+  height: 130px;
+  top: 15%;
+  right: 20%;
+  background: linear-gradient(45deg, rgba(96, 165, 250, 0.1), rgba(147, 197, 253, 0.1));
+  animation: float-bubble 9s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+.bubble-blue-2 {
+  width: 85px;
+  height: 85px;
+  bottom: 25%;
+  left: 35%;
+  background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.1));
+  animation: rotate-bubble 15s linear infinite;
+  animation-delay: -4s;
+}
+
+.bubble-blue-3 {
+  width: 110px;
+  height: 110px;
+  top: 45%;
+  left: 15%;
+  background: linear-gradient(45deg, rgba(147, 197, 253, 0.1), rgba(191, 219, 254, 0.1));
+  animation: pulse-bubble 8s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.bubble-yellow-1 {
+  width: 95px;
+  height: 95px;
+  top: 35%;
+  right: 35%;
+  background: linear-gradient(45deg, rgba(251, 191, 36, 0.1), rgba(253, 230, 138, 0.1));
+  animation: float-bubble 7s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.bubble-yellow-2 {
+  width: 140px;
+  height: 140px;
+  bottom: 15%;
+  right: 10%;
+  background: linear-gradient(45deg, rgba(253, 230, 138, 0.1), rgba(254, 243, 199, 0.1));
+  animation: pulse-bubble 10s ease-in-out infinite;
+  animation-delay: -1.5s;
+}
+
+.bubble-yellow-3 {
+  width: 75px;
+  height: 75px;
+  top: 25%;
+  left: 25%;
+  background: linear-gradient(45deg, rgba(252, 211, 77, 0.1), rgba(251, 191, 36, 0.1));
+  animation: rotate-bubble 13s linear infinite;
+  animation-delay: -5s;
+}
+
+/* Admin page depth enhancements */
+.admin-bg {
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(199, 210, 254, 0.3), transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(167, 139, 250, 0.3), transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(147, 197, 253, 0.3), transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(196, 181, 253, 0.3), transparent 50%);
+}
+
+.depth-layer-1 {
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.depth-layer-2 {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.02) 100%);
+  pointer-events: none;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Enhanced depth bubbles */
+.depth-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent);
+  box-shadow: 
+    inset -5px -5px 15px rgba(0, 0, 0, 0.05),
+    inset 5px 5px 15px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+.depth-bubble-1 {
+  width: 300px;
+  height: 300px;
+  top: -10%;
+  right: -5%;
+  background: radial-gradient(circle at 30% 30%, rgba(199, 210, 254, 0.4), rgba(199, 210, 254, 0.1));
+  filter: blur(30px);
+}
+
+.depth-bubble-2 {
+  width: 250px;
+  height: 250px;
+  bottom: -10%;
+  left: -5%;
+  background: radial-gradient(circle at 30% 30%, rgba(167, 139, 250, 0.4), rgba(167, 139, 250, 0.1));
+  filter: blur(25px);
+}
+
+.depth-bubble-3 {
+  width: 200px;
+  height: 200px;
+  top: 20%;
+  left: 30%;
+  background: radial-gradient(circle at 30% 30%, rgba(147, 197, 253, 0.3), rgba(147, 197, 253, 0.1));
+  filter: blur(20px);
+}
+
+/* Modern Navbar Styles */
+.navbar-search {
+  @apply bg-gray-100/50 dark:bg-gray-800/50 
+         border border-transparent 
+         hover:border-gray-300 dark:hover:border-gray-700
+         focus:border-gray-300 dark:focus:border-gray-700;
+  transition: all 0.3s ease;
+}
+
+.navbar-icon-button {
+  @apply flex items-center justify-center w-10 h-10 rounded-full
+         text-gray-600 dark:text-gray-300 
+         hover:bg-gray-100 dark:hover:bg-gray-800 
+         hover:text-gray-900 dark:hover:text-white 
+         transition-all duration-300;
+}
+
+.navbar-dropdown {
+  @apply absolute right-0 mt-2 w-48 
+         bg-white dark:bg-[#1a1a1a] 
+         border border-gray-200/20 dark:border-gray-800/20
+         rounded-xl shadow-lg;
+}
+
+.navbar-dropdown-item {
+  @apply block px-4 py-2 text-sm 
+         text-gray-700 dark:text-gray-200 
+         hover:bg-gray-100 dark:hover:bg-gray-800/50 
+         transition-colors;
+}
+
+/* Remove old navbar styles */
+.navbar-glass,
+.navbar-glass-dark,
+.search-glass {
+  display: none;
+}
+
+/* Modern Banner Styles */
+.banner-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+.dark .banner-container {
+  background: linear-gradient(135deg, #000000 0%, #111111 100%);
+}
+
+.banner-overlay {
+  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 50%),
+              radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.15), transparent 50%);
+}
+
+/* Banner Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* Infinite Scroll Animation */
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.infinite-scroll-left {
+  animation: scroll-left 25s linear infinite;
+}
+
+.infinite-scroll-right {
+  animation: scroll-right 25s linear infinite;
+}
+
+/* Bubble Animations */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(40px);
+  animation: float-bubble 20s ease-in-out infinite;
+}
+
+.bubble-blue-1 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at center, #60a5fa, transparent);
+  top: 10%;
+  right: 15%;
+  animation-delay: 0s;
+}
+
+.bubble-blue-2 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle at center, #3b82f6, transparent);
+  bottom: 20%;
+  left: 10%;
+  animation-delay: -5s;
+}
+
+.bubble-blue-3 {
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle at center, #2563eb, transparent);
+  top: 40%;
+  left: 20%;
+  animation-delay: -10s;
+}
+
+.bubble-yellow-1 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle at center, #fcd34d, transparent);
+  top: 30%;
+  right: 25%;
+  animation-delay: -7s;
+}
+
+.bubble-yellow-2 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle at center, #fbbf24, transparent);
+  bottom: 15%;
+  right: 20%;
+  animation-delay: -3s;
+}
+
+.bubble-yellow-3 {
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at center, #f59e0b, transparent);
+  top: 60%;
+  left: 15%;
+  animation-delay: -15s;
+}
+
+@keyframes float-bubble {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(20px, -20px) rotate(5deg);
+  }
+  50% {
+    transform: translate(-10px, 20px) rotate(-5deg);
+  }
+  75% {
+    transform: translate(-20px, -10px) rotate(3deg);
+  }
+}
+
+/* Book Card Aural Effect */
+.book-card {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.dark .book-card {
+  background: rgba(26, 26, 26, 0.8);
+}
+
+.book-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    45deg,
+    rgba(79, 70, 229, 0) 0%,
+    rgba(129, 140, 248, 0.2) 50%,
+    rgba(99, 102, 241, 0) 100%
+  );
+  border-radius: inherit;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.dark .book-card::before {
+  background: linear-gradient(
+    45deg,
+    rgba(79, 70, 229, 0) 0%,
+    rgba(129, 140, 248, 0.15) 50%,
+    rgba(99, 102, 241, 0) 100%
+  );
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -10px rgba(79, 70, 229, 0.15);
+}
+
+.dark .book-card:hover {
+  box-shadow: 0 12px 24px -10px rgba(79, 70, 229, 0.25);
+}
+
+.book-card:hover::before {
+  opacity: 1;
+}
+
+.book-card::after {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(79, 70, 229, 0.1),
+    transparent 50%
+  );
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.dark .book-card::after {
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(99, 102, 241, 0.15),
+    transparent 50%
+  );
+}
+
+.book-card:hover::after {
+  opacity: 1;
+}
+
+/* Add mouse move effect tracking */
+.book-card-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dark Mode Bubble Gradients */
+.dark .bubble-blue-1 {
+  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.2), transparent);
+}
+
+.dark .bubble-blue-2 {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2), transparent);
+}
+
+.dark .bubble-blue-3 {
+  background: radial-gradient(circle at center, rgba(96, 165, 250, 0.2), transparent);
+}
+
+.dark .bubble-yellow-1 {
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.2), transparent);
+}
+
+.dark .bubble-yellow-2 {
+  background: radial-gradient(circle at center, rgba(251, 191, 36, 0.2), transparent);
+}
+
+.dark .bubble-yellow-3 {
+  background: radial-gradient(circle at center, rgba(253, 230, 138, 0.2), transparent);
+}
+
+/* Dark Mode Admin Background */
+.dark .admin-bg {
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.15), transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.15), transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.15), transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(167, 139, 250, 0.15), transparent 50%);
+}
+
+/* Dark Mode Depth Layers */
+.dark .depth-layer-1 {
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(17, 17, 17, 0.3));
+  border: 1px solid var(--dark-border);
+}
+
+.dark .depth-layer-2 {
+  background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+/* Dark Mode Depth Bubbles */
+.dark .depth-bubble-1 {
+  background: radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.2), rgba(37, 99, 235, 0.05));
+}
+
+.dark .depth-bubble-2 {
+  background: radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
+}
+
+.dark .depth-bubble-3 {
+  background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.05));
+}
+
+/* Dark Mode Text Colors */
+.dark .text-gray-800 {
+  color: var(--dark-text);
+}
+
+.dark .text-gray-600 {
+  color: var(--dark-text-2);
+}
+
+/* Dark Mode Hover States */
+.dark .hover\:bg-gray-800\/50:hover {
+  background-color: rgba(31, 41, 55, 0.5);
+}
+
+.dark .hover\:text-white:hover {
+  color: #ffffff;
+}
+
 

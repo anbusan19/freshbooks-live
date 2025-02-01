@@ -1,107 +1,158 @@
 import React from 'react'
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <footer className="bg-primary-light/5 dark:bg-dark-secondary border-t border-primary-light/10 dark:border-primary-light/5">
-      <div className="max-w-screen-2xl mx-auto py-10 px-4">
-        {/* Top Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-          {/* Left Side - Logo and Nav */}
-          <div className="md:w-1/2 w-full">
+    <footer className="relative bg-gradient-to-b from-transparent to-white/80 dark:to-black/40 backdrop-blur-xl border-t border-gray-200/20 dark:border-gray-800/20">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-100/30 dark:bg-purple-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-100/30 dark:bg-indigo-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Logo and About */}
+          <div className="space-y-6">
             <img 
               src="/freshbooks-logo.svg" 
               alt="Freshbooks" 
-              className="mb-6 h-8 w-auto block dark:hidden"
+              className="h-8 w-auto block dark:hidden"
             />
             <img 
               src="/freshbooks-logo-negative.svg" 
               alt="Freshbooks" 
-              className="mb-6 h-8 w-auto hidden dark:block"
+              className="h-8 w-auto hidden dark:block"
             />
-            <ul className="flex flex-col md:flex-row gap-6">
+            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              Discover a world of books at your fingertips. Your one-stop destination for all your reading needs.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Quick Links</h3>
+            <ul className="space-y-4">
               <li>
-                <a href="#home" className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
+                <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
-                  Services
-                </a>
+                <Link to="/books" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  Books
+                </Link>
               </li>
               <li>
-                <a href="#about" className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
+                <Link to="/about" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#contact" className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
+                <Link to="/contact" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Right Side - Newsletter */}
-          <div className="md:w-1/2 w-full">
-            <p className="mb-4 text-primary-dark dark:text-primary-light">
-              Subscribe to our newsletter to receive the latest updates, news, and offers!
+          {/* Legal */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Legal</h3>
+            <ul className="space-y-4">
+              <li>
+                <Link to="/privacy" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/shipping" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/refund" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  Refund Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Newsletter</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+              Subscribe to our newsletter to receive updates and exclusive offers.
             </p>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 rounded-l-md bg-white dark:bg-dark-primary 
-                         text-primary-dark dark:text-primary-light
-                         placeholder-primary-dark/50 dark:placeholder-primary-light/50
-                         border border-primary-light/20 dark:border-primary-light/10
-                         focus:outline-none focus:ring-2 focus:ring-primary/30 dark:focus:ring-primary-light/30"
-              />
-              <button className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-r-md transition-colors">
+            <form className="space-y-3">
+              <div className="relative">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 rounded-lg bg-white/80 dark:bg-gray-800/80 
+                           border border-gray-200/20 dark:border-gray-700/20
+                           text-gray-800 dark:text-gray-200
+                           placeholder-gray-500 dark:placeholder-gray-400
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30
+                           transition-all duration-300"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 
+                         hover:from-indigo-700 hover:to-purple-700
+                         text-white rounded-lg px-6 py-3 font-medium 
+                         transition-all duration-300 transform 
+                         hover:scale-[1.02] active:scale-[0.98]"
+              >
                 Subscribe
               </button>
-            </div>
+            </form>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center mt-10 pt-6
-                      border-t border-primary-light/10 dark:border-primary-light/5">
-          {/* Left Side - Privacy Links */}
-          <ul className="flex gap-6 mb-4 md:mb-0">
-            <li>
-              <a href="#privacy" className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a href="#terms" className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
-                Terms of Service
-              </a>
-            </li>
-          </ul>
+        <div className="pt-8 border-t border-gray-200/20 dark:border-gray-800/20">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* Copyright */}
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              © {new Date().getFullYear()} Freshbooks. All rights reserved.
+            </p>
 
-          {/* Right Side - Social Icons */}
-          <div className="flex gap-6">
-            <a href="https://facebook.com" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
-              <FaFacebook size={24} />
-            </a>
-            <a href="https://twitter.com" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
-              <FaTwitter size={24} />
-            </a>
-            <a href="https://instagram.com" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               className="text-primary-dark dark:text-primary-light hover:text-primary transition-colors">
-              <FaInstagram size={24} />
-            </a>
+            {/* Social Links */}
+            <div className="flex items-center gap-6">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+              >
+                <FaFacebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+              >
+                <FaTwitter className="w-5 h-5" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+              >
+                <FaInstagram className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

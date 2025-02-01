@@ -14,53 +14,51 @@ import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 
 const Recommened = () => {
-   
-
     const {data: books = []} = useFetchAllBooksQuery();
-  return (
-    <div className='py-16'>
-         <h2 className='text-3xl font-semibold mb-6'>Recommended for you </h2>
+    
+    return (
+        <div className='py-12 px-4 sm:px-6 lg:px-8'>
+            <h2 className='text-2xl sm:text-3xl font-semibold mb-6'>Recommended for you</h2>
 
-
-         <Swiper
-                slidesPerView={1}
-                spaceBetween={30}
+            <Swiper
+                slidesPerView={2}
+                spaceBetween={16}
                 navigation={true}
                 breakpoints={{
+                    320: {
+                        slidesPerView: 2,
+                        spaceBetween: 12,
+                    },
                     640: {
-                        slidesPerView: 1,
-                        spaceBetween: 20,
+                        slidesPerView: 2,
+                        spaceBetween: 16,
                     },
                     768: {
                         slidesPerView: 2,
-                        spaceBetween: 40,
+                        spaceBetween: 20,
                     },
                     1024: {
-                        slidesPerView: 2,
-                        spaceBetween: 50,
-                    },
-                    1180: {
                         slidesPerView: 3,
-                        spaceBetween: 50,
+                        spaceBetween: 24,
+                    },
+                    1280: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
                     }
                 }}
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
-
                 {
-                   books.length > 0 && books.slice(8, 18).map((book, index) => (
+                    books.length > 0 && books.slice(8, 18).map((book, index) => (
                         <SwiperSlide key={index}>
-                            <BookCard  book={book} />
+                            <BookCard book={book} />
                         </SwiperSlide>
                     ))
                 }
-
-
-
             </Swiper>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default Recommened
