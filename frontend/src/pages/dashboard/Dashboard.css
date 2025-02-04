@@ -1,0 +1,135 @@
+/* Gradient Blobs */
+.gradient-blob {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: blob-movement 25s infinite alternate ease-in-out;
+}
+
+.gradient-blob-1 {
+    background: linear-gradient(to right, #4f46e5, #818cf8);
+    top: -200px;
+    right: -100px;
+    animation-delay: -2s;
+}
+
+.gradient-blob-2 {
+    background: linear-gradient(to right, #8b5cf6, #a78bfa);
+    bottom: -300px;
+    left: -200px;
+    animation-delay: -4s;
+}
+
+.gradient-blob-3 {
+    background: linear-gradient(to right, #6366f1, #818cf8);
+    top: 40%;
+    right: 20%;
+    animation-delay: -6s;
+}
+
+@keyframes blob-movement {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+/* Floating Bubbles */
+.bubble {
+    position: fixed;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 20s infinite;
+}
+
+.bubble-1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    left: 10%;
+    animation-delay: -2s;
+}
+
+.bubble-2 {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    right: 15%;
+    animation-delay: -5s;
+}
+
+.bubble-3 {
+    width: 80px;
+    height: 80px;
+    top: 40%;
+    left: 30%;
+    animation-delay: -8s;
+}
+
+.bubble-4 {
+    width: 120px;
+    height: 120px;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: -11s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0);
+    }
+    33% {
+        transform: translate(30px, -30px) rotate(120deg);
+    }
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}
+
+/* Dark mode adjustments */
+:root[class~="dark"] .gradient-blob {
+    opacity: 0.1;
+}
+
+:root[class~="dark"] .bubble {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05), transparent);
+}
+
+/* Glass effect for cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dark .glass-card {
+    background: rgba(31, 41, 55, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+} 

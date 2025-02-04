@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import { FiChevronDown } from 'react-icons/fi';
+import '../../styles/shared-gradients.css';
 
 const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
 
@@ -20,11 +21,18 @@ const TopSellers = () => {
 
     return (
         <div className='relative py-16 px-4 md:px-8 dark:bg-black/40 bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl'>
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Background gradients */}
-                <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-100/30 dark:bg-purple-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-100/30 dark:bg-indigo-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-                <div className="absolute top-40 left-40 w-96 h-96 bg-pink-100/30 dark:bg-pink-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+            {/* Background Effects */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                <div className="gradient-blob gradient-blob-1"></div>
+                <div className="gradient-blob gradient-blob-2"></div>
+                <div className="gradient-blob gradient-blob-3"></div>
+                
+                {/* Floating Bubbles */}
+                <div className="aural-bubble aural-bubble-1"></div>
+                <div className="aural-bubble aural-bubble-2"></div>
+                <div className="aural-bubble aural-bubble-3"></div>
+                <div className="aural-bubble aural-bubble-4"></div>
+                <div className="aural-bubble aural-bubble-5"></div>
             </div>
 
             <div className="max-w-7xl mx-auto relative z-10">

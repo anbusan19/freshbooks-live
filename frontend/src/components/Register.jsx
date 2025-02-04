@@ -43,7 +43,7 @@ const Register = () => {
         setIsLoading(false);
     };
 
-    return (
+  return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center p-4 transition-colors duration-300 overflow-hidden">
             {/* Background Effects - Positioned in corners */}
             <div className="fixed inset-0 pointer-events-none">
@@ -128,8 +128,8 @@ const Register = () => {
                                 </div>
                                 <div className="relative flex justify-center text-sm">
                                     <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with</span>
-                                </div>
-                            </div>
+            </div>
+            </div>
 
                             <button
                                 type="button"
@@ -142,8 +142,8 @@ const Register = () => {
                                          flex items-center justify-center gap-3"
                             >
                                 <FcGoogle className="w-5 h-5" />
-                                Sign in with Google
-                            </button>
+              Sign in with Google
+            </button>
 
                             <div className="text-center">
                                 <p className="text-gray-600 dark:text-gray-300">
@@ -154,10 +154,10 @@ const Register = () => {
                                 </p>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+    </div>
     );
 };
 

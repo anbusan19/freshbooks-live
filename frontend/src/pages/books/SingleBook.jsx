@@ -6,6 +6,7 @@ import { useFetchBookByIdQuery } from '../../redux/features/books/booksApi';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice';
 import Swal from 'sweetalert2';
+import '../../styles/shared-gradients.css';
 
 const SingleBook = () => {
     const {id} = useParams();
@@ -59,15 +60,22 @@ const SingleBook = () => {
     return (
         <div className="min-h-screen py-16 px-4 md:px-8 dark:bg-black/40 bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl relative">
             {/* Background Effects */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-100/30 dark:bg-purple-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-100/30 dark:bg-indigo-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-                <div className="absolute top-40 left-40 w-96 h-96 bg-pink-100/30 dark:bg-pink-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+            <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                <div className="gradient-blob gradient-blob-1"></div>
+                <div className="gradient-blob gradient-blob-2"></div>
+                <div className="gradient-blob gradient-blob-3"></div>
+                
+                {/* Floating Bubbles */}
+                <div className="aural-bubble aural-bubble-1"></div>
+                <div className="aural-bubble aural-bubble-2"></div>
+                <div className="aural-bubble aural-bubble-3"></div>
+                <div className="aural-bubble aural-bubble-4"></div>
+                <div className="aural-bubble aural-bubble-5"></div>
             </div>
 
             {/* Content */}
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-gray-200/20 dark:border-gray-800/20">
+                <div className="glass-card rounded-2xl p-8">
                     <div className="flex flex-col lg:flex-row gap-12">
                         {/* Image Section */}
                         <div className="lg:w-1/3">

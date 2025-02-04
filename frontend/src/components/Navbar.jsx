@@ -80,7 +80,7 @@ const Navbar = () => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [dispatch]);
-
+  
     return (
         <header className="sticky top-0 z-50">
             <nav className="bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl border-b border-gray-200/20 dark:border-gray-800/20 transition-all duration-300">
@@ -93,20 +93,20 @@ const Navbar = () => {
                                 className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                             >
                                 <HiMiniBars3CenterLeft className="w-6 h-6" />
-                            </button>
-                            
+                        </button>
+                        
                             <Link to="/" className="flex-shrink-0">
-                                <img 
-                                    src="/freshbooks-logo.svg" 
-                                    alt="Freshbooks" 
-                                    className="h-8 w-auto block dark:hidden"
-                                />
-                                <img 
-                                    src="/freshbooks-logo-negative.svg" 
-                                    alt="Freshbooks" 
-                                    className="h-8 w-auto hidden dark:block"
-                                />
-                            </Link>
+                            <img 
+                                src="/freshbooks-logo.svg" 
+                                alt="Freshbooks" 
+                                className="h-8 w-auto block dark:hidden"
+                            />
+                            <img 
+                                src="/freshbooks-logo-negative.svg" 
+                                alt="Freshbooks" 
+                                className="h-8 w-auto hidden dark:block"
+                            />
+                        </Link>
 
                             {/* Desktop Navigation */}
                             <div className="hidden lg:flex items-center gap-6 ml-6">
@@ -120,14 +120,14 @@ const Navbar = () => {
                                     </Link>
                                 ))}
                             </div>
-                        </div>
+                    </div>
 
                         {/* Middle - Search (Desktop) */}
                         <div className="hidden lg:block flex-1 max-w-lg mx-8">
                             <div className="relative" ref={searchRef}>
                                 <IoSearchOutline className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
-                                <input 
-                                    type="text" 
+                        <input 
+                            type="text" 
                                     value={searchTerm}
                                     onChange={handleSearchInput}
                                     placeholder="Search books..."
@@ -171,7 +171,7 @@ const Navbar = () => {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                    </div>
 
                         {/* Right side - Icons */}
                         <div className="flex items-center gap-2 sm:gap-4">
@@ -181,8 +181,8 @@ const Navbar = () => {
                                 className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                             >
                                 <IoSearchOutline className="w-6 h-6" />
-                            </button>
-
+                        </button>
+                        
                             <ThemeToggle />
 
                             {/* Wishlist - Hidden on mobile */}
@@ -196,7 +196,7 @@ const Navbar = () => {
                                         {wishlistItems.length}
                                     </span>
                                 )}
-                            </Link>
+                        </Link>
 
                             {/* Cart */}
                             <Link 
@@ -206,15 +206,15 @@ const Navbar = () => {
                                 <HiOutlineShoppingCart className="w-6 h-6" />
                                 {cartItems?.length > 0 && (
                                     <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                                        {cartItems.length}
-                                    </span>
-                                )}
-                            </Link>
+                                    {cartItems.length}
+                                </span>
+                            )}
+                        </Link>
 
                             {/* User Menu */}
                             <div className="relative" ref={dropdownRef}>
                                 {currentUser ? (
-                                    <button
+                                <button
                                         onClick={() => setIsOpen(!isOpen)}
                                         className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all overflow-hidden"
                                     >
@@ -223,7 +223,7 @@ const Navbar = () => {
                                             alt="User"
                                             className="w-8 h-8 rounded-full"
                                         />
-                                    </button>
+                                </button>
                                 ) : (
                                     <Link
                                         to="/login"
@@ -248,13 +248,13 @@ const Navbar = () => {
                                         >
                                             Dashboard
                                         </Link>
-                                        <Link
+                                            <Link
                                             to="/orders"
                                             className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50"
                                             onClick={() => setIsOpen(false)}
                                         >
                                             Orders
-                                        </Link>
+                                            </Link>
                                         <button
                                             onClick={handleLogout}
                                             className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800/50"
