@@ -50,8 +50,8 @@ const CheckoutPage = () => {
                 icon: "success",
                 showConfirmButton: false,
                 timer: 1500
-            });
-            navigate("/orders")
+              });
+              navigate("/orders")
         } catch (error) {
             console.error("Error place an order", error);
             setMessage("Failed to place order. Please try again.");
@@ -89,14 +89,14 @@ const CheckoutPage = () => {
                             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
                                 <div className="flex items-center gap-3 bg-indigo-50/50 dark:bg-indigo-900/30 px-4 py-2 rounded-lg">
                                     <FiShoppingBag className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                                    <div>
+                    <div>
                                         <p className="text-sm text-gray-600 dark:text-gray-300">Total Items</p>
                                         <p className="text-lg font-semibold text-gray-800 dark:text-white">{cartItems.length}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 bg-green-50/50 dark:bg-green-900/30 px-4 py-2 rounded-lg">
                                     <FiCreditCard className="w-5 h-5 text-green-600 dark:text-green-400" />
-                                    <div>
+                        <div>
                                         <p className="text-sm text-gray-600 dark:text-gray-300">Total Price</p>
                                         <p className="text-lg font-semibold text-gray-800 dark:text-white">₹{totalPrice}</p>
                                     </div>
@@ -130,19 +130,19 @@ const CheckoutPage = () => {
 
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                                        <input
+                                                <input
                                             type="email"
-                                            disabled
-                                            defaultValue={currentUser?.email}
+                                                    disabled
+                                                    defaultValue={currentUser?.email}
                                             className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-700
                                                      text-gray-900 dark:text-white cursor-not-allowed"
                                         />
-                                    </div>
+                                            </div>
 
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
-                                        <input
-                                            {...register("phone", { required: true })}
+                                                <input
+                                                    {...register("phone", { required: true })}
                                             type="tel"
                                             className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
@@ -151,15 +151,15 @@ const CheckoutPage = () => {
                                             
                                         />
                                         {errors.phone && <p className="mt-1 text-sm text-red-600 dark:text-red-400">Phone number is required</p>}
-                                    </div>
-                                </div>
+                                            </div>
+                                            </div>
 
                                 {/* Address Details */}
                                 <div className="space-y-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Country</label>
-                                        <input
-                                            {...register("country", { required: true })}
+                                                    <input
+                                                        {...register("country", { required: true })}
                                             type="text"
                                             className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
@@ -168,12 +168,12 @@ const CheckoutPage = () => {
                                             
                                         />
                                         {errors.country && <p className="mt-1 text-sm text-red-600 dark:text-red-400">Country is required</p>}
-                                    </div>
+                                            </div>
 
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">State</label>
-                                        <input
-                                            {...register("state", { required: true })}
+                                                    <input
+                                                        {...register("state", { required: true })}
                                             type="text"
                                             className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
@@ -182,7 +182,7 @@ const CheckoutPage = () => {
                                             
                                         />
                                         {errors.state && <p className="mt-1 text-sm text-red-600 dark:text-red-400">State is required</p>}
-                                    </div>
+                                                </div>
 
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</label>
@@ -196,12 +196,12 @@ const CheckoutPage = () => {
                                             
                                         />
                                         {errors.city && <p className="mt-1 text-sm text-red-600 dark:text-red-400">City is required</p>}
-                                    </div>
+                                            </div>
 
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ZIP Code</label>
-                                        <input
-                                            {...register("zipcode", { required: true })}
+                                                <input
+                                                    {...register("zipcode", { required: true })}
                                             type="text"
                                             className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
@@ -210,9 +210,9 @@ const CheckoutPage = () => {
                                             
                                         />
                                         {errors.zipcode && <p className="mt-1 text-sm text-red-600 dark:text-red-400">ZIP code is required</p>}
-                                    </div>
-                                </div>
-                            </div>
+                                            </div>
+                                                </div>
+                                            </div>
 
                             {/* Terms and Conditions */}
                             <div className="flex items-center gap-2">
@@ -234,7 +234,7 @@ const CheckoutPage = () => {
                                         Privacy Policy
                                     </Link>
                                 </label>
-                            </div>
+                                            </div>
 
                             {message && <p className="text-sm text-red-600 dark:text-red-400">{message}</p>}
 

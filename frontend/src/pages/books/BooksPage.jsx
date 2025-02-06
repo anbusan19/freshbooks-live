@@ -58,7 +58,7 @@ const BooksPage = () => {
             </div>
 
             {/* Content */}
-            <div className="max-w-7xl mx-auto relative z-10">
+            <div className="max-w-[1920px] mx-auto relative z-10">
                 {/* Header Section */}
                 <div className="text-center mb-12">
                     <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 filter drop-shadow-lg animate-fade-in">
@@ -117,7 +117,9 @@ const BooksPage = () => {
                 {/* Books Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 animate-fade-in animation-delay-600">
                     {sortedBooks.map((book, index) => (
-                        <div key={book._id} className={`animate-fade-in`} style={{ animationDelay: `${(index % 5) * 100}ms` }}>
+                        <div key={book._id} 
+                             className={`animate-fade-in transform transition-transform duration-300 hover:-translate-y-1`} 
+                             style={{ animationDelay: `${(index % 5) * 100}ms` }}>
                             <BookCard book={book} />
                         </div>
                     ))}

@@ -47,14 +47,14 @@ const BookCard = ({book}) => {
             <div className="flex-1 flex flex-col relative z-10">
                 {/* Image Container */}
                 <div className="relative w-full aspect-[3/4] mb-2 sm:mb-3 overflow-hidden rounded-lg group">
-                    <Link to={`/books/${book._id}`}>
-                        <img
-                            src={`${book.coverImage}`}
+                <Link to={`/books/${book._id}`}>
+                    <img
+                        src={`${book.coverImage}`}
                             alt={book.title}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
+                    />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </Link>
+                </Link>
                     <button
                         onClick={toggleWishlist}
                         className={`absolute top-1 right-1 sm:top-2 sm:right-2 p-1 sm:p-1.5 rounded-full 
@@ -65,7 +65,7 @@ const BookCard = ({book}) => {
                     >
                         <FiHeart className={`w-3 h-3 sm:w-4 sm:h-4 ${isInWishlist ? 'fill-current' : ''}`} />
                     </button>
-                </div>
+            </div>
 
                 <Link to={`/books/${book._id}`}>
                     <h3 className="text-xs sm:text-sm font-bold text-gray-800 dark:text-white mb-0.5 sm:mb-1 line-clamp-1 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">

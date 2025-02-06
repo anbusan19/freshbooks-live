@@ -10,21 +10,13 @@ require("dotenv").config();
 
 // middleware
 app.use(express.json());
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:5173",
-//       "https://freshbooks-live.vercel.app",
-//       "https://appsail-50024742513.development.catalystappsail.in"
-//     ],
-//     credentials: true,
-//   })
-// );
+app.use(cors());
 
 const bookRoutes = require("./src/books/book.route");
 const orderRoutes = require("./src/orders/order.route");
 const userRoutes = require("./src/users/user.route");
 const adminRoutes = require("./src/stats/admin.stats");
+const bannerRoutes = require("./src/banners/banner.routes");
 
 async function main() {
   await mongoose.connect(process.env.DB_URL);
@@ -32,6 +24,7 @@ async function main() {
   app.use("/api/orders", orderRoutes);
   app.use("/api/auth", userRoutes);
   app.use("/api/admin", adminRoutes);
+  app.use("/api/banners", bannerRoutes);
 }
 
 main()

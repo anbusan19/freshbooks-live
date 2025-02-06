@@ -25,13 +25,39 @@ ChartJS.register(
     Filler
 );
 
-const RevenueChart = () => {
+const RevenueChart = ({ monthlySales = [] }) => {
+    // Process monthly sales data
+    const processedData = monthlySales.reduce((acc, sale) => {
+        acc[sale._id] = sale.totalSales;
+        return acc;
+    }, {});
+
+    // Get last 12 months
+    const getLast12Months = () => {
+        const months = [];
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const today = new Date();
+        
+        for (let i = 11; i >= 0; i--) {
+            const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+            const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+            months.push({
+                label: `${monthNames[d.getMonth()]} ${d.getFullYear()}`,
+                key: monthKey,
+                value: processedData[monthKey] || 0
+            });
+        }
+        return months;
+    };
+
+    const last12Months = getLast12Months();
+
     const data = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: last12Months.map(m => m.label),
         datasets: [
             {
                 label: 'Revenue',
-                data: [3000, 4500, 3800, 5200, 4800, 6000, 5500, 7000, 6800, 8500, 8000, 9500],
+                data: last12Months.map(m => m.value),
                 fill: true,
                 backgroundColor: (context) => {
                     const ctx = context.chart.ctx;
@@ -71,7 +97,7 @@ const RevenueChart = () => {
                 },
                 displayColors: false,
                 callbacks: {
-                    label: (context) => `$${context.parsed.y.toLocaleString()}`,
+                    label: (context) => `₹${context.parsed.y.toLocaleString()}`,
                 },
             },
         },
@@ -97,7 +123,7 @@ const RevenueChart = () => {
                     font: {
                         size: 12,
                     },
-                    callback: (value) => `$${value.toLocaleString()}`,
+                    callback: (value) => `₹${value.toLocaleString()}`,
                 },
             },
         },

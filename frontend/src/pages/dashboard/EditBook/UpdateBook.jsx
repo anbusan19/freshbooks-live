@@ -99,10 +99,10 @@ const UpdateBook = () => {
     }
   }
   if (isLoading) return <Loading />
-  if (isError) return <div>Error fetching book data</div>
+  if (isError) return <div className="text-red-500 dark:text-red-400">Error fetching book data</div>
   return (
-    <div className="max-w-lg mx-auto md:p-6 p-3 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Update Book</h2>
+    <div className="max-w-lg mx-auto md:p-6 p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Update Book</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
@@ -133,17 +133,18 @@ const UpdateBook = () => {
           ]}
           register={register}
         />
+
         <div className="mb-4">
           <label className="inline-flex items-center">
             <input
               type="checkbox"
               {...register('trending')}
-              className="rounded text-blue-600 focus:ring focus:ring-offset-2 focus:ring-blue-500"
+              className="rounded text-blue-600 focus:ring focus:ring-offset-2 focus:ring-blue-500
+                       dark:bg-gray-700 dark:border-gray-600"
             />
-            <span className="ml-2 text-sm font-semibold text-gray-700">Trending</span>
+            <span className="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Trending</span>
           </label>
         </div>
-
 
         <InputField
           label="Rating"
@@ -170,18 +171,29 @@ const UpdateBook = () => {
         />
 
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
-          <input type="file" accept="image/*" onChange={handleFileUpload} className="mb-2 w-full" />
-          {imageFileName && <p className="text-sm text-gray-500">Current image: {imageFileName}</p>}
-          {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Cover Image</label>
+          <input 
+            type="file" 
+            accept="image/*" 
+            onChange={handleFileUpload} 
+            className="mb-2 w-full text-gray-700 dark:text-gray-200
+                     file:mr-4 file:py-2 file:px-4 file:rounded-md
+                     file:border-0 file:text-sm file:font-semibold
+                     file:bg-blue-50 file:text-blue-700
+                     dark:file:bg-gray-700 dark:file:text-gray-200
+                     hover:file:bg-blue-100 dark:hover:file:bg-gray-600"
+          />
+          {imageFileName && <p className="text-sm text-gray-500 dark:text-gray-400">Current image: {imageFileName}</p>}
+          {uploading && <p className="text-sm text-gray-500 dark:text-gray-400">Uploading...</p>}
           {imageUrl && (
             <div className="mt-2">
-              <img src={imageUrl} alt="Book cover" className="w-32 h-32 object-cover rounded-md" />
+              <img src={imageUrl} alt="Book cover" className="w-32 h-32 object-cover rounded-md ring-1 ring-gray-200 dark:ring-gray-700" />
             </div>
           )}
         </div>
 
-        <button type="submit" className="w-full py-2 bg-blue-500 text-white font-bold rounded-md">
+        <button type="submit" className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md
+                                     dark:bg-blue-600 dark:hover:bg-blue-700 transition-colors duration-200">
           Update Book
         </button>
       </form>

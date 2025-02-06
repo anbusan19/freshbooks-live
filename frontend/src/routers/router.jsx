@@ -18,6 +18,7 @@ import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
 import Wishlist from "../pages/Wishlist";
 import BooksPage from "../pages/books/BooksPage";
+import ManageBanners from "../pages/dashboard/banners/ManageBanners";
 
 const router = createBrowserRouter([
     {
@@ -100,6 +101,12 @@ const router = createBrowserRouter([
           path: "manage-books",
           element: <AdminRoute>
             <ManageBooks/>
+          </AdminRoute>
+        },
+        {
+          path: "manage-banners",
+          element: <AdminRoute>
+            <ManageBanners/>
           </AdminRoute>
         }
       ]
