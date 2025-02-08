@@ -98,18 +98,12 @@ const BookCard = ({book}) => {
                 {/* Action Buttons */}
                 <div className="flex items-center gap-1 sm:gap-2 mt-auto">
                     <button 
-                        className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1"
+                        className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1"
                         onClick={() => handleAddToCart(book)}
                     >
                         <FiShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                         Add to Cart
                     </button>
-                    <Link 
-                        to={`/books/${book._id}`}
-                        className="p-1 sm:p-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
-                    >
-                        <FiHeart className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                    </Link>
                 </div>
             </div>
         </div>

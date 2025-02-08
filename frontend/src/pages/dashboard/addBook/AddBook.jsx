@@ -40,11 +40,18 @@ const AddBook = () => {
             Swal.fire({
                 title: "Upload Failed",
                 text: "Failed to upload image. Please try again.",
-                icon: "error"
+                icon: "error",
+                width: '90%',
+                customClass: {
+                    container: 'my-swal',
+                    popup: 'sm:max-w-sm rounded-lg',
+                    title: 'text-lg sm:text-xl font-semibold text-red-600',
+                    htmlContainer: 'text-sm sm:text-base',
+                    confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                }
             });
             setUploading(false);
         }
-        
     }
 
     const onSubmit = async (data) => {
@@ -52,7 +59,15 @@ const AddBook = () => {
             Swal.fire({
                 title: "Missing Image",
                 text: "Please upload a cover image for the book",
-                icon: "warning"
+                icon: "warning",
+                width: '90%',
+                customClass: {
+                    container: 'my-swal',
+                    popup: 'sm:max-w-sm rounded-lg',
+                    title: 'text-lg sm:text-xl font-semibold',
+                    htmlContainer: 'text-sm sm:text-base',
+                    confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                }
             });
             return;
         }
@@ -64,23 +79,38 @@ const AddBook = () => {
         try {
             await addBook(newBookData).unwrap();
             Swal.fire({
-                title: "Book added",
-                text: "Your book is uploaded successfully!",
+                title: "Book Added",
+                text: "Your book has been uploaded successfully!",
                 icon: "success",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, It's Okay!"
-              });
-              reset();
-              setImageUrl('');
-              setimageFileName('');
-              setimageFile(null);
+                width: '90%',
+                customClass: {
+                    container: 'my-swal',
+                    popup: 'sm:max-w-sm rounded-lg',
+                    title: 'text-lg sm:text-xl font-semibold',
+                    htmlContainer: 'text-sm sm:text-base',
+                    confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                }
+            });
+            reset();
+            setImageUrl('');
+            setimageFileName('');
+            setimageFile(null);
         } catch (error) {
             console.error(error);
-            alert("Failed to add book. Please try again.")   
+            Swal.fire({
+                title: "Error",
+                text: "Failed to add book. Please try again.",
+                icon: "error",
+                width: '90%',
+                customClass: {
+                    container: 'my-swal',
+                    popup: 'sm:max-w-sm rounded-lg',
+                    title: 'text-lg sm:text-xl font-semibold text-red-600',
+                    htmlContainer: 'text-sm sm:text-base',
+                    confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                }
+            });
         }
-      
     }
     
   return (

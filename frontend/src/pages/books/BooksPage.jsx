@@ -41,7 +41,7 @@ const BooksPage = () => {
     }
 
     return (
-        <div className="books-page-container min-h-screen py-16 px-4 md:px-8 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+        <div className="books-page-container min-h-screen pb-24 pt-16 px-4 md:px-8 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
             {/* Aural Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {/* Gradient Blobs */}
@@ -60,58 +60,13 @@ const BooksPage = () => {
             {/* Content */}
             <div className="max-w-[1920px] mx-auto relative z-10">
                 {/* Header Section */}
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 filter drop-shadow-lg animate-fade-in">
+                <div className="text-center mb-8">
+                    <h1 className="text-3xl sm:text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 filter drop-shadow-lg animate-fade-in">
                         Explore Our Books
                     </h1>
-                    <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed animate-fade-in animation-delay-200">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed animate-fade-in animation-delay-200">
                         Discover your next favorite read from our collection
                     </p>
-                </div>
-
-                {/* Filters Section */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 animate-fade-in animation-delay-400">
-                    {/* Category Filter */}
-                    <div className="relative w-full sm:w-auto">
-                        <select
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
-                            className="w-full appearance-none bg-white/80 dark:bg-[#1a1a1a]/80 text-gray-800 dark:text-gray-200
-                                     border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-6 py-3 pr-12
-                                     focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30
-                                     cursor-pointer transition-all duration-300
-                                     hover:bg-gray-50 dark:hover:bg-gray-800/50
-                                     backdrop-blur-xl shadow-lg"
-                        >
-                            {categories.map((category) => (
-                                <option key={category} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
-                        <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none" />
-                    </div>
-
-                    {/* Sort Filter */}
-                    <div className="relative w-full sm:w-auto">
-                        <select
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value)}
-                            className="w-full appearance-none bg-white/80 dark:bg-[#1a1a1a]/80 text-gray-800 dark:text-gray-200
-                                     border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-6 py-3 pr-12
-                                     focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30
-                                     cursor-pointer transition-all duration-300
-                                     hover:bg-gray-50 dark:hover:bg-gray-800/50
-                                     backdrop-blur-xl shadow-lg"
-                        >
-                            <option value="default">Sort by</option>
-                            <option value="price-low">Price: Low to High</option>
-                            <option value="price-high">Price: High to Low</option>
-                            <option value="name-asc">Name: A to Z</option>
-                            <option value="name-desc">Name: Z to A</option>
-                        </select>
-                        <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none" />
-                    </div>
                 </div>
 
                 {/* Books Grid */}
@@ -136,6 +91,49 @@ const BooksPage = () => {
                         </p>
                     </div>
                 )}
+            </div>
+
+            {/* Fixed Bottom Filter Bar */}
+            <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl border-t border-gray-200/20 dark:border-gray-800/20 z-50 px-4 py-3 sm:py-4">
+                <div className="max-w-[1920px] mx-auto flex flex-row gap-3 items-center">
+                    {/* Category Filter */}
+                    <div className="relative flex-1">
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="w-full appearance-none bg-white/90 dark:bg-[#1a1a1a]/90 text-gray-800 dark:text-gray-200
+                                     border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-3 py-2
+                                     focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30
+                                     cursor-pointer transition-all duration-300 text-sm"
+                        >
+                            {categories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                        <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none w-4 h-4" />
+                    </div>
+
+                    {/* Sort Filter */}
+                    <div className="relative flex-1">
+                        <select
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="w-full appearance-none bg-white/90 dark:bg-[#1a1a1a]/90 text-gray-800 dark:text-gray-200
+                                     border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-3 py-2
+                                     focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30
+                                     cursor-pointer transition-all duration-300 text-sm"
+                        >
+                            <option value="default">Sort by</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name-asc">Name: A to Z</option>
+                            <option value="name-desc">Name: Z to A</option>
+                        </select>
+                        <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none w-4 h-4" />
+                    </div>
+                </div>
             </div>
         </div>
     );

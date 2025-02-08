@@ -58,10 +58,34 @@ const ManageBanners = () => {
         try {
             if (editingBanner) {
                 await updateBanner({ id: editingBanner._id, ...formData }).unwrap();
-                Swal.fire('Success', 'Banner updated successfully', 'success');
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Banner updated successfully',
+                    icon: 'success',
+                    width: '90%',
+                    customClass: {
+                        container: 'my-swal',
+                        popup: 'sm:max-w-sm rounded-lg',
+                        title: 'text-lg sm:text-xl font-semibold',
+                        htmlContainer: 'text-sm sm:text-base',
+                        confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                    }
+                });
             } else {
                 await createBanner(formData).unwrap();
-                Swal.fire('Success', 'Banner created successfully', 'success');
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Banner created successfully',
+                    icon: 'success',
+                    width: '90%',
+                    customClass: {
+                        container: 'my-swal',
+                        popup: 'sm:max-w-sm rounded-lg',
+                        title: 'text-lg sm:text-xl font-semibold',
+                        htmlContainer: 'text-sm sm:text-base',
+                        confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                    }
+                });
             }
             setIsModalOpen(false);
             setEditingBanner(null);
@@ -74,7 +98,19 @@ const ManageBanners = () => {
             });
             refetch();
         } catch (error) {
-            Swal.fire('Error', error.message, 'error');
+            Swal.fire({
+                title: 'Error',
+                text: error.message,
+                icon: 'error',
+                width: '90%',
+                customClass: {
+                    container: 'my-swal',
+                    popup: 'sm:max-w-sm rounded-lg',
+                    title: 'text-lg sm:text-xl font-semibold text-red-600',
+                    htmlContainer: 'text-sm sm:text-base',
+                    confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                }
+            });
         }
     };
 
@@ -92,22 +128,56 @@ const ManageBanners = () => {
 
     const handleDelete = async (id) => {
         const result = await Swal.fire({
-            title: 'Are you sure?',
+            title: 'Delete Banner?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+            width: '90%',
+            customClass: {
+                container: 'my-swal',
+                popup: 'sm:max-w-sm rounded-lg',
+                title: 'text-lg sm:text-xl font-semibold',
+                htmlContainer: 'text-sm sm:text-base',
+                confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg',
+                cancelButton: 'text-sm sm:text-base px-4 py-2 rounded-lg',
+            }
         });
 
         if (result.isConfirmed) {
             try {
                 await deleteBanner(id).unwrap();
-                Swal.fire('Deleted!', 'Banner has been deleted.', 'success');
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Banner has been deleted.',
+                    icon: 'success',
+                    width: '90%',
+                    customClass: {
+                        container: 'my-swal',
+                        popup: 'sm:max-w-sm rounded-lg',
+                        title: 'text-lg sm:text-xl font-semibold',
+                        htmlContainer: 'text-sm sm:text-base',
+                        confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                    }
+                });
                 refetch();
             } catch (error) {
-                Swal.fire('Error', error.message, 'error');
+                Swal.fire({
+                    title: 'Error',
+                    text: error.message,
+                    icon: 'error',
+                    width: '90%',
+                    customClass: {
+                        container: 'my-swal',
+                        popup: 'sm:max-w-sm rounded-lg',
+                        title: 'text-lg sm:text-xl font-semibold text-red-600',
+                        htmlContainer: 'text-sm sm:text-base',
+                        confirmButton: 'text-sm sm:text-base px-4 py-2 rounded-lg'
+                    }
+                });
             }
         }
     };

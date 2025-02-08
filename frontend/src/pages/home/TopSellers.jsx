@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import BookCard from '../books/BookCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { FreeMode } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css/free-mode';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import { FiChevronDown } from 'react-icons/fi';
 import '../../styles/shared-gradients.css';
@@ -20,43 +19,26 @@ const TopSellers = () => {
         .filter(book => selectedCategory === "Choose a genre" ? true : book.category === selectedCategory.toLowerCase());
 
     return (
-        <section className='relative isolate py-16 px-4 md:px-8 overflow-hidden'>
-            {/* Background Effects - Moved lower z-index */}
-            <div className="absolute inset-0 -z-20">
-                <div className="absolute inset-0">
-                    <div className="absolute top-1/4 left-1/4 w-96 h-96 -translate-x-1/2 -translate-y-1/2">
-                        <div className="gradient-blob gradient-blob-1 animate-blob-slow opacity-70"></div>
-                    </div>
-                    <div className="absolute top-3/4 right-1/4 w-96 h-96 translate-x-1/2 -translate-y-1/2">
-                        <div className="gradient-blob gradient-blob-2 animate-blob-slow animation-delay-2000 opacity-70"></div>
-                    </div>
-                    <div className="absolute top-1/2 left-2/3 w-96 h-96">
-                        <div className="gradient-blob gradient-blob-3 animate-blob-slow animation-delay-4000 opacity-70"></div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Subtle backdrop gradient - separate from blobs */}
-            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/40 to-transparent dark:from-black/20 dark:to-transparent"></div>
-
+        <section className='relative py-4 sm:py-8 px-2 sm:px-4 bg-gray-50/50 dark:bg-gray-900/50'>
             <div className="max-w-7xl mx-auto relative">
                 {/* Header Section */}
-                <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-12'>
-                    <h2 className='text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 mb-6 md:mb-0'>
+                <div className='flex flex-col gap-2 sm:gap-4 mb-4 sm:mb-6'>
+                    <h2 className='text-xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400'>
                         Trending Books
                     </h2>
                     
                     {/* Category Filtering */}
-                    <div className='relative'>
+                    <div className='relative z-10 w-full sm:w-auto'>
                         <select
                             onChange={(e) => setSelectedCategory(e.target.value)}
                             name="category" 
                             id="category" 
-                            className='appearance-none bg-white/90 dark:bg-[#1a1a1a]/90 text-gray-800 dark:text-gray-200
-                                     border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-6 py-3 pr-12
+                            className='w-full sm:w-auto appearance-none bg-white/90 dark:bg-[#1a1a1a]/90 text-gray-800 dark:text-gray-200
+                                     border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5
                                      focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30
                                      cursor-pointer transition-all duration-300
-                                     hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                                     hover:bg-gray-50 dark:hover:bg-gray-800/50
+                                     backdrop-blur-sm shadow-lg text-sm'
                         >
                             {categories.map((category, index) => (
                                 <option 
@@ -68,42 +50,44 @@ const TopSellers = () => {
                                 </option>
                             ))}
                         </select>
-                        <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none" />
+                        <FiChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none w-4 h-4" />
                     </div>
                 </div>
 
-                {/* Books Carousel - Increased z-index and added background */}
-                <div className="relative z-20 bg-transparent">
+                {/* Books Swiper */}
+                <div className="px-4 -mx-4 sm:mx-0 sm:px-0">
                     <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={30}
-                        slidesPerView={2}
-                        navigation
-                        pagination={{ clickable: true }}
+                        modules={[FreeMode]}
+                        freeMode={{
+                            enabled: true,
+                            sticky: false,
+                            momentumBounce: false
+                        }}
+                        spaceBetween={12}
+                        slidesPerView={2.2}
                         breakpoints={{
-                            // Mobile view (default) - 2 slides
                             0: {
-                                slidesPerView: 2,
+                                slidesPerView: 2.2,
+                                spaceBetween: 12,
+                            },
+                            640: {
+                                slidesPerView: 3.2,
                                 spaceBetween: 16,
                             },
-                            // Tablet view - 3 slides
-                            768: {
-                                slidesPerView: 3,
-                                spaceBetween: 24,
-                            },
-                            // Desktop view - 4 slides
                             1024: {
-                                slidesPerView: 4,
-                                spaceBetween: 30,
+                                slidesPerView: 4.2,
+                                spaceBetween: 20,
                             },
+                            1280: {
+                                slidesPerView: 5.2,
+                                spaceBetween: 24,
+                            }
                         }}
-                        className="w-full"
+                        className="!pb-4"
                     >
                         {filteredBooks.map((book) => (
                             <SwiperSlide key={book._id}>
-                                <div className="h-full bg-transparent">
-                                    <BookCard book={book} />
-                                </div>
+                                <BookCard book={book} />
                             </SwiperSlide>
                         ))}
                     </Swiper>

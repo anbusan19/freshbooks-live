@@ -15,27 +15,27 @@ const Banner = () => {
     const secondRowBooks = [book6, book7, book8, book9, book10, book6, book7, book8, book9, book10];
 
     return (
-        <div className="banner-container relative overflow-hidden">
+        <div className="banner-container relative overflow-hidden min-h-[85vh] sm:min-h-0">
             <div className="banner-overlay absolute inset-0"></div>
             
             {/* Content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-32 pb-12 sm:pb-16">
-                <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-8
+            <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-8 sm:pt-32 pb-6 sm:pb-16">
+                <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-16">
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-8
                                  bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600
                                  filter drop-shadow-lg animate-fade-in">
                         Discover Your Next Favorite Book
                     </h1>
-                    <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8
-                                leading-relaxed animate-fade-in animation-delay-200">
+                    <p className="text-sm sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-4 sm:mb-8
+                                leading-relaxed animate-fade-in animation-delay-200 px-4 sm:px-0">
                         Explore our vast collection of books across all genres. 
                         From bestsellers to hidden gems, find your perfect read today.
                     </p>
                     <Link
                         to="/books"
-                        className="inline-flex items-center px-6 sm:px-8 py-2.5 sm:py-3 rounded-full
+                        className="inline-flex items-center px-6 py-2.5 sm:px-8 sm:py-3 rounded-full
                                  bg-gradient-to-r from-indigo-600 to-purple-600
-                                 text-white font-semibold text-base sm:text-lg
+                                 text-white font-semibold text-sm sm:text-lg
                                  transform hover:scale-105 transition-all duration-200
                                  shadow-lg hover:shadow-xl animate-fade-in animation-delay-400"
                     >
@@ -44,13 +44,13 @@ const Banner = () => {
                 </div>
 
                 {/* Infinite Scroll Books */}
-                <div className="relative max-w-7xl mx-auto overflow-hidden">
+                <div className="relative max-w-7xl mx-auto overflow-hidden -mx-3 sm:mx-0">
                     {/* First Row */}
-                    <div className="flex gap-4 sm:gap-8 mb-4 sm:mb-8 infinite-scroll-left">
+                    <div className="flex gap-2 sm:gap-8 mb-2 sm:mb-8 infinite-scroll-left">
                         {firstRowBooks.map((book, index) => (
                             <div
                                 key={index}
-                                className="flex-none w-32 sm:w-48 h-44 sm:h-64 rounded-lg overflow-hidden
+                                className="flex-none w-20 sm:w-48 h-28 sm:h-64 rounded-lg overflow-hidden
                                          transform hover:scale-105 transition-all duration-200
                                          shadow-lg hover:shadow-xl"
                             >
@@ -64,11 +64,11 @@ const Banner = () => {
                     </div>
 
                     {/* Second Row */}
-                    <div className="flex gap-4 sm:gap-8 infinite-scroll-right">
+                    <div className="flex gap-2 sm:gap-8 infinite-scroll-right">
                         {secondRowBooks.map((book, index) => (
                             <div
                                 key={index}
-                                className="flex-none w-32 sm:w-48 h-44 sm:h-64 rounded-lg overflow-hidden
+                                className="flex-none w-20 sm:w-48 h-28 sm:h-64 rounded-lg overflow-hidden
                                          transform hover:scale-105 transition-all duration-200
                                          shadow-lg hover:shadow-xl"
                             >
@@ -84,12 +84,12 @@ const Banner = () => {
             </div>
 
             {/* Background Bubbles */}
-            <div className="bubble bubble-blue-1"></div>
-            <div className="bubble bubble-blue-2"></div>
-            <div className="bubble bubble-blue-3"></div>
-            <div className="bubble bubble-yellow-1"></div>
-            <div className="bubble bubble-yellow-2"></div>
-            <div className="bubble bubble-yellow-3"></div>
+            <div className="bubble bubble-blue-1 scale-50 sm:scale-100"></div>
+            <div className="bubble bubble-blue-2 scale-50 sm:scale-100"></div>
+            <div className="bubble bubble-blue-3 scale-50 sm:scale-100"></div>
+            <div className="bubble bubble-yellow-1 scale-50 sm:scale-100"></div>
+            <div className="bubble bubble-yellow-2 scale-50 sm:scale-100"></div>
+            <div className="bubble bubble-yellow-3 scale-50 sm:scale-100"></div>
         </div>
     );
 };
