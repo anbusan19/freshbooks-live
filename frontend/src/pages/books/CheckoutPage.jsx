@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { FiCreditCard, FiTruck, FiShoppingBag } from "react-icons/fi";
-
-import Swal from'sweetalert2';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
 import '../../styles/shared-gradients.css';
 
@@ -25,9 +25,80 @@ const CheckoutPage = () => {
     const [createOrder, {isLoading, error}] = useCreateOrderMutation();
     const navigate =  useNavigate()
 
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.async = true;
+        document.body.appendChild(script);
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    const handlePayment = async (orderData) => {
+        try {
+            // Create Razorpay order
+            const response = await axios.post(`${import.meta.env.VITE_PROD_BACKEND_BASEURL}/api/orders/create-razorpay-order`, {
+                amount: totalPrice
+            });
+
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+                amount: response.data.amount,
+                currency: response.data.currency,
+                name: "FreshBooks",
+                description: "Book Purchase",
+                order_id: response.data.id,
+                handler: async function (response) {
+                    const orderWithPayment = {
+                        ...orderData,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id
+                    };
+                    
+                    try {
+                        await createOrder(orderWithPayment).unwrap();
+                        Swal.fire({
+                            title: "Payment Successful",
+                            text: "Your order has been placed successfully!",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate("/orders");
+                    } catch (error) {
+                        console.error("Error creating order", error);
+                        Swal.fire({
+                            title: "Error",
+                            text: "Failed to create order. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                },
+                prefill: {
+                    name: watch('name'),
+                    email: currentUser?.email,
+                    contact: watch('phone')
+                },
+                theme: {
+                    color: "#4F46E5"
+                }
+            };
+
+            const razorpayInstance = new window.Razorpay(options);
+            razorpayInstance.open();
+        } catch (error) {
+            console.error("Error initiating payment", error);
+            Swal.fire({
+                title: "Error",
+                text: "Failed to initiate payment. Please try again.",
+                icon: "error"
+            });
+        }
+    };
+
     const onSubmit = async (data) => {
-     
-        const newOrder = {
+        const orderData = {
             name: data.name,
             email: currentUser?.email,
             address: {
@@ -35,28 +106,14 @@ const CheckoutPage = () => {
                 country: data.country,
                 state: data.state,
                 zipcode: data.zipcode
-        
             },
             phone: data.phone,
             productIds: cartItems.map(item => item?._id),
-            totalPrice: totalPrice,
-        }
+            totalPrice: parseFloat(totalPrice)
+        };
         
-        try {
-            await createOrder(newOrder).unwrap();
-            Swal.fire({
-                title: "Confirmed Order",
-                text: "Your order placed successfully!",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500
-              });
-              navigate("/orders")
-        } catch (error) {
-            console.error("Error place an order", error);
-            setMessage("Failed to place order. Please try again.");
-        }
-    }
+        await handlePayment(orderData);
+    };
 
     if(isLoading) return (
         <div className="min-h-screen flex items-center justify-center">

@@ -9,22 +9,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 import { setSearchTerm, setSearchResults, setIsSearching, clearSearch } from "../redux/features/search/searchSlice";
 import { useFetchAllBooksQuery } from "../redux/features/books/booksApi";
-
-const navigation = [
-    {name: "Home", href:"/"},
-    {name: "Shop", href:"/shop"},
-    {name: "About", href:"/about"},
-    {name: "Contact", href:"/contact"},
-];
+import navbarLogo from "../assets/freshbooks-navbar-logo.png"
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const searchRef = useRef(null);
-    const userDropdownRef = useRef(null);
     
     const cartItems = useSelector(state => state.cart?.cartItems || []);
     const wishlistItems = useSelector(state => state.wishlist?.wishlistItems || []);
@@ -83,44 +75,27 @@ const Navbar = () => {
   
     return (
         <header className="sticky top-0 z-50">
-            <nav className="bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl border-b border-gray-200/20 dark:border-gray-800/20 transition-all duration-300">
+            <nav className="bg-gray-50/98 dark:bg-[#2A2A2E]/98 backdrop-blur-md border-b border-gray-200/30 dark:border-gray-600/20 shadow-lg transition-all duration-300">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        {/* Left side - Mobile Menu Button & Logo */}
+                        {/* Left side - Logo */}
                         <div className="flex items-center gap-4">
-                            <button 
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                            >
-                                <HiMiniBars3CenterLeft className="w-6 h-6" />
-                        </button>
-                        
                             <Link to="/" className="flex-shrink-0">
-                            <img 
-                                src="/freshbooks-logo.svg" 
-                                alt="Freshbooks" 
-                                className="h-8 w-auto block dark:hidden"
-                            />
-                            <img 
-                                src="/freshbooks-logo-negative.svg" 
-                                alt="Freshbooks" 
-                                className="h-8 w-auto hidden dark:block"
-                            />
-                        </Link>
-
-                            {/* Desktop Navigation */}
-                            <div className="hidden lg:flex items-center gap-6 ml-6">
-                                {navigation.map((item) => (
-                                    <Link
-                                        key={item.name}
-                                        to={item.href}
-                                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                                    >
-                                        {item.name}
-                                    </Link>
-                                ))}
-                            </div>
-                    </div>
+                                <div className="relative">
+                                    {/* Left-side stronger glow */}
+                                    <div className="absolute -left-4 -top-4 bottom-0 w-12 dark:bg-white/30 dark:blur-2xl dark:rounded-full"></div>
+                                    {/* Main glow */}
+                                    <div className="absolute inset-0 dark:bg-white/20 dark:blur-2xl dark:rounded-full"></div>
+                                    <div className="relative p-1.5">
+                                        <img 
+                                            src={navbarLogo}
+                                            alt="Freshbooks" 
+                                            className="h-8 w-auto brightness-90 dark:brightness-200 dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.8)] dark:filter dark:contrast-150"
+                                        />
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
 
                         {/* Middle - Search (Desktop) */}
                         <div className="hidden lg:block flex-1 max-w-lg mx-8">
@@ -181,14 +156,14 @@ const Navbar = () => {
                                 className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                             >
                                 <IoSearchOutline className="w-6 h-6" />
-                        </button>
-                        
+                            </button>
+                            
                             <ThemeToggle />
 
                             {/* Wishlist - Hidden on mobile */}
                             <Link 
                                 to="/wishlist" 
-                                className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
+                                className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
                             >
                                 <HiOutlineHeart className="w-6 h-6" />
                                 {wishlistItems?.length > 0 && (
@@ -196,7 +171,7 @@ const Navbar = () => {
                                         {wishlistItems.length}
                                     </span>
                                 )}
-                        </Link>
+                            </Link>
 
                             {/* Cart */}
                             <Link 
@@ -323,31 +298,6 @@ const Navbar = () => {
                                     ))}
                                 </div>
                             )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Mobile Navigation Menu */}
-                {isMobileMenuOpen && (
-                    <div className="lg:hidden border-t border-gray-200/20 dark:border-gray-800/20">
-                        <div className="px-4 py-3 space-y-1">
-                            {navigation.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    to={item.href}
-                                    className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    {item.name}
-                                </Link>
-                            ))}
-                            <Link
-                                to="/wishlist"
-                                className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                Wishlist
-                            </Link>
                         </div>
                     </div>
                 )}

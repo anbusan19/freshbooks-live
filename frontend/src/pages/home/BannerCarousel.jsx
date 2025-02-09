@@ -40,10 +40,10 @@ const BannerCarousel = () => {
                 <div className="-mx-4 sm:mx-0 sm:rounded-xl overflow-hidden">
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay]}
-                        spaceBetween={0}
+                        spaceBetween={20}
                         slidesPerView={1}
                         navigation={{
-                            enabled: false,
+                            enabled: true,
                             hideOnMobile: true
                         }}
                         pagination={{
@@ -59,11 +59,14 @@ const BannerCarousel = () => {
                             0: {
                                 slidesPerView: 1,
                                 spaceBetween: 0,
+                                navigation: {
+                                    enabled: false
+                                }
                             },
-                            // Tablet/Desktop view - 1 slide with padding
-                            640: {
-                                slidesPerView: 1,
-                                spaceBetween: 0,
+                            // Desktop view - 2 slides with spacing
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 20,
                                 navigation: {
                                     enabled: true
                                 }
@@ -75,7 +78,7 @@ const BannerCarousel = () => {
                             <SwiperSlide key={banner._id}>
                                 <div className="relative w-full">
                                     {/* Aspect ratio container */}
-                                    <div className="relative w-full pb-[75%] sm:pb-[56.25%]">
+                                    <div className="relative w-full pb-[56.25%]">
                                         {/* Banner Image */}
                                         <img
                                             src={banner.image}

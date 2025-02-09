@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
 import { Link } from 'react-router-dom'
+import navbarLogo from "../assets/freshbooks-navbar-logo.png"
 
 const Footer = () => {
   return (
@@ -16,16 +17,19 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Logo and About */}
           <div className="space-y-6">
-            <img 
-              src="/freshbooks-logo.svg" 
-              alt="Freshbooks" 
-              className="h-8 w-auto block dark:hidden"
-            />
-            <img 
-              src="/freshbooks-logo-negative.svg" 
-              alt="Freshbooks" 
-              className="h-8 w-auto hidden dark:block"
-            />
+            <div className="relative">
+              {/* Left-side stronger glow */}
+              <div className="absolute -left-4 -top-4 bottom-0 w-12 dark:bg-white/30 dark:blur-2xl dark:rounded-full"></div>
+              {/* Main glow */}
+              <div className="absolute inset-0 dark:bg-white/20 dark:blur-2xl dark:rounded-full"></div>
+              <div className="relative p-1.5">
+                <img 
+                  src={navbarLogo}
+                  alt="Freshbooks" 
+                  className="h-8 w-auto brightness-90 dark:brightness-200 dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.8)] dark:filter dark:contrast-150"
+                />
+              </div>
+            </div>
             <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
               Discover a world of books at your fingertips. Your one-stop destination for all your reading needs.
             </p>

@@ -1,8 +1,37 @@
 const Order = require("./order.model");
+const Razorpay = require('razorpay');
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET
+});
+
+const createRazorpayOrder = async (req, res) => {
+  try {
+    const { amount } = req.body;
+    const options = {
+      amount: amount * 100, // Razorpay expects amount in paise
+      currency: "INR",
+      receipt: "order_" + Date.now(),
+    };
+
+    const order = await razorpay.orders.create(options);
+    return res.status(200).json(order);
+  } catch (error) {
+    console.error("Error creating Razorpay order", error);
+    return res.status(500).json({ message: "Failed to create Razorpay order" });
+  }
+};
 
 const createAOrder = async (req, res) => {
   try {
-    const newOrder = await Order(req.body);
+    const { razorpay_payment_id, razorpay_order_id, ...orderData } = req.body;
+    const newOrder = await Order({
+      ...orderData,
+      paymentId: razorpay_payment_id,
+      razorpayOrderId: razorpay_order_id,
+      paymentStatus: "completed"
+    });
     const savedOrder = await newOrder.save();
     return res.status(200).json(savedOrder);
   } catch (error) {
@@ -28,4 +57,5 @@ const getOrderByEmail = async (req, res) => {
 module.exports = {
   createAOrder,
   getOrderByEmail,
+  createRazorpayOrder
 };

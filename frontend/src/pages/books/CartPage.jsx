@@ -45,27 +45,20 @@ const CartPage = () => {
     }
 
     return (
-        <div className="min-h-screen py-16 px-4 md:px-8 dark:bg-black/40 bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl relative">
+        <div className="min-h-screen bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl relative overflow-hidden">
             {/* Background Effects */}
-            <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="gradient-blob gradient-blob-1"></div>
-                <div className="gradient-blob gradient-blob-2"></div>
-                <div className="gradient-blob gradient-blob-3"></div>
-                
-                {/* Floating Bubbles */}
-                <div className="aural-bubble aural-bubble-1"></div>
-                <div className="aural-bubble aural-bubble-2"></div>
-                <div className="aural-bubble aural-bubble-3"></div>
-                <div className="aural-bubble aural-bubble-4"></div>
-                <div className="aural-bubble aural-bubble-5"></div>
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-0 left-0 w-96 h-96 bg-purple-100/20 dark:bg-purple-900/10 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-50 animate-blob"></div>
+                <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-100/20 dark:bg-indigo-900/10 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+                <div className="absolute top-0 right-0 w-80 h-80 bg-pink-100/20 dark:bg-pink-900/10 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
             </div>
 
             {/* Content */}
-            <div className="max-w-7xl mx-auto relative z-10">
-                <div className="bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/20 dark:border-gray-800/20">
-                    <div className="p-4 sm:p-8">
+            <div className="max-w-7xl mx-auto relative z-10 px-4 md:px-8 py-8 md:py-16 overflow-hidden">
+                <div className="bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl rounded-xl md:rounded-2xl shadow-lg md:shadow-xl border border-gray-200/20 dark:border-gray-800/20">
+                    <div className="p-4 md:p-8">
                         {/* Header */}
-                        <div className="flex items-center justify-between mb-4 sm:mb-8">
+                        <div className="flex items-center justify-between mb-4 md:mb-8">
                             <h1 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-white">Shopping Cart</h1>
                             {cartItems.length > 0 && (
                                 <button
@@ -83,14 +76,14 @@ const CartPage = () => {
 
                         {/* Cart Items */}
                         {cartItems.length > 0 ? (
-                            <div className="grid grid-cols-2 gap-3 sm:grid-cols-1 sm:gap-6">
+                            <div className="grid grid-cols-1 gap-4 md:gap-6">
                                 {cartItems.map((product) => (
                                     <div 
                                         key={product?._id} 
                                         className="bg-white/50 dark:bg-gray-800/50 border border-gray-200/20 dark:border-gray-700/20
                                                  rounded-lg overflow-hidden transition-all duration-300 
                                                  hover:bg-white/80 dark:hover:bg-gray-800/80
-                                                 sm:flex sm:items-center"
+                                                 flex items-start sm:items-center flex-col sm:flex-row"
                                     >
                                         {/* Image Container with Remove Button Overlay */}
                                         <div className="relative w-full sm:w-48 aspect-[3/4] sm:aspect-[3/4] overflow-hidden">
@@ -101,32 +94,32 @@ const CartPage = () => {
                                             />
                                             <button
                                                 onClick={() => handleRemoveFromCart(product)}
-                                                className="absolute top-1 right-1 p-1.5 rounded-full
+                                                className="absolute top-2 right-2 p-1.5 rounded-full
                                                          bg-red-100/80 dark:bg-red-900/30 text-red-600 dark:text-red-400
                                                          hover:bg-red-200 dark:hover:bg-red-900/50 
                                                          transition-all duration-300 sm:hidden"
                                             >
-                                                <FiTrash2 className="w-3 h-3" />
+                                                <FiTrash2 className="w-4 h-4" />
                                             </button>
                                         </div>
 
                                         {/* Details */}
-                                        <div className="p-2 sm:p-6 sm:flex-1 sm:flex sm:flex-col sm:justify-between">
+                                        <div className="p-3 sm:p-6 sm:flex-1 w-full sm:flex sm:flex-col sm:justify-between">
                                             <div>
                                                 <Link 
                                                     to={`/books/${product._id}`}
-                                                    className="block text-xs sm:text-xl font-bold text-gray-800 dark:text-white 
+                                                    className="block text-base sm:text-xl font-bold text-gray-800 dark:text-white 
                                                              hover:text-indigo-600 dark:hover:text-indigo-400 
-                                                             transition-colors line-clamp-1 mb-0.5 sm:mb-3"
+                                                             transition-colors line-clamp-1 mb-1 sm:mb-3"
                                                 >
                                                     {product?.title}
                                                 </Link>
-                                                <p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-300 capitalize mb-1 sm:mb-3">
+                                                <p className="text-xs sm:text-base text-gray-600 dark:text-gray-300 capitalize mb-2 sm:mb-3">
                                                     <span className="font-medium">Category:</span> {product?.category}
                                                 </p>
                                             </div>
-                                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
-                                                <span className="text-sm sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+                                            <div className="flex items-center justify-between sm:flex-row sm:items-center sm:gap-4">
+                                                <span className="text-lg sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
                                                     ₹{product?.newPrice}
                                                 </span>
                                                 <button
@@ -144,23 +137,23 @@ const CartPage = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-center py-12">
-                                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-100/80 dark:bg-gray-800/80 
+                            <div className="text-center py-8 sm:py-12">
+                                <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-full bg-gray-100/80 dark:bg-gray-800/80 
                                               flex items-center justify-center">
-                                    <FiShoppingBag className="w-12 h-12 text-gray-400 dark:text-gray-500" />
+                                    <FiShoppingBag className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 dark:text-gray-500" />
                                 </div>
-                                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+                                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-2 sm:mb-4">
                                     Your cart is empty
                                 </h2>
-                                <p className="text-gray-600 dark:text-gray-300 mb-8">
+                                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-6 sm:mb-8">
                                     Looks like you haven't added any books to your cart yet.
                                 </p>
                                 <Link
                                     to="/"
-                                    className="inline-flex items-center px-8 py-4 rounded-xl
+                                    className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl
                                              bg-gradient-to-r from-indigo-600 to-purple-600
                                              hover:from-indigo-700 hover:to-purple-700
-                                             text-white font-medium text-lg
+                                             text-white font-medium text-sm sm:text-lg
                                              transform hover:scale-[1.02] active:scale-[0.98]
                                              transition-all duration-300
                                              shadow-lg hover:shadow-xl"

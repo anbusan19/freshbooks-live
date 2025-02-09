@@ -56,23 +56,23 @@ const Features = () => {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                     {features.map((feature, index) => (
                         <div 
                             key={index}
-                            className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-6
+                            className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-4 sm:p-6
                                      border border-gray-200/20 dark:border-gray-700/20
                                      hover:transform hover:-translate-y-1 transition-all duration-300
                                      hover:shadow-xl hover:shadow-indigo-500/10"
                         >
-                            <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg
-                                          flex items-center justify-center mb-4">
-                                <feature.icon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg
+                                          flex items-center justify-center mb-3 sm:mb-4">
+                                <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2">
                                 {feature.title}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-300">
+                            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
                                 {feature.description}
                             </p>
                         </div>

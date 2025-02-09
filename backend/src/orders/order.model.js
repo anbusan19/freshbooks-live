@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
         zipcode: String,
     },
     phone: {
-        type: Number,
+        type: String,
         required: true,
     },
     productIds:[
@@ -32,6 +32,19 @@ const orderSchema = new mongoose.Schema({
     totalPrice: {
         type: Number,
         required: true,
+    },
+    paymentId: {
+        type: String,
+        required: true,
+    },
+    razorpayOrderId: {
+        type: String,
+        required: true,
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['pending', 'completed', 'failed'],
+        default: 'pending'
     }
 }, {
     timestamps: true,

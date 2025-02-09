@@ -10,7 +10,6 @@ require("dotenv").config();
 
 // middleware
 app.use(express.json());
-app.use(cors());
 
 const bookRoutes = require("./src/books/book.route");
 const orderRoutes = require("./src/orders/order.route");

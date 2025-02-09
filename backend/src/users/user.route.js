@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("./user.model");
 const jwt = require("jsonwebtoken");
+const { createAOrder, getOrderByEmail, createRazorpayOrder } = require("../orders/order.controller");
 
 const router = express.Router();
 
@@ -36,5 +37,9 @@ router.post("/admin", async (req, res) => {
     return res.status(500).send({ message: "Failed to login as admin" }); // Use 500 for server errors
   }
 });
+
+router.post("/orders/create-razorpay-order", createRazorpayOrder);
+router.post("/orders", createAOrder);
+router.get("/orders/:email", getOrderByEmail);
 
 module.exports = router;
