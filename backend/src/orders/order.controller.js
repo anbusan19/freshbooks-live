@@ -43,7 +43,9 @@ const createAOrder = async (req, res) => {
 const getOrderByEmail = async (req, res) => {
   try {
     const { email } = req.params;
-    const orders = await Order.find({ email }).sort({ createdAt: -1 });
+    const orders = await Order.find({ email })
+      .populate('productIds', 'title coverImage price')
+      .sort({ createdAt: -1 });
     if (!orders) {
       return res.status(404).json({ message: "Order not found" });
     }
@@ -54,8 +56,70 @@ const getOrderByEmail = async (req, res) => {
   }
 };
 
+const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate('productIds', 'title coverImage price')
+      .sort({ createdAt: -1 });
+    return res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error fetching all orders", error);
+    return res.status(500).json({ message: "Failed to fetch orders" });
+  }
+};
+
+const updateDeliveryStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status, note } = req.body;
+
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Update delivery status
+    order.deliveryStatus = status;
+    
+    // Add to delivery updates history
+    order.deliveryUpdates.push({
+      status,
+      timestamp: new Date(),
+      note: note || `Order ${status.replace(/_/g, ' ')}`
+    });
+
+    const updatedOrder = await order.save();
+    return res.status(200).json(updatedOrder);
+  } catch (error) {
+    console.error("Error updating delivery status", error);
+    return res.status(500).json({ message: "Failed to update delivery status" });
+  }
+};
+
+const getDeliveryUpdates = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId);
+    
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    return res.status(200).json({
+      currentStatus: order.deliveryStatus,
+      updates: order.deliveryUpdates
+    });
+  } catch (error) {
+    console.error("Error fetching delivery updates", error);
+    return res.status(500).json({ message: "Failed to fetch delivery updates" });
+  }
+};
+
 module.exports = {
   createAOrder,
   getOrderByEmail,
-  createRazorpayOrder
+  createRazorpayOrder,
+  getAllOrders,
+  updateDeliveryStatus,
+  getDeliveryUpdates
 };

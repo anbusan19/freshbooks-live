@@ -102,9 +102,12 @@ const CheckoutPage = () => {
             name: data.name,
             email: currentUser?.email,
             address: {
+                houseNo: data.houseNo,
+                street: data.street,
+                area: data.area,
                 city: data.city,
-                country: data.country,
                 state: data.state,
+                country: data.country,
                 zipcode: data.zipcode
             },
             phone: data.phone,
@@ -213,62 +216,104 @@ const CheckoutPage = () => {
                                 {/* Address Details */}
                                 <div className="space-y-2 sm:space-y-3">
                                     <div>
-                                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Country</label>
-                                                    <input
-                                                        {...register("country", { required: true })}
+                                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">House/Flat Number</label>
+                                        <input
+                                            {...register("houseNo", { required: true })}
                                             type="text"
+                                            placeholder="e.g., No: 10, East Apartments"
                                             className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                                                      focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
                                                      transition-all duration-200"
-                                            
                                         />
-                                        {errors.country && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">Country is required</p>}
-                                            </div>
+                                        {errors.houseNo && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">House/Flat number is required</p>}
+                                    </div>
 
                                     <div>
-                                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">State</label>
-                                                    <input
-                                                        {...register("state", { required: true })}
+                                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Street Address</label>
+                                        <input
+                                            {...register("street", { required: true })}
                                             type="text"
+                                            placeholder="e.g., West Main Street"
                                             className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                                                      focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
                                                      transition-all duration-200"
-                                            
                                         />
-                                        {errors.state && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">State is required</p>}
-                                                </div>
+                                        {errors.street && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">Street address is required</p>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Area/Locality</label>
+                                        <input
+                                            {...register("area", { required: true })}
+                                            type="text"
+                                            placeholder="e.g., Mangadu"
+                                            className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
+                                                     text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
+                                                     focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
+                                                     transition-all duration-200"
+                                        />
+                                        {errors.area && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">Area/Locality is required</p>}
+                                    </div>
 
                                     <div>
                                         <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</label>
                                         <input
                                             {...register("city", { required: true })}
                                             type="text"
+                                            placeholder="e.g., Chennai"
                                             className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                                                      focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
                                                      transition-all duration-200"
-                                            
                                         />
                                         {errors.city && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">City is required</p>}
-                                            </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">State</label>
+                                        <input
+                                            {...register("state", { required: true })}
+                                            type="text"
+                                            placeholder="e.g., Tamil Nadu"
+                                            className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
+                                                     text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
+                                                     focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
+                                                     transition-all duration-200"
+                                        />
+                                        {errors.state && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">State is required</p>}
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Country</label>
+                                        <input
+                                            {...register("country", { required: true })}
+                                            type="text"
+                                            placeholder="e.g., India"
+                                            className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
+                                                     text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
+                                                     focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
+                                                     transition-all duration-200"
+                                        />
+                                        {errors.country && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">Country is required</p>}
+                                    </div>
 
                                     <div>
                                         <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ZIP Code</label>
-                                                <input
-                                                    {...register("zipcode", { required: true })}
+                                        <input
+                                            {...register("zipcode", { required: true })}
                                             type="text"
+                                            placeholder="e.g., 560034"
                                             className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                                                      focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
                                                      transition-all duration-200"
-                                            
                                         />
                                         {errors.zipcode && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">ZIP code is required</p>}
-                                            </div>
-                                                </div>
-                                            </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             {/* Terms and Conditions */}
                             <div className="space-y-4">

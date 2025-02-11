@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { HiViewGridAdd } from "react-icons/hi";
 import { MdOutlineManageHistory } from "react-icons/md";
-import { FiGrid, FiLogOut, FiSearch, FiBell, FiMoon, FiSun, FiImage } from "react-icons/fi";
+import { FiGrid, FiLogOut, FiSearch, FiBell, FiMoon, FiSun, FiImage, FiShoppingBag } from "react-icons/fi";
 import './Dashboard.css';
 
 const DashboardLayout = () => {
@@ -98,6 +98,20 @@ const DashboardLayout = () => {
                 <MdOutlineManageHistory className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <span className="hidden lg:block text-sm font-medium">Manage Books</span>
+            </div>
+          </Link>
+
+          <Link
+            to="/dashboard/orders"
+            className="group flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 text-gray-600 dark:text-gray-300 
+                     bg-transparent hover:bg-white/80 dark:hover:bg-gray-700/80 rounded-lg sm:rounded-xl 
+                     transition-all duration-300"
+          >
+            <div className="relative z-10 flex items-center gap-3 w-full">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-green-50/50 dark:bg-green-900/30">
+                <FiShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400" />
+              </div>
+              <span className="hidden lg:block text-sm font-medium">Orders</span>
             </div>
           </Link>
 

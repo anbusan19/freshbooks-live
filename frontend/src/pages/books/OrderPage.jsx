@@ -2,6 +2,46 @@ import React from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi';
 import Loading from '../../components/Loading';
+import { FiPackage, FiTruck, FiCheck, FiClock } from 'react-icons/fi';
+
+const DeliveryStatusBadge = ({ status }) => {
+    const getStatusStyles = () => {
+        switch (status) {
+            case 'pending':
+                return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400';
+            case 'processing':
+                return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400';
+            case 'out_for_delivery':
+                return 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400';
+            case 'delivered':
+                return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400';
+            default:
+                return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400';
+        }
+    };
+
+    const getStatusIcon = () => {
+        switch (status) {
+            case 'pending':
+                return <FiClock className="w-4 h-4" />;
+            case 'processing':
+                return <FiPackage className="w-4 h-4" />;
+            case 'out_for_delivery':
+                return <FiTruck className="w-4 h-4" />;
+            case 'delivered':
+                return <FiCheck className="w-4 h-4" />;
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-full ${getStatusStyles()}`}>
+            {getStatusIcon()}
+            {status.replace(/_/g, ' ')}
+        </span>
+    );
+};
 
 const OrderPage = () => {
     const { currentUser } = useAuth();
@@ -36,7 +76,7 @@ const OrderPage = () => {
                                     >
                                         {/* Order Header */}
                                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
-                                            <div className="flex items-center gap-3 sm:gap-4">
+                                            <div className="flex items-center gap-4">
                                                 <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/30 rounded-full">
                                                     <span className="text-base sm:text-lg font-semibold text-indigo-600 dark:text-indigo-400">
                                                         #{index + 1}
@@ -66,9 +106,9 @@ const OrderPage = () => {
                                         </div>
 
                                         {/* Order Details */}
-                                        <div className="grid grid-cols-1 gap-4 sm:gap-6">
-                                            {/* Customer Info */}
-                                            <div className="space-y-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                                            {/* Customer Info and Address */}
+                                            <div className="space-y-4 md:col-span-2">
                                                 <div>
                                                     <h4 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
                                                         Customer Details
@@ -91,8 +131,11 @@ const OrderPage = () => {
                                                         Shipping Address
                                                     </h4>
                                                     <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
-                                                        <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200">
-                                                            {`${order.address.city}, ${order.address.state}, ${order.address.country}, ${order.address.zipcode}`}
+                                                        <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 space-y-1">
+                                                            <span className="block">{order.address.houseNo}, {order.address.street}</span>
+                                                            <span className="block">{order.address.area}</span>
+                                                            <span className="block">{order.address.city}, {order.address.state}</span>
+                                                            <span className="block">{order.address.country} - {order.address.zipcode}</span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -101,21 +144,48 @@ const OrderPage = () => {
                                             {/* Products */}
                                             <div>
                                                 <h4 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                                                    Products ({order.productIds.length})
+                                                    Products ({order.productIds?.length || 0})
                                                 </h4>
                                                 <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
                                                     <div className="space-y-2">
-                                    {order.productIds.map((productId) => (
-                                                            <div 
-                                                                key={productId}
-                                                                className="flex items-center justify-between p-2 rounded bg-gray-50 dark:bg-gray-700/50"
-                                                            >
-                                                                <span className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 break-all">
-                                                                    {productId}
-                                                                </span>
-                                                            </div>
-                                                        ))}
+                                                        {order.productIds && order.productIds.length > 0 && order.productIds.map((book) => {
+                                                            if (!book || typeof book !== 'object') return null;
+                                                            return (
+                                                                <div 
+                                                                    key={book._id}
+                                                                    className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2"
+                                                                >
+                                                                    {typeof book.coverImage === 'string' && (
+                                                                        <img 
+                                                                            src={book.coverImage} 
+                                                                            alt={typeof book.title === 'string' ? book.title : 'Book cover'}
+                                                                            className="w-16 h-20 object-cover rounded-lg shadow-sm"
+                                                                        />
+                                                                    )}
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="text-sm font-medium text-gray-800 dark:text-white truncate">
+                                                                            {typeof book.title === 'string' ? book.title : 'Untitled Book'}
+                                                                        </p>
+                                                                        {typeof book.price === 'number' && book.price > 0 && (
+                                                                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                                                ₹{book.price}
+                                                                            </p>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Delivery Status */}
+                                            <div className="md:col-span-3">
+                                                <h4 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                                                    Delivery Status
+                                                </h4>
+                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
+                                                    <DeliveryStatusBadge status={order.deliveryStatus || 'pending'} />
                                                 </div>
                                             </div>
                                         </div>

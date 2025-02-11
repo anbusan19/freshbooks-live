@@ -58,7 +58,7 @@ const SingleBook = () => {
     );
 
   return (
-        <div className="min-h-screen py-8 sm:py-16 px-4 md:px-8 dark:bg-black/40 bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl relative">
+        <div className="min-h-screen py-8 sm:py-16 px-4 md:px-8 dark:bg-black/40 bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl relative overflow-x-hidden">
             {/* Background Effects */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <div className="gradient-blob gradient-blob-1"></div>
@@ -75,19 +75,19 @@ const SingleBook = () => {
 
             {/* Content */}
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="glass-card rounded-2xl p-4 sm:p-8">
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-4 sm:p-8 border border-gray-200/20 dark:border-gray-700/20">
                     <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
                         {/* Image Section */}
                         <div className="lg:w-1/3">
                             <div className="relative aspect-[3/4] rounded-xl overflow-hidden group">
-                <img
-                    src={`${book.coverImage}`}
-                    alt={book.title}
+                                <img
+                                    src={`${book.coverImage}`}
+                                    alt={book.title}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+                                />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             </div>
-            </div>
+                        </div>
 
                         {/* Details Section */}
                         <div className="lg:w-2/3 flex flex-col">
@@ -103,7 +103,7 @@ const SingleBook = () => {
                                 <div className="flex items-center gap-2">
                                     <span className="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Rating:</span>
                                     <div className="flex items-center">
-                    {Array.from({ length: 5 }, (_, index) => (
+                                        {Array.from({ length: 5 }, (_, index) => (
                                             <FiStar 
                                                 key={index}
                                                 className={`w-4 h-4 sm:w-5 sm:h-5 ${
@@ -122,11 +122,11 @@ const SingleBook = () => {
                                     <span className="text-lg sm:text-xl text-gray-500 dark:text-gray-400 line-through">₹{book.oldPrice}</span>
                                     <span className="text-sm sm:text-lg text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
                                         {((book.oldPrice - book.newPrice) / book.oldPrice * 100).toFixed(0)}% off
-                    </span>
+                                    </span>
                                 </div>
 
                                 {/* Description */}
-                                <div className="py-4 sm:py-6 border-t border-b border-gray-200/20 dark:border-gray-800/20">
+                                <div className="py-4 sm:py-6 border-t border-b border-gray-200/30 dark:border-gray-700/30">
                                     <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
                                         {book.description}
                                     </p>
@@ -150,7 +150,7 @@ const SingleBook = () => {
                                     >
                                         <FiShoppingCart className="w-5 h-5" />
                                         <span className="text-sm sm:text-base">Add to Cart</span>
-                    </button>
+                                    </button>
                                 </div>
                             </div>
                         </div>

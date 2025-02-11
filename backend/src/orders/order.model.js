@@ -10,13 +10,34 @@ const orderSchema = new mongoose.Schema({
         required: true,
     },
     address: {
+        houseNo: {
+            type: String,
+            required: true,
+        },
+        street: {
+            type: String,
+            required: true,
+        },
+        area: {
+            type: String,
+            required: true,
+        },
         city: {
             type: String,
             required: true,
         },
-        country: String,
-        state: String,
-        zipcode: String,
+        state: {
+            type: String,
+            required: true,
+        },
+        country: {
+            type: String,
+            required: true,
+        },
+        zipcode: {
+            type: String,
+            required: true,
+        }
     },
     phone: {
         type: String,
@@ -45,7 +66,20 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'completed', 'failed'],
         default: 'pending'
-    }
+    },
+    deliveryStatus: {
+        type: String,
+        enum: ['pending', 'processing', 'out_for_delivery', 'delivered'],
+        default: 'pending'
+    },
+    deliveryUpdates: [{
+        status: String,
+        timestamp: {
+            type: Date,
+            default: Date.now
+        },
+        note: String
+    }]
 }, {
     timestamps: true,
 })
