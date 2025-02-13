@@ -177,14 +177,20 @@ const CheckoutPage = () => {
                                     <div>
                                         <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
                                         <input
-                                            {...register("name", { required: true })}
+                                            {...register("name", { 
+                                                required: "Name is required",
+                                                pattern: {
+                                                    value: /^[A-Za-z\s]+$/,
+                                                    message: "Name should only contain letters and spaces"
+                                                }
+                                            })}
                                             type="text"
                                             className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                                                      focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
                                                      transition-all duration-200"
-                                />
-                                        {errors.name && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">Name is required</p>}
+                                        />
+                                        {errors.name && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">{errors.name.message}</p>}
                                     </div>
 
                                     <div>
@@ -201,7 +207,13 @@ const CheckoutPage = () => {
                                     <div>
                                         <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
                                                 <input
-                                                    {...register("phone", { required: true })}
+                                                    {...register("phone", { 
+                                                        required: "Phone number is required",
+                                                        pattern: {
+                                                            value: /^\d{10}$/,
+                                                            message: "Phone number must be exactly 10 digits"
+                                                        }
+                                                    })}
                                             type="tel"
                                             className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                      text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
@@ -209,7 +221,7 @@ const CheckoutPage = () => {
                                                      transition-all duration-200"
                                             
                                         />
-                                        {errors.phone && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">Phone number is required</p>}
+                                        {errors.phone && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">{errors.phone.message}</p>}
                                             </div>
                                             </div>
 
