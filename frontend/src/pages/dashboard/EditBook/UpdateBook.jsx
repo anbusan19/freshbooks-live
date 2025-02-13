@@ -125,11 +125,23 @@ const UpdateBook = () => {
           name="category"
           options={[
             { value: '', label: 'Choose A Category' },
+            { value: 'self-help', label: 'Self-Help' },
+            { value: 'personal-development', label: 'Personal Development' },
+            { value: 'finance', label: 'Finance' },
             { value: 'business', label: 'Business' },
-            { value: 'technology', label: 'Technology' },
+            { value: 'strategy', label: 'Strategy' },
+            { value: 'psychology', label: 'Psychology' },
+            { value: 'behavioral-economics', label: 'Behavioral Economics' },
+            { value: 'history', label: 'History' },
+            { value: 'anthropology', label: 'Anthropology' },
+            { value: 'philosophy', label: 'Philosophy' },
+            { value: 'productivity', label: 'Productivity' },
+            { value: 'communication', label: 'Communication' },
+            { value: 'memoir', label: 'Memoir' },
+            { value: 'entrepreneurship', label: 'Entrepreneurship' },
             { value: 'fiction', label: 'Fiction' },
             { value: 'horror', label: 'Horror' },
-            { value: 'adventure', label: 'Adventure' },
+            { value: 'adventure', label: 'Adventure' }
           ]}
           register={register}
         />

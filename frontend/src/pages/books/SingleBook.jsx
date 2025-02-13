@@ -75,7 +75,7 @@ const SingleBook = () => {
 
             {/* Content */}
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-4 sm:p-8 border border-gray-200/20 dark:border-gray-700/20">
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-4 sm:p-8 border border-gray-200/30 dark:border-gray-700/30">
                     <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
                         {/* Image Section */}
                         <div className="lg:w-1/3">

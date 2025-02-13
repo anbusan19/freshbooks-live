@@ -15,36 +15,33 @@ const Banner = () => {
     const secondRowBooks = [book6, book7, book8, book9, book10, book6, book7, book8, book9, book10];
 
     return (
-        <div className="banner-container relative overflow-hidden min-h-[85vh] sm:min-h-0">
-            <div className="banner-overlay absolute inset-0"></div>
+        <section className="relative py-4 sm:py-8 px-2 sm:px-4 bg-gray-50/50 dark:bg-gray-900/50">
+            <div className="banner-overlay absolute inset-0 -z-10"></div>
             
             {/* Content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-8 sm:pt-32 pb-6 sm:pb-16">
+            <div className="max-w-7xl mx-auto relative z-20">
                 <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-16">
                     <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-8
                                  bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600
                                  filter drop-shadow-lg animate-fade-in">
                         Discover Your Next Favorite Book
                     </h1>
-                    <p className="text-sm sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-4 sm:mb-8
-                                leading-relaxed animate-fade-in animation-delay-200 px-4 sm:px-0">
-                        Explore our vast collection of books across all genres. 
-                        From bestsellers to hidden gems, find your perfect read today.
+                    <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-8 leading-relaxed animate-fade-in animation-delay-200">
+                        Explore our vast collection of books across all genres. From bestsellers to hidden gems, find your perfect read today.
                     </p>
                     <Link
                         to="/books"
-                        className="inline-flex items-center px-6 py-2.5 sm:px-8 sm:py-3 rounded-full
-                                 bg-gradient-to-r from-indigo-600 to-purple-600
-                                 text-white font-semibold text-sm sm:text-lg
-                                 transform hover:scale-105 transition-all duration-200
-                                 shadow-lg hover:shadow-xl animate-fade-in animation-delay-400"
+                        className="inline-flex items-center justify-center px-6 py-3 text-sm sm:text-base font-medium text-white 
+                                 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-lg
+                                 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105
+                                 transition-all duration-200 animate-fade-in animation-delay-400"
                     >
                         Explore Books
                     </Link>
                 </div>
 
                 {/* Infinite Scroll Books */}
-                <div className="relative max-w-7xl mx-auto overflow-hidden -mx-3 sm:mx-0">
+                <div className="relative max-w-7xl mx-auto overflow-hidden -mx-3 sm:mx-0 z-20">
                     {/* First Row */}
                     <div className="flex gap-2 sm:gap-8 mb-2 sm:mb-8 infinite-scroll-left">
                         {firstRowBooks.map((book, index) => (
@@ -84,13 +81,15 @@ const Banner = () => {
             </div>
 
             {/* Background Bubbles */}
-            <div className="bubble bubble-blue-1 scale-50 sm:scale-100"></div>
-            <div className="bubble bubble-blue-2 scale-50 sm:scale-100"></div>
-            <div className="bubble bubble-blue-3 scale-50 sm:scale-100"></div>
-            <div className="bubble bubble-yellow-1 scale-50 sm:scale-100"></div>
-            <div className="bubble bubble-yellow-2 scale-50 sm:scale-100"></div>
-            <div className="bubble bubble-yellow-3 scale-50 sm:scale-100"></div>
-        </div>
+            <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+                <div className="bubble bubble-blue-1 scale-50 sm:scale-100"></div>
+                <div className="bubble bubble-blue-2 scale-50 sm:scale-100"></div>
+                <div className="bubble bubble-blue-3 scale-50 sm:scale-100"></div>
+                <div className="bubble bubble-yellow-1 scale-50 sm:scale-100"></div>
+                <div className="bubble bubble-yellow-2 scale-50 sm:scale-100"></div>
+                <div className="bubble bubble-yellow-3 scale-50 sm:scale-100"></div>
+            </div>
+        </section>
     );
 };
 

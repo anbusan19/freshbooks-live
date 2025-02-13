@@ -4,7 +4,26 @@ import BookCard from './BookCard';
 import { FiChevronDown } from 'react-icons/fi';
 import './BooksPage.css';
 
-const categories = ["All Books", "Business", "Fiction", "Horror", "Adventure"];
+const categories = [
+    "All Books",
+    "Self-Help",
+    "Personal Development",
+    "Finance",
+    "Business",
+    "Strategy",
+    "Psychology",
+    "Behavioral Economics",
+    "History",
+    "Anthropology",
+    "Philosophy",
+    "Productivity",
+    "Communication",
+    "Memoir",
+    "Entrepreneurship",
+    "Fiction",
+    "Horror",
+    "Adventure"
+];
 
 const BooksPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("All Books");

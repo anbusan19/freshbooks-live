@@ -8,7 +8,26 @@ import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import { FiChevronDown } from 'react-icons/fi';
 import '../../styles/shared-gradients.css';
 
-const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
+const categories = [
+    "Choose a genre",
+    "Self-Help",
+    "Personal Development",
+    "Finance",
+    "Business",
+    "Strategy",
+    "Psychology",
+    "Behavioral Economics",
+    "History",
+    "Anthropology",
+    "Philosophy",
+    "Productivity",
+    "Communication",
+    "Memoir",
+    "Entrepreneurship",
+    "Fiction",
+    "Horror",
+    "Adventure"
+]
 
 const TopSellers = () => {
     const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
