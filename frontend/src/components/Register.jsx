@@ -22,7 +22,7 @@ const Register = () => {
         try {
             await registerUser(data.email, data.password);
             alert("User registered successfully!");
-            navigate("/login");
+            navigate("/");
         } catch (error) {
             setMessage("Please provide a valid email and password");
             console.error(error);
@@ -44,7 +44,7 @@ const Register = () => {
     };
 
   return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center p-4 transition-colors duration-300 overflow-hidden">
+        <div className="min-h-[calc(100vh-64px)] bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-start justify-center transition-colors duration-300 overflow-hidden">
             {/* Background Effects - Positioned in corners */}
             <div className="fixed inset-0 pointer-events-none">
                 {/* Top-left corner */}
@@ -57,19 +57,19 @@ const Register = () => {
                 <div className="absolute top-0 right-0 w-80 h-80 bg-pink-100/20 dark:bg-pink-900/10 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
             </div>
 
-            <div className="flex items-center gap-12 max-w-4xl w-full relative z-10">
+            <div className="flex items-center justify-center gap-12 max-w-4xl w-full relative z-10 pt-4 px-4">
                 {/* Brand Logo Section */}
-                <div className="hidden lg:flex flex-col items-center space-y-8 w-80">
-                    <img src={logo} alt="Freshbooks Logo" className="w-48 h-auto" />
+                <div className="hidden lg:flex flex-col items-center justify-center space-y-6 w-80 self-start mt-12">
+                    <img src={logo} alt="Freshbooks Logo" className="w-40 h-auto" />
                     <div className="text-center">
-                        <h1 className="text-4xl font-bold text-gray-800 dark:text-white tracking-tight">Join Us Today</h1>
+                        <h1 className="text-3xl font-bold text-gray-800 dark:text-white tracking-tight">Join Us Today</h1>
                         <p className="text-gray-600 dark:text-gray-300 mt-2">Start your journey with Freshbooks</p>
                     </div>
                 </div>
 
                 {/* Register Form Section */}
-                <div className="flex-1 max-w-md">
-                    <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-2xl shadow-xl p-8 relative overflow-hidden">
+                <div className="flex-1 max-w-md w-full">
+                    <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-2xl shadow-xl p-6 sm:p-8 relative overflow-hidden">
                         <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">Create Account</h2>
 
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

@@ -13,8 +13,13 @@ const CheckoutPage = () => {
     const [message, setMessage] = useState("");
     const [isChecked, setIsChecked] = useState(false)
     const cartItems = useSelector(state => state.cart.cartItems);
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
-    const {  currentUser} = useAuth()
+    const subtotal = cartItems.reduce((acc, item) => acc + (item.newPrice * item.quantity), 0);
+    const gstAmount = cartItems.reduce((acc, item) => {
+        const itemGst = (item.newPrice * item.quantity) * (item.gst / 100);
+        return acc + itemGst;
+    }, 0);
+    const totalPrice = (subtotal + gstAmount).toFixed(2);
+    const { currentUser } = useAuth();
     const {
         register,
         handleSubmit,
@@ -124,7 +129,7 @@ const CheckoutPage = () => {
         </div>
     );
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 relative">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300">
             {/* Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="gradient-blob gradient-blob-1 opacity-30"></div>
@@ -146,20 +151,33 @@ const CheckoutPage = () => {
                         {/* Order Summary */}
                         <div className="mb-4 sm:mb-6">
                             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">Checkout</h2>
-                            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:gap-4 items-start sm:items-center">
+                            <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-row sm:gap-4 items-start sm:items-center">
                                 <div className="flex items-center gap-2 sm:gap-3 bg-indigo-50/50 dark:bg-indigo-900/30 px-2 sm:px-4 py-2 rounded-lg">
                                     <FiShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400" />
                                     <div>
-                                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Total Items</p>
+                                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Items</p>
                                         <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">{cartItems.length}</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-2 sm:gap-3 bg-green-50/50 dark:bg-green-900/30 px-2 sm:px-4 py-2 rounded-lg">
-                                    <FiCreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400" />
+                                <div className="flex items-center gap-2 sm:gap-3 bg-purple-50/50 dark:bg-purple-900/30 px-2 sm:px-4 py-2 rounded-lg">
+                                    <FiCreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400" />
                                     <div>
-                                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Total Price</p>
-                                        <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">₹{totalPrice}</p>
+                                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Subtotal</p>
+                                        <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">₹{subtotal.toFixed(2)}</p>
                                     </div>
+                                </div>
+                                <div className="flex items-center gap-2 sm:gap-3 bg-green-50/50 dark:bg-green-900/30 px-2 sm:px-4 py-2 rounded-lg">
+                                    <FiTruck className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400" />
+                                    <div>
+                                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">GST</p>
+                                        <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">₹{gstAmount.toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mt-4 p-3 bg-gray-50/50 dark:bg-gray-700/30 rounded-lg">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm sm:text-base font-medium text-gray-800 dark:text-white">Total Amount</span>
+                                    <span className="text-lg sm:text-xl font-bold text-indigo-600 dark:text-indigo-400">₹{totalPrice}</span>
                                 </div>
                             </div>
                         </div>
@@ -314,7 +332,13 @@ const CheckoutPage = () => {
                                     <div>
                                         <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ZIP Code</label>
                                         <input
-                                            {...register("zipcode", { required: true })}
+                                            {...register("zipcode", { 
+                                                required: "ZIP code is required",
+                                                pattern: {
+                                                    value: /^[0-9]{6}$/,
+                                                    message: "ZIP code must be exactly 6 digits"
+                                                }
+                                            })}
                                             type="text"
                                             placeholder="e.g., 560034"
                                             className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
@@ -322,7 +346,7 @@ const CheckoutPage = () => {
                                                      focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
                                                      transition-all duration-200"
                                         />
-                                        {errors.zipcode && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">ZIP code is required</p>}
+                                        {errors.zipcode && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">{errors.zipcode.message}</p>}
                                     </div>
                                 </div>
                             </div>

@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { clearCart, removeFromCart } from '../../redux/features/cart/cartSlice';
-import { FiTrash2, FiShoppingBag } from 'react-icons/fi';
+import { clearCart, removeFromCart, incrementQuantity, decrementQuantity, updateQuantity } from '../../redux/features/cart/cartSlice';
+import { FiTrash2, FiShoppingBag, FiMinus, FiPlus } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import '../../styles/shared-gradients.css';
 
@@ -10,7 +10,12 @@ const CartPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
     const dispatch = useDispatch();
 
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
+    const subtotal = cartItems.reduce((acc, item) => acc + (item.newPrice * item.quantity), 0);
+    const gstAmount = cartItems.reduce((acc, item) => {
+        const itemGst = (item.newPrice * item.quantity) * (item.gst / 100);
+        return acc + itemGst;
+    }, 0);
+    const totalPrice = (subtotal + gstAmount).toFixed(2);
 
     const handleRemoveFromCart = (product) => {
         dispatch(removeFromCart(product));
@@ -44,8 +49,15 @@ const CartPage = () => {
         });
     }
 
+    const handleQuantityChange = (e, id) => {
+        const value = parseInt(e.target.value);
+        if (!isNaN(value)) {
+            dispatch(updateQuantity({ id, quantity: value }));
+        }
+    }
+
     return (
-        <div className="min-h-screen bg-gradient-to-b from-white/80 to-transparent dark:from-black/40 dark:to-transparent backdrop-blur-3xl relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300">
             {/* Background Effects */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute top-0 left-0 w-96 h-96 bg-purple-100/20 dark:bg-purple-900/10 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-50 animate-blob"></div>
@@ -119,9 +131,35 @@ const CartPage = () => {
                                                 </p>
                                             </div>
                                             <div className="flex items-center justify-between sm:flex-row sm:items-center sm:gap-4">
+                                                <div className="flex items-center gap-4">
                                                 <span className="text-lg sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-                                                    ₹{product?.newPrice}
+                                                        ₹{(product?.newPrice * product.quantity).toFixed(2)}
                                                 </span>
+                                                    <div className="flex items-center gap-2 bg-gray-100/80 dark:bg-gray-800/80 rounded-lg p-1">
+                                                        <button
+                                                            onClick={() => dispatch(decrementQuantity(product._id))}
+                                                            className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 
+                                                                     text-gray-600 dark:text-gray-400 transition-colors"
+                                                        >
+                                                            <FiMinus className="w-4 h-4" />
+                                                        </button>
+                                                        <input
+                                                            type="number"
+                                                            min="1"
+                                                            value={product.quantity}
+                                                            onChange={(e) => handleQuantityChange(e, product._id)}
+                                                            className="w-12 text-center bg-transparent border-none focus:outline-none 
+                                                                     text-gray-800 dark:text-gray-200 text-sm"
+                                                        />
+                                                        <button
+                                                            onClick={() => dispatch(incrementQuantity(product._id))}
+                                                            className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 
+                                                                     text-gray-600 dark:text-gray-400 transition-colors"
+                                                        >
+                                                            <FiPlus className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 <button
                                                     onClick={() => handleRemoveFromCart(product)}
                                                     className="hidden sm:flex text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 
@@ -165,12 +203,22 @@ const CartPage = () => {
 
                         {cartItems.length > 0 && (
                             <div className="mt-4 sm:mt-8 p-3 sm:p-6 rounded-xl bg-gray-50/80 dark:bg-gray-800/50 border border-gray-200/20 dark:border-gray-700/20 sm:max-w-md sm:ml-auto">
-                                <div className="flex justify-between items-center mb-2 sm:mb-4">
-                                    <span className="text-sm sm:text-lg font-medium text-gray-800 dark:text-white">Subtotal</span>
-                                    <span className="text-lg sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">₹{totalPrice}</span>
+                                <div className="space-y-2 sm:space-y-3">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">Subtotal</span>
+                                        <span className="text-base sm:text-lg font-medium text-gray-800 dark:text-white">₹{subtotal.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">GST</span>
+                                        <span className="text-base sm:text-lg font-medium text-gray-800 dark:text-white">₹{gstAmount.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-gray-700">
+                                        <span className="text-sm sm:text-lg font-medium text-gray-800 dark:text-white">Total</span>
+                                        <span className="text-lg sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">₹{totalPrice}</span>
+                                    </div>
                                 </div>
-                                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-6">
-                                    Shipping and taxes calculated at checkout.
+                                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-3 mb-6">
+                                    Shipping calculated at checkout.
                                 </p>
                                 <div className="space-y-2 sm:space-y-4">
                                     <Link

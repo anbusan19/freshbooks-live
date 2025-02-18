@@ -56,6 +56,13 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    gst: {
+        type: Number,
+        required: true,
+        default: 0,
+        min: 0,
+        max: 100
+    },
     createdAt: {
         type: Date,
         default: Date.now,

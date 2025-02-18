@@ -46,14 +46,13 @@ const BookCard = ({book}) => {
             {/* Content Container */}
             <div className="flex-1 flex flex-col relative z-10">
                 {/* Image Container */}
-                <div className="relative w-full aspect-[3/4] mb-2 sm:mb-3 overflow-hidden rounded-lg group">
+                <div className="relative w-full aspect-[3/4] mb-2 sm:mb-3 overflow-hidden rounded-lg">
                     <Link to={`/books/${book._id}`}>
                         <img
                             src={`${book.coverImage}`}
                             alt={book.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </Link>
                 </div>
 

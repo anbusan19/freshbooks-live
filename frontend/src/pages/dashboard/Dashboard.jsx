@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiBook, FiDollarSign, FiTrendingUp, FiShoppingBag } from 'react-icons/fi';
+import { FiBook, FiTrendingUp, FiShoppingBag } from 'react-icons/fi';
+import { BiRupee } from 'react-icons/bi';
 import axios from 'axios';
 import Loading from '../../components/Loading';
 import getBaseUrl from '../../utils/baseURL';
@@ -62,7 +63,7 @@ const Dashboard = () => {
                         <div className="glass-card rounded-lg sm:rounded-xl p-3 sm:p-6">
                             <div className="flex items-center gap-2 sm:gap-4">
                                 <div className="flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-green-100/50 dark:bg-green-900/30">
-                                    <FiDollarSign className="w-4 h-4 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
+                                    <BiRupee className="w-4 h-4 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
                                 </div>
                                 <div>
                                     <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">Total Sales</p>
@@ -104,7 +105,7 @@ const Dashboard = () => {
                         <div className="glass-card rounded-lg sm:rounded-xl p-3 sm:p-6">
                             <h2 className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4">Revenue Overview</h2>
                             <div className="h-48 sm:h-80">
-                                <RevenueChart monthlySales={data.monthlySales || []} />
+                                <RevenueChart monthlySales={data.monthlySales || []} weeklySales={data.weeklySales || []} />
                             </div>
                         </div>
 

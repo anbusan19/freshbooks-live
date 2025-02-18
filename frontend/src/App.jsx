@@ -27,7 +27,7 @@ function App() {
       <AuthProvide>
         <div className="min-h-screen bg-surface-light dark:bg-black transition-colors duration-200">
           <Navbar />
-          <main className='max-w-screen-2xl mx-auto px-4 pt-8 pb-16 font-primary text-gray-800 dark:text-white'>
+          <main className='w-full px-2 sm:px-4 lg:px-6 pt-4 sm:pt-8 pb-8 sm:pb-16 font-primary text-gray-800 dark:text-white'>
             <Outlet />
           </main>
           <Footer />

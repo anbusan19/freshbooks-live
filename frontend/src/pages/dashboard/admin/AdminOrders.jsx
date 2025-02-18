@@ -47,28 +47,43 @@ const AdminOrders = () => {
     const [updateDeliveryStatus] = useUpdateDeliveryStatusMutation();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [filterStatus, setFilterStatus] = useState('all');
+    const [timePeriod, setTimePeriod] = useState('all');
 
-    if (isLoading) return <Loading />;
-    if (isError) return (
-        <div className="min-h-[60vh] flex items-center justify-center text-red-500 dark:text-red-400">
-            Error getting orders data
-        </div>
-    );
+    const getFilteredOrdersByTime = (orders) => {
+        const currentDate = new Date();
+        const oneWeekAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const oneMonthAgo = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+        switch (timePeriod) {
+            case 'week':
+                return orders.filter(order => new Date(order.createdAt) >= oneWeekAgo);
+            case 'month':
+                return orders.filter(order => new Date(order.createdAt) >= oneMonthAgo);
+            default:
+                return orders;
+        }
+    };
 
     const filteredOrders = orders.filter(order => {
         const searchLower = searchTerm.toLowerCase();
-        return (
-            order.name.toLowerCase().includes(searchLower) ||
-            order.email.toLowerCase().includes(searchLower) ||
-            order._id.toLowerCase().includes(searchLower) ||
-            order.phone.includes(searchTerm) ||
-            order.address.city.toLowerCase().includes(searchLower) ||
-            (order.address.state && order.address.state.toLowerCase().includes(searchLower)) ||
-            (order.address.country && order.address.country.toLowerCase().includes(searchLower)) ||
-            (order.address.zipcode && order.address.zipcode.includes(searchTerm)) ||
-            order.productIds.some(book => book.title.toLowerCase().includes(searchLower))
-        );
+        const matchesSearch = 
+            order.name?.toLowerCase().includes(searchLower) ||
+            order.email?.toLowerCase().includes(searchLower) ||
+            order._id?.toLowerCase().includes(searchLower) ||
+            order.phone?.includes(searchTerm) ||
+            order.address?.city?.toLowerCase().includes(searchLower) ||
+            order.address?.state?.toLowerCase().includes(searchLower) ||
+            order.address?.country?.toLowerCase().includes(searchLower) ||
+            order.address?.zipcode?.includes(searchTerm) ||
+            order.productIds?.some(book => book.title?.toLowerCase().includes(searchLower));
+
+        const matchesStatus = filterStatus === 'all' ? true : order.deliveryStatus === filterStatus;
+        
+        return matchesSearch && matchesStatus;
     });
+
+    const timeFilteredOrders = getFilteredOrdersByTime(filteredOrders);
 
     const handleStatusUpdate = async (orderId, newStatus) => {
         try {
@@ -83,6 +98,13 @@ const AdminOrders = () => {
         }
     };
 
+    if (isLoading) return <Loading />;
+    if (isError) return (
+        <div className="min-h-[60vh] flex items-center justify-center text-red-500 dark:text-red-400">
+            Error getting orders data
+        </div>
+    );
+
     return (
         <div className="p-6 space-y-6">
             {/* Header Section */}
@@ -91,18 +113,60 @@ const AdminOrders = () => {
                     <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Orders Management</h2>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">View and manage all customer orders</p>
                 </div>
-                <div className="w-full sm:w-72">
-                    <div className="relative">
+                
+                {/* Search and Filter Section */}
+                <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-3">
+                    {/* Time Period Filter */}
+                    <select
+                        value={timePeriod}
+                        onChange={(e) => setTimePeriod(e.target.value)}
+                        className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 
+                                 bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
+                                 text-sm"
+                    >
+                        <option value="all">All Time</option>
+                        <option value="week">Past Week</option>
+                        <option value="month">Past Month</option>
+                    </select>
+
+                    {/* Status Filter */}
+                    <select
+                        value={filterStatus}
+                        onChange={(e) => setFilterStatus(e.target.value)}
+                        className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 
+                                 bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
+                                 text-sm"
+                    >
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="out_for_delivery">Out for Delivery</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+
+                    {/* Search Bar */}
+                    <div className="relative flex-1 sm:w-72">
                         <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input
                             type="text"
-                            placeholder="Search by name, email, phone, address, or book..."
+                            placeholder="Search orders..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 
                                      bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                                     focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+                                     focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
+                                     placeholder-gray-500 dark:placeholder-gray-400"
                         />
+                        {searchTerm && (
+                            <button
+                                onClick={() => setSearchTerm('')}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            >
+                                ×
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -115,8 +179,8 @@ const AdminOrders = () => {
                             <FiPackage className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Total Orders</p>
-                            <p className="text-xl font-semibold text-gray-900 dark:text-white">{orders.length}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Filtered Orders</p>
+                            <p className="text-xl font-semibold text-gray-900 dark:text-white">{timeFilteredOrders.length}</p>
                         </div>
                     </div>
                 </div>
@@ -128,7 +192,7 @@ const AdminOrders = () => {
                         <div>
                             <p className="text-sm text-gray-600 dark:text-gray-400">Delivered Orders</p>
                             <p className="text-xl font-semibold text-gray-900 dark:text-white">
-                                {orders.filter(order => order.deliveryStatus === 'delivered').length}
+                                {timeFilteredOrders.filter(order => order.deliveryStatus === 'delivered').length}
                             </p>
                         </div>
                     </div>
@@ -148,7 +212,7 @@ const AdminOrders = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                            {filteredOrders.map((order) => (
+                            {timeFilteredOrders.map((order) => (
                                 <tr key={order._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                                     <td className="px-6 py-4">
                                         <div className="text-sm">
@@ -182,7 +246,6 @@ const AdminOrders = () => {
                                                     />
                                                     <div className="text-sm">
                                                         <p className="font-medium text-gray-900 dark:text-white">{book.title}</p>
-                                                        <p className="text-gray-600 dark:text-gray-400">₹{book.price}</p>
                                                     </div>
                                                 </div>
                                             ))}

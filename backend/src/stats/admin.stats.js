@@ -35,17 +35,57 @@ router.get("/", async (req, res) => {
     // 5. Total number of books
     const totalBooks = await Book.countDocuments();
 
-    // 6. Monthly sales (group by month and sum total sales for each month)
+    // 6. Weekly sales (group by week and sum total sales for each week)
+    const weeklySales = await Order.aggregate([
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            week: { $week: "$createdAt" }
+          },
+          totalSales: { $sum: "$totalPrice" },
+          totalOrders: { $sum: 1 },
+          startDate: { $min: "$createdAt" }
+        }
+      },
+      { $sort: { "startDate": -1 } },
+      { $limit: 12 } // Last 12 weeks
+    ]);
+
+    // 7. Monthly sales (group by month and sum total sales for each month)
     const monthlySales = await Order.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } }, // Group by year and month
-          totalSales: { $sum: "$totalPrice" }, // Sum totalPrice for each month
-          totalOrders: { $sum: 1 }, // Count total orders for each month
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          totalSales: { $sum: "$totalPrice" },
+          totalOrders: { $sum: 1 },
+          startDate: { $min: "$createdAt" }
         },
       },
-      { $sort: { _id: 1 } },
+      { $sort: { "_id": -1 } },
+      { $limit: 12 } // Last 12 months
     ]);
+
+    // Format weekly sales data with proper date formatting
+    const formattedWeeklySales = weeklySales.map(week => {
+      const startDate = new Date(week.startDate);
+      const weekNumber = week._id.week;
+      const year = week._id.year;
+      return {
+        _id: `Week ${weekNumber}, ${year}`,
+        totalSales: week.totalSales || 0,
+        totalOrders: week.totalOrders || 0,
+        startDate: startDate
+      };
+    }).sort((a, b) => a.startDate - b.startDate);
+
+    // Format monthly sales data
+    const formattedMonthlySales = monthlySales.map(month => ({
+      _id: month._id,
+      totalSales: month.totalSales || 0,
+      totalOrders: month.totalOrders || 0,
+      startDate: month.startDate
+    })).sort((a, b) => new Date(a._id) - new Date(b._id));
 
     // Result summary
     return res.status(200).json({
@@ -53,7 +93,8 @@ router.get("/", async (req, res) => {
       totalSales: totalSales[0]?.totalSales || 0,
       trendingBooks,
       totalBooks,
-      monthlySales,
+      weeklySales: formattedWeeklySales,
+      monthlySales: formattedMonthlySales,
     });
   } catch (error) {
     console.error("Error fetching admin stats:", error);

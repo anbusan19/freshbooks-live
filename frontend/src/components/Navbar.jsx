@@ -74,9 +74,9 @@ const Navbar = () => {
     }, [dispatch]);
   
     return (
-        <header className="sticky top-0 z-50">
+        <header className="sticky top-0 z-50 w-full">
             <nav className="bg-gray-50/98 dark:bg-[#2A2A2E]/98 backdrop-blur-md border-b border-gray-200/30 dark:border-gray-600/20 shadow-lg transition-all duration-300">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="w-full px-2 sm:px-4 lg:px-6">
                     <div className="flex justify-between items-center h-16">
                         {/* Left side - Logo */}
                         <div className="flex items-center gap-4">
@@ -90,7 +90,7 @@ const Navbar = () => {
                                         <img 
                                             src={navbarLogo}
                                             alt="Freshbooks" 
-                                            className="h-8 w-auto brightness-90 dark:brightness-200 dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.8)] dark:filter dark:contrast-150"
+                                            className="h-10 w-auto brightness-90 dark:brightness-200 dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.8)] dark:filter dark:contrast-150"
                                         />
                                     </div>
                                 </div>
@@ -98,14 +98,14 @@ const Navbar = () => {
                         </div>
 
                         {/* Middle - Search (Desktop) */}
-                        <div className="hidden lg:block flex-1 max-w-lg mx-8">
+                        <div className="hidden lg:block flex-1 max-w-xl mx-4">
                             <div className="relative" ref={searchRef}>
                                 <IoSearchOutline className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                         <input 
                             type="text" 
                                     value={searchTerm}
                                     onChange={handleSearchInput}
-                                    placeholder="Search books..."
+                                    placeholder="Search your Favourite Books or Authors"
                                     className="w-full py-2 px-10 rounded-full bg-gray-100/50 dark:bg-gray-800/50
                                              text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400
                                              border border-transparent hover:border-gray-300 dark:hover:border-gray-700
@@ -149,7 +149,7 @@ const Navbar = () => {
                     </div>
 
                         {/* Right side - Icons */}
-                        <div className="flex items-center gap-2 sm:gap-4">
+                        <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
                             {/* Mobile Search Button */}
                             <button 
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -160,10 +160,10 @@ const Navbar = () => {
                             
                             <ThemeToggle />
 
-                            {/* Wishlist - Hidden on mobile */}
+                            {/* Wishlist - Hidden on small screens */}
                             <Link 
                                 to="/wishlist" 
-                                className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
+                                className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
                             >
                                 <HiOutlineHeart className="w-6 h-6" />
                                 {wishlistItems?.length > 0 && (

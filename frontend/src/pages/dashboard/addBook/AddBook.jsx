@@ -194,20 +194,31 @@ const AddBook = () => {
 
         {/* Old Price */}
         <InputField
-          label="Old Price"
+          label="MRP"
           name="oldPrice"
           type="number"
-          placeholder="Old Price"
+          placeholder="MRP"
           register={register}
         />
 
         {/* New Price */}
         <InputField
-          label="New Price"
+          label="Our Price"
           name="newPrice"
           type="number"
-          placeholder="New Price"
+          placeholder="Our Price"
           register={register}
+        />
+
+        {/* GST Percentage */}
+        <InputField
+          label="GST Percentage"
+          name="gst"
+          type="number"
+          placeholder="Enter GST percentage (e.g. 18)"
+          register={register}
+          min="0"
+          max="100"
         />
 
         {/* Cover Image Upload */}
