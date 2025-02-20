@@ -20,6 +20,8 @@ import Wishlist from "../pages/Wishlist";
 import BooksPage from "../pages/books/BooksPage";
 import ManageBanners from "../pages/dashboard/banners/ManageBanners";
 import AdminOrders from "../pages/dashboard/admin/AdminOrders";
+import ForgotPassword from "../components/ForgotPassword";
+import ResetPassword from "../components/ResetPassword";
 
 const router = createBrowserRouter([
     {
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
         {
           path: "/books",
           element: <BooksPage/>
+        },
+        {
+          path: "/forgot-password",
+          element: <ForgotPassword />
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPassword />
         }
       ]
     },

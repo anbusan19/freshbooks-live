@@ -121,6 +121,11 @@ const Login = () => {
                                     </>
                                 )}
                             </button>
+                            <p className="mt-2 text-gray-600 dark:text-gray-300">
+                                    <Link to="/forgot-password" className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+                                    Forgot your password?
+                                    </Link>
+                                </p>
 
                             <div className="relative">
                                 <div className="absolute inset-0 flex items-center">
@@ -152,6 +157,7 @@ const Login = () => {
                                         Create an account
                                     </Link>
                                 </p>
+                                
                             </div>
                         </form>
                     </div>
