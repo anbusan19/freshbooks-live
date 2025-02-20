@@ -4,7 +4,7 @@ import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import logo from '../assets/freshbooks-logo.png';
+import logo from '../assets/freshbooks-navbar-logo.png';
 
 const Login = () => {
     const [message, setMessage] = useState("");
@@ -44,7 +44,7 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-64px)] bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-start justify-center transition-colors duration-300 overflow-hidden">
+        <div className="min-h-[calc(100vh-64px)] bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center transition-colors duration-300 overflow-hidden">
             {/* Background Effects - Positioned in corners */}
             <div className="fixed inset-0 pointer-events-none">
                 {/* Top-left corner */}
@@ -57,13 +57,13 @@ const Login = () => {
                 <div className="absolute top-0 right-0 w-80 h-80 bg-pink-100/20 dark:bg-pink-900/10 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
             </div>
 
-            <div className="flex items-center justify-center gap-12 max-w-4xl w-full relative z-10 pt-4 px-4">
+            <div className="flex items-center justify-center gap-16 max-w-5xl w-full relative z-10 px-4">
                 {/* Brand Logo Section */}
-                <div className="hidden lg:flex flex-col items-center justify-center space-y-6 w-80 self-start mt-12">
-                    <img src={logo} alt="Freshbooks Logo" className="w-40 h-auto" />
+                <div className="hidden lg:flex flex-col items-center justify-center space-y-8">
+                    <img src={logo} alt="Freshbooks Logo" className="w-72 h-auto" />
                     <div className="text-center">
-                        <h1 className="text-3xl font-bold text-gray-800 dark:text-white tracking-tight">Welcome Back</h1>
-                        <p className="text-gray-600 dark:text-gray-300 mt-2">Your gateway to seamless book management</p>
+                        <h1 className="text-4xl font-bold text-gray-800 dark:text-white tracking-tight">Welcome Back</h1>
+                        <p className="text-xl text-gray-600 dark:text-gray-300 mt-4">Your gateway to seamless book management</p>
                     </div>
                 </div>
 
@@ -122,6 +122,7 @@ const Login = () => {
                                 )}
                             </button>
                             <p className="mt-2 text-gray-600 dark:text-gray-300">
+
                                     <Link to="/forgot-password" className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
                                     Forgot your password?
                                     </Link>

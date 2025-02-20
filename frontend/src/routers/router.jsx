@@ -83,7 +83,7 @@ const router = createBrowserRouter([
       ]
     },
     {
-      path: "/admin",
+      path: "/freshbooksadmin",
       element: <AdminLogin/>
     },
     {

@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi';
 import Loading from '../../components/Loading';
 import { FiPackage, FiTruck, FiCheck, FiClock } from 'react-icons/fi';
+import DownloadInvoice from '../../components/DownloadInvoice';
 
 const DeliveryStatusBadge = ({ status }) => {
     const getStatusStyles = () => {
@@ -76,7 +77,7 @@ const OrderPage = () => {
                                     >
                                         {/* Order Header */}
                                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
-                                            <div className="flex items-center gap-4">
+                                            <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/30 rounded-full">
                                                     <span className="text-base sm:text-lg font-semibold text-indigo-600 dark:text-indigo-400">
                                                         #{index + 1}
@@ -95,13 +96,28 @@ const OrderPage = () => {
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center justify-between sm:block text-right mt-2 sm:mt-0">
-                                                <span className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 sm:block">
-                                                    Total Amount
-                                                </span>
-                                                <p className="text-base sm:text-lg font-semibold text-indigo-600 dark:text-indigo-400 ml-2 sm:ml-0">
-                                                    ₹{order.totalPrice}
-                                                </p>
+                                            <div className="flex items-center gap-4">
+                                                <div className="text-right">
+                                                    <span className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 block">
+                                                        Total Amount
+                                                    </span>
+                                                    <p className="text-base sm:text-lg font-semibold text-indigo-600 dark:text-indigo-400">
+                                                        ₹{order.totalPrice}
+                                                    </p>
+                                                </div>
+                                                <DownloadInvoice order={{
+                                                    ...order,
+                                                    customerName: order.name,
+                                                    items: order.productIds.map(book => ({
+                                                        title: book.title,
+                                                        price: book.price,
+                                                        quantity: 1
+                                                    })),
+                                                    subtotal: order.totalPrice,
+                                                    tax: order.totalPrice * 0.1,
+                                                    totalAmount: order.totalPrice,
+                                                    shippingAddress: `${order.address.houseNo}, ${order.address.street}, ${order.address.area}, ${order.address.city}, ${order.address.state}, ${order.address.country} - ${order.address.zipcode}`
+                                                }} />
                                             </div>
                                         </div>
 

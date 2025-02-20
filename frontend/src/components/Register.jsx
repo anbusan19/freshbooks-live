@@ -4,7 +4,7 @@ import { FaEnvelope, FaLock, FaUserPlus } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { useAuth } from '../context/AuthContext';
-import logo from '../assets/freshbooks-logo.png';
+import logo from '../assets/freshbooks-navbar-logo.png';
 
 const Register = () => {
     const [message, setMessage] = useState("");
@@ -43,8 +43,8 @@ const Register = () => {
         setIsLoading(false);
     };
 
-  return (
-        <div className="min-h-[calc(100vh-64px)] bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-start justify-center transition-colors duration-300 overflow-hidden">
+    return (
+        <div className="min-h-[calc(100vh-64px)] bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center transition-colors duration-300 overflow-hidden">
             {/* Background Effects - Positioned in corners */}
             <div className="fixed inset-0 pointer-events-none">
                 {/* Top-left corner */}
@@ -57,13 +57,13 @@ const Register = () => {
                 <div className="absolute top-0 right-0 w-80 h-80 bg-pink-100/20 dark:bg-pink-900/10 rounded-full mix-blend-multiply dark:mix-blend-overlay filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
             </div>
 
-            <div className="flex items-center justify-center gap-12 max-w-4xl w-full relative z-10 pt-4 px-4">
+            <div className="flex items-center justify-center gap-16 max-w-5xl w-full relative z-10 px-4">
                 {/* Brand Logo Section */}
-                <div className="hidden lg:flex flex-col items-center justify-center space-y-6 w-80 self-start mt-12">
-                    <img src={logo} alt="Freshbooks Logo" className="w-40 h-auto" />
+                <div className="hidden lg:flex flex-col items-center justify-center space-y-8">
+                    <img src={logo} alt="Freshbooks Logo" className="w-72 h-auto" />
                     <div className="text-center">
-                        <h1 className="text-3xl font-bold text-gray-800 dark:text-white tracking-tight">Join Us Today</h1>
-                        <p className="text-gray-600 dark:text-gray-300 mt-2">Start your journey with Freshbooks</p>
+                        <h1 className="text-4xl font-bold text-gray-800 dark:text-white tracking-tight">Join Us Today</h1>
+                        <p className="text-xl text-gray-600 dark:text-gray-300 mt-4">Start your journey with Freshbooks</p>
                     </div>
                 </div>
 
@@ -128,8 +128,8 @@ const Register = () => {
                                 </div>
                                 <div className="relative flex justify-center text-sm">
                                     <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with</span>
-            </div>
-            </div>
+                                </div>
+                            </div>
 
                             <button
                                 type="button"
@@ -142,8 +142,8 @@ const Register = () => {
                                          flex items-center justify-center gap-3"
                             >
                                 <FcGoogle className="w-5 h-5" />
-              Sign in with Google
-            </button>
+                                Sign in with Google
+                            </button>
 
                             <div className="text-center">
                                 <p className="text-gray-600 dark:text-gray-300">
@@ -154,10 +154,10 @@ const Register = () => {
                                 </p>
                             </div>
                         </form>
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
     );
 };
 
