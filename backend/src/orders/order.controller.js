@@ -44,7 +44,10 @@ const getOrderByEmail = async (req, res) => {
   try {
     const { email } = req.params;
     const orders = await Order.find({ email })
-      .populate('productIds', 'title coverImage price')
+      .populate({
+        path: 'productIds.book',
+        select: 'title coverImage price author'
+      })
       .sort({ createdAt: -1 });
     if (!orders) {
       return res.status(404).json({ message: "Order not found" });
@@ -59,7 +62,10 @@ const getOrderByEmail = async (req, res) => {
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
-      .populate('productIds', 'title coverImage price')
+      .populate({
+        path: 'productIds.book',
+        select: 'title coverImage price author'
+      })
       .sort({ createdAt: -1 });
     return res.status(200).json(orders);
   } catch (error) {
@@ -71,7 +77,7 @@ const getAllOrders = async (req, res) => {
 const updateDeliveryStatus = async (req, res) => {
   try {
     const { orderId } = req.params;
-    const { status, note } = req.body;
+    const { status, note, trackingUrl } = req.body;
 
     const order = await Order.findById(orderId);
     if (!order) {
@@ -80,6 +86,11 @@ const updateDeliveryStatus = async (req, res) => {
 
     // Update delivery status
     order.deliveryStatus = status;
+    
+    // Update tracking URL if provided
+    if (trackingUrl !== undefined) {
+      order.trackingUrl = trackingUrl;
+    }
     
     // Add to delivery updates history
     order.deliveryUpdates.push({

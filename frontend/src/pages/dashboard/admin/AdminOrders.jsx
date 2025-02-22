@@ -49,6 +49,8 @@ const AdminOrders = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [filterStatus, setFilterStatus] = useState('all');
     const [timePeriod, setTimePeriod] = useState('all');
+    const [trackingUrl, setTrackingUrl] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
 
     const getFilteredOrdersByTime = (orders) => {
         const currentDate = new Date();
@@ -90,9 +92,11 @@ const AdminOrders = () => {
             await updateDeliveryStatus({
                 orderId,
                 status: newStatus,
-                note: `Order status updated to ${newStatus.replace(/_/g, ' ')}`
+                note: `Order status updated to ${newStatus.replace(/_/g, ' ')}`,
+                trackingUrl: newStatus === 'out_for_delivery' ? trackingUrl : ''
             }).unwrap();
             setSelectedOrder(null);
+            setTrackingUrl('');
         } catch (error) {
             console.error('Failed to update delivery status:', error);
         }
@@ -237,18 +241,35 @@ const AdminOrders = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="space-y-3">
-                                            {order.productIds.map((book) => (
-                                                <div key={book._id} className="flex items-center gap-3">
-                                                    <img 
-                                                        src={book.coverImage} 
-                                                        alt={book.title}
-                                                        className="w-12 h-16 object-cover rounded-md shadow-sm"
-                                                    />
-                                                    <div className="text-sm">
-                                                        <p className="font-medium text-gray-900 dark:text-white">{book.title}</p>
+                                            {order.productIds && order.productIds.length > 0 && order.productIds.map((item) => {
+                                                if (!item || !item.book) return null;
+                                                return (
+                                                    <div 
+                                                        key={item.book._id}
+                                                        className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2"
+                                                    >
+                                                        <img 
+                                                            src={item.book.coverImage} 
+                                                            alt={item.book.title}
+                                                            className="w-12 h-16 object-cover rounded-md shadow-sm"
+                                                        />
+                                                        <div className="min-w-0 flex-1">
+                                                            <p className="font-medium text-gray-900 dark:text-white truncate">
+                                                                {item.book.title}
+                                                            </p>
+                                                            <div className="flex items-center gap-2 mt-1">
+                                                                <p className="text-sm text-gray-600 dark:text-gray-300">
+                                                                    ₹{item.price}
+                                                                </p>
+                                                                <span className="text-sm text-gray-400 dark:text-gray-500">×</span>
+                                                                <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                                                    {item.quantity || 1}
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
@@ -280,40 +301,6 @@ const AdminOrders = () => {
                                                 >
                                                     Update Status
                                                 </button>
-
-                                                {/* Status Update Modal */}
-                                                {selectedOrder === order._id && (
-                                                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                                        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-                                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                                                Update Delivery Status
-                                                            </h3>
-                                                            <div className="space-y-2">
-                                                                {['pending', 'processing', 'out_for_delivery', 'delivered'].map((status) => (
-                                                                    <button
-                                                                        key={status}
-                                                                        onClick={() => handleStatusUpdate(order._id, status)}
-                                                                        className={`w-full px-4 py-2 rounded-lg text-sm font-medium
-                                                                                  ${order.deliveryStatus === status
-                                                                                    ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200'
-                                                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                                                                                  }`}
-                                                                    >
-                                                                        {status.replace(/_/g, ' ')}
-                                                                    </button>
-                                                                ))}
-                                                            </div>
-                                                            <button
-                                                                onClick={() => setSelectedOrder(null)}
-                                                                className="mt-4 w-full px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400
-                                                                         border border-gray-200 dark:border-gray-700 rounded-lg
-                                                                         hover:bg-gray-50 dark:hover:bg-gray-700"
-                                                            >
-                                                                Cancel
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                )}
                                             </div>
                                         </div>
                                     </td>
@@ -323,6 +310,78 @@ const AdminOrders = () => {
                     </table>
                 </div>
             </div>
+
+            {selectedOrder && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                            Update Delivery Status
+                        </h3>
+                        <div className="space-y-2">
+                            {['pending', 'processing', 'out_for_delivery', 'delivered'].map((status) => {
+                                const order = orders.find(o => o._id === selectedOrder);
+                                const isSelected = selectedStatus === status || (!selectedStatus && order?.deliveryStatus === status);
+                                
+                                return (
+                                    <div key={status}>
+                                        <button
+                                            onClick={() => {
+                                                setSelectedStatus(status);
+                                                if (status !== 'out_for_delivery') {
+                                                    handleStatusUpdate(selectedOrder, status);
+                                                }
+                                            }}
+                                            className={`w-full px-4 py-2 rounded-lg text-sm font-medium
+                                                ${isSelected
+                                                    ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200'
+                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                }`}
+                                        >
+                                            {status.replace(/_/g, ' ')}
+                                        </button>
+                                        
+                                        {/* Show tracking URL input when out_for_delivery is selected */}
+                                        {status === 'out_for_delivery' && selectedStatus === 'out_for_delivery' && (
+                                            <div className="mt-2 mb-4">
+                                                <input
+                                                    type="url"
+                                                    value={trackingUrl}
+                                                    onChange={(e) => setTrackingUrl(e.target.value)}
+                                                    placeholder="Enter tracking URL"
+                                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                                             text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700
+                                                             focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
+                                                             placeholder-gray-400 dark:placeholder-gray-500"
+                                                />
+                                                <button
+                                                    onClick={() => handleStatusUpdate(selectedOrder, 'out_for_delivery')}
+                                                    className="mt-2 w-full px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium
+                                                             hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                                                             dark:bg-indigo-500 dark:hover:bg-indigo-600"
+                                                >
+                                                    Update with Tracking URL
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <button
+                            onClick={() => {
+                                setSelectedOrder(null);
+                                setTrackingUrl('');
+                                setSelectedStatus('');
+                            }}
+                            className="mt-4 w-full px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400
+                                     border border-gray-200 dark:border-gray-700 rounded-lg
+                                     hover:bg-gray-50 dark:hover:bg-gray-700"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -81,27 +81,35 @@ const OrderCard = ({ order, index }) => {
                     Products ({order.productIds?.length || 0})
                 </p>
                 <div className="space-y-2">
-                    {order.productIds && order.productIds.length > 0 && order.productIds.map((book) => {
-                        if (!book || typeof book !== 'object') return null;
+                    {order.productIds && order.productIds.length > 0 && order.productIds.map((item) => {
+                        if (!item || !item.book) return null;
                         return (
                             <div 
-                                key={book._id}
+                                key={item.book._id}
                                 className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2"
                             >
-                                {typeof book.coverImage === 'string' && (
-                                    <img 
-                                        src={book.coverImage} 
-                                        alt={typeof book.title === 'string' ? book.title : 'Book cover'}
-                                        className="w-10 h-14 object-cover rounded shadow-sm"
-                                    />
-                                )}
+                                <img 
+                                    src={item.book.coverImage} 
+                                    alt={item.book.title}
+                                    className="w-10 h-14 object-cover rounded shadow-sm"
+                                />
                                 <div className="min-w-0 flex-1">
                                     <p className="text-sm font-medium text-gray-800 dark:text-white truncate">
-                                        {typeof book.title === 'string' ? book.title : 'Untitled Book'}
+                                        {item.book.title}
                                     </p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                                        ₹{typeof book.price === 'number' ? book.price : 0}
-                                    </p>
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            ₹{item.price}
+                                        </p>
+                                        <span className="text-xs text-gray-400 dark:text-gray-500">×</span>
+                                        <p className="text-xs font-medium text-gray-600 dark:text-gray-300">
+                                            {item.quantity || 1}
+                                        </p>
+                                        <span className="text-xs text-gray-400 dark:text-gray-500">=</span>
+                                        <p className="text-xs font-medium text-gray-600 dark:text-gray-300">
+                                            ₹{(item.price * (item.quantity || 1)).toFixed(2)}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         );

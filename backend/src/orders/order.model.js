@@ -43,13 +43,23 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    productIds:[
-        {
+    productIds:[{
+        book: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Book',
             required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true,
+            min: 1,
+            default: 1
+        },
+        price: {
+            type: Number,
+            required: true
         }
-    ],
+    }],
     totalPrice: {
         type: Number,
         required: true,
@@ -71,6 +81,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'processing', 'out_for_delivery', 'delivered'],
         default: 'pending'
+    },
+    trackingUrl: {
+        type: String,
+        default: ''
     },
     deliveryUpdates: [{
         status: String,

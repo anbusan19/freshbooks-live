@@ -46,7 +46,7 @@ const BookCard = ({book}) => {
             {/* Content Container */}
             <div className="flex-1 flex flex-col relative z-10">
                 {/* Image Container */}
-                <div className="relative w-full aspect-[3/4] mb-2 sm:mb-3 overflow-hidden rounded-lg">
+                <div className="relative w-full h-[240px] mb-3 overflow-hidden rounded-lg">
                     <Link to={`/books/${book._id}`}>
                         <img
                             src={`${book.coverImage}`}

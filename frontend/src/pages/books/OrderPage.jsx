@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi';
 import Loading from '../../components/Loading';
-import { FiPackage, FiTruck, FiCheck, FiClock } from 'react-icons/fi';
+import { FiPackage, FiTruck, FiCheck, FiClock, FiRotateCcw } from 'react-icons/fi';
 import DownloadInvoice from '../../components/DownloadInvoice';
+import ReturnPolicyModal from '../../components/ReturnPolicyModal';
 
 const DeliveryStatusBadge = ({ status }) => {
     const getStatusStyles = () => {
@@ -47,6 +48,7 @@ const DeliveryStatusBadge = ({ status }) => {
 const OrderPage = () => {
     const { currentUser } = useAuth();
     const { data: orders = [], isLoading, isError } = useGetOrderByEmailQuery(currentUser?.email);
+    const [isReturnPolicyOpen, setIsReturnPolicyOpen] = useState(false);
 
     if (isLoading) return <Loading />;
     if (isError) return (
@@ -55,13 +57,38 @@ const OrderPage = () => {
         </div>
     );
 
+    // Function to check if order is eligible for return (within 3 days of delivery)
+    const isEligibleForReturn = (order) => {
+        if (order.deliveryStatus !== 'delivered') return false;
+        
+        const deliveryUpdate = order.deliveryUpdates.find(update => update.status === 'delivered');
+        if (!deliveryUpdate) return false;
+
+        const deliveryDate = new Date(deliveryUpdate.timestamp);
+        const currentDate = new Date();
+        const daysDifference = Math.floor((currentDate - deliveryDate) / (1000 * 60 * 60 * 24));
+        
+        return daysDifference <= 3;
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-8 px-3 sm:px-4 transition-colors duration-300">
             <div className="max-w-7xl mx-auto">
                 {/* Header Section */}
-                <div className="mb-6 sm:mb-8">
-                    <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">Your Orders</h1>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">View and manage your order history</p>
+                <div className="mb-6 sm:mb-8 flex justify-between items-center">
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">Your Orders</h1>
+                        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">View and manage your order history</p>
+                    </div>
+                    <button
+                        onClick={() => setIsReturnPolicyOpen(true)}
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 
+                                 dark:text-indigo-400 dark:bg-indigo-900/30 rounded-lg hover:bg-indigo-100 
+                                 dark:hover:bg-indigo-900/50 transition-colors"
+                    >
+                        <FiRotateCcw className="w-4 h-4" />
+                        Return Policy
+                    </button>
                 </div>
 
                 {/* Orders List */}
@@ -108,10 +135,10 @@ const OrderPage = () => {
                                                 <DownloadInvoice order={{
                                                     ...order,
                                                     customerName: order.name,
-                                                    items: order.productIds.map(book => ({
-                                                        title: book.title,
-                                                        price: book.price,
-                                                        quantity: 1
+                                                    items: order.productIds.map(item => ({
+                                                        title: item.book?.title || 'Unknown Book',
+                                                        price: item.book?.price || 0,
+                                                        quantity: item.quantity || 1
                                                     })),
                                                     subtotal: order.totalPrice,
                                                     tax: order.totalPrice * 0.1,
@@ -164,29 +191,31 @@ const OrderPage = () => {
                                                 </h4>
                                                 <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
                                                     <div className="space-y-2">
-                                                        {order.productIds && order.productIds.length > 0 && order.productIds.map((book) => {
-                                                            if (!book || typeof book !== 'object') return null;
+                                                        {order.productIds && order.productIds.length > 0 && order.productIds.map((item) => {
+                                                            if (!item || !item.book) return null;
                                                             return (
                                                                 <div 
-                                                                    key={book._id}
+                                                                    key={item.book._id}
                                                                     className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2"
                                                                 >
-                                                                    {typeof book.coverImage === 'string' && (
-                                                                        <img 
-                                                                            src={book.coverImage} 
-                                                                            alt={typeof book.title === 'string' ? book.title : 'Book cover'}
-                                                                            className="w-16 h-20 object-cover rounded-lg shadow-sm"
-                                                                        />
-                                                                    )}
+                                                                    <img 
+                                                                        src={item.book.coverImage} 
+                                                                        alt={item.book.title}
+                                                                        className="w-16 h-20 object-cover rounded-lg shadow-sm"
+                                                                    />
                                                                     <div className="min-w-0 flex-1">
                                                                         <p className="text-sm font-medium text-gray-800 dark:text-white truncate">
-                                                                            {typeof book.title === 'string' ? book.title : 'Untitled Book'}
+                                                                            {item.book.title}
                                                                         </p>
-                                                                        {typeof book.price === 'number' && book.price > 0 && (
-                                                                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                                                                ₹{book.price}
+                                                                        <div className="flex items-center gap-2 mt-1">
+                                                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                                ₹{item.price}
                                                                             </p>
-                                                                        )}
+                                                                            <span className="text-xs text-gray-400 dark:text-gray-500">×</span>
+                                                                            <p className="text-xs font-medium text-gray-600 dark:text-gray-300">
+                                                                                {item.quantity || 1}
+                                                                            </p>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             );
@@ -201,7 +230,35 @@ const OrderPage = () => {
                                                     Delivery Status
                                                 </h4>
                                                 <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
-                                                    <DeliveryStatusBadge status={order.deliveryStatus || 'pending'} />
+                                                    <div className="flex items-center justify-between">
+                                                        <div className="flex items-center gap-3">
+                                                            <DeliveryStatusBadge status={order.deliveryStatus || 'pending'} />
+                                                            
+                                                            {/* Track Order Button */}
+                                                            {order.deliveryStatus === 'out_for_delivery' && order.trackingUrl && (
+                                                                <a
+                                                                    href={order.trackingUrl}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 
+                                                                             hover:bg-indigo-700 rounded-lg transition-colors duration-200
+                                                                             dark:bg-indigo-500 dark:hover:bg-indigo-600"
+                                                                >
+                                                                    <FiTruck className="w-4 h-4" />
+                                                                    Track Order
+                                                                </a>
+                                                            )}
+                                                        </div>
+
+                                                        {/* Return Eligibility Badge */}
+                                                        {isEligibleForReturn(order) && (
+                                                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full
+                                                                         bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                                <FiRotateCcw className="w-3 h-3" />
+                                                                Eligible for Return
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -222,6 +279,12 @@ const OrderPage = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Return Policy Modal */}
+            <ReturnPolicyModal 
+                isOpen={isReturnPolicyOpen}
+                onClose={() => setIsReturnPolicyOpen(false)}
+            />
         </div>
     );
 };

@@ -28,10 +28,10 @@ const ordersApi = createApi({
             providesTags: ['Orders']
         }),
         updateDeliveryStatus: builder.mutation({
-            query: ({ orderId, status, note }) => ({
+            query: ({ orderId, status, note, trackingUrl }) => ({
                 url: `/${orderId}/delivery-status`,
                 method: 'PUT',
-                body: { status, note },
+                body: { status, note, trackingUrl },
             }),
             invalidatesTags: ['Orders']
         }),
