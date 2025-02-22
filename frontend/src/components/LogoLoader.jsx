@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/freshbooks-logo.png';
+import logo from '../assets/freshbooks-navbar-logo.png';
 
 const LogoLoader = () => {
   return (
