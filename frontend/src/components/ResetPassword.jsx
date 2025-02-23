@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { FaLock } from "react-icons/fa";
+import { FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/freshbooks-navbar-logo.png';
@@ -9,6 +9,8 @@ const ResetPassword = () => {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { confirmPasswordReset } = useAuth();
@@ -93,12 +95,23 @@ const ResetPassword = () => {
                                         message: "Password must be at least 6 characters"
                                     }
                                 })}
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 dark:border-gray-600 
                                          placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700
-                                         focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                         focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm pr-12"
                                 placeholder="New password"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
+                            >
+                                {showPassword ? (
+                                    <FaEyeSlash className="w-5 h-5" />
+                                ) : (
+                                    <FaEye className="w-5 h-5" />
+                                )}
+                            </button>
                         </div>
                         {errors.password && (
                             <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.password.message}</p>
@@ -116,12 +129,23 @@ const ResetPassword = () => {
                                     required: "Please confirm your password",
                                     validate: value => value === password || "Passwords do not match"
                                 })}
-                                type="password"
+                                type={showConfirmPassword ? "text" : "password"}
                                 className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 dark:border-gray-600 
                                          placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700
-                                         focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                         focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm pr-12"
                                 placeholder="Confirm password"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
+                            >
+                                {showConfirmPassword ? (
+                                    <FaEyeSlash className="w-5 h-5" />
+                                ) : (
+                                    <FaEye className="w-5 h-5" />
+                                )}
+                            </button>
                         </div>
                         {errors.confirmPassword && (
                             <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.confirmPassword.message}</p>

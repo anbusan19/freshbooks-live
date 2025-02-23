@@ -5,6 +5,7 @@ import Loading from '../../components/Loading';
 import { FiPackage, FiTruck, FiCheck, FiClock, FiRotateCcw } from 'react-icons/fi';
 import DownloadInvoice from '../../components/DownloadInvoice';
 import ReturnPolicyModal from '../../components/ReturnPolicyModal';
+import OrderStatusProgress from '../../components/OrderStatusProgress';
 
 const DeliveryStatusBadge = ({ status }) => {
     const getStatusStyles = () => {
@@ -136,18 +137,22 @@ const OrderPage = () => {
                                             {/* Customer Info */}
                                             <div className="space-y-3">
                                                 <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                    Customer Details
+                                                    Order Status
                                                 </h4>
-                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 space-y-2">
-                                                    <p className="text-sm text-gray-800 dark:text-gray-200">
-                                                        <span className="font-medium">Name:</span> {order.name}
-                                                    </p>
-                                                    <p className="text-sm text-gray-800 dark:text-gray-200">
-                                                        <span className="font-medium">Email:</span> {order.email}
-                                                    </p>
-                                                    <p className="text-sm text-gray-800 dark:text-gray-200">
-                                                        <span className="font-medium">Phone:</span> {order.phone}
-                                                    </p>
+                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3">
+                                                    <div className="space-y-4">
+                                                        <OrderStatusProgress 
+                                                            status={order.deliveryStatus} 
+                                                            trackingUrl={order.trackingUrl}
+                                                        />
+                                                        {isEligibleForReturn(order) && (
+                                                            <div className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg
+                                                                         bg-green-100/80 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                                <FiRotateCcw className="w-3.5 h-3.5" />
+                                                                <span>Eligible for Return</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -201,39 +206,6 @@ const OrderPage = () => {
                                                                 </div>
                                                             );
                                                         })}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Delivery Status - Full Width */}
-                                            <div className="col-span-full">
-                                                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
-                                                    Delivery Status
-                                                </h4>
-                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3">
-                                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                                        <div className="flex items-center gap-3">
-                                                            <DeliveryStatusBadge status={order.deliveryStatus || 'pending'} />
-                                                            
-                                                            {order.trackingUrl && (
-                                                                <a
-                                                                    href={order.trackingUrl}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
-                                                                >
-                                                                    Track Order
-                                                                </a>
-                                                            )}
-                                                        </div>
-                                                        
-                                                        {isEligibleForReturn(order) && (
-                                                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full
-                                                                         bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                                                <FiRotateCcw className="w-3 h-3" />
-                                                                Eligible for Return
-                                                            </span>
-                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

@@ -7,14 +7,6 @@ const TermsOfServicePopup = ({ isOpen, onClose }) => {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
             <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-2xl shadow-xl">
-                {/* Close Button */}
-                <button 
-                    onClick={onClose}
-                    className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
-                >
-                    <IoMdClose size={24} />
-                </button>
-
                 {/* Content */}
                 <div className="p-6 sm:p-8">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">Terms of Service</h2>
@@ -110,6 +102,16 @@ const TermsOfServicePopup = ({ isOpen, onClose }) => {
                                 <p><strong>Email:</strong> support@freshbooks.in</p>
                             </div>
                         </section>
+                    </div>
+
+                    {/* Close Button */}
+                    <div className="mt-8 flex justify-end">
+                        <button 
+                            onClick={onClose}
+                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                        >
+                            Close
+                        </button>
                     </div>
                 </div>
             </div>

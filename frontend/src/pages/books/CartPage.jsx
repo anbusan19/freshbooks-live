@@ -71,7 +71,7 @@ const CartPage = () => {
                     <div className="p-4 md:p-8">
                         {/* Header */}
                         <div className="flex items-center justify-between mb-4 md:mb-8">
-                            <h1 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-white">Shopping Cart</h1>
+                            <h1 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-white">Shopping Bag</h1>
                             {cartItems.length > 0 && (
                                 <button
                                     onClick={handleClearCart}
@@ -81,7 +81,7 @@ const CartPage = () => {
                                              text-xs sm:text-base"
                                 >
                                     <FiTrash2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                                    <span className="hidden sm:inline">Clear Cart</span>
+                                    <span className="hidden sm:inline">Clear Bag</span>
                                 </button>
                             )}
                         </div>
@@ -181,10 +181,10 @@ const CartPage = () => {
                                     <FiShoppingBag className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 dark:text-gray-500" />
                                 </div>
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-2 sm:mb-4">
-                                    Your cart is empty
+                                    Your Bag is empty
                                 </h2>
                                 <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-6 sm:mb-8">
-                                    Looks like you haven't added any books to your cart yet.
+                                    Looks like you haven't added any books to your Bag yet.
                                 </p>
                                 <Link
                                     to="/"

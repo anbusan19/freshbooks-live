@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
-import { FiPhone, FiMail } from "react-icons/fi"
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa"
 import { Link } from 'react-router-dom'
 import navbarLogo from "../assets/freshbooks-navbar-logo.png"
 import PrivacyPolicyPopup from './PrivacyPolicyPopup'
@@ -15,160 +14,145 @@ const Footer = () => {
   const [isTermsOfServiceOpen, setIsTermsOfServiceOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isReturnPolicyOpen, setIsReturnPolicyOpen] = useState(false);
+  const [isCareerPopupOpen, setIsCareerPopupOpen] = useState(false);
+  const [isFranchisePopupOpen, setIsFranchisePopupOpen] = useState(false);
 
   return (
     <>
-      <footer className="relative bg-gradient-to-b from-transparent to-white/80 dark:to-black/40 backdrop-blur-xl border-t border-gray-200/20 dark:border-gray-800/20 w-full">
-        {/* Background Effects */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-100/30 dark:bg-purple-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-100/30 dark:bg-indigo-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-        </div>
+      <footer className="bg-white dark:bg-gray-900 relative z-30">
+        <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+          <div className="md:flex md:justify-between gap-12">
+            {/* Logo Section */}
+            <div className="mb-6 md:mb-0 max-w-xs">
+              <Link to="/" className="flex items-center">
+                <img src={navbarLogo} className="h-12 w-auto" alt="Freshbooks Logo" />
+              </Link>
+              <p className="mt-6 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                Discover a world of books at your fingertips. Your one-stop destination for all your reading needs.
+              </p>
+            </div>
 
-        {/* Content */}
-        <div className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
-            {/* Logo and About */}
-            <div className="space-y-6">
-              <div className="relative">
-                {/* Left-side stronger glow */}
-                <div className="absolute -left-4 -top-4 bottom-0 w-12 dark:bg-white/30 dark:blur-2xl dark:rounded-full"></div>
-                {/* Main glow */}
-                <div className="absolute inset-0 dark:bg-white/20 dark:blur-2xl dark:rounded-full"></div>
-                <div className="relative p-1.5">
-                  <img 
-                    src={navbarLogo}
-                    alt="Freshbooks" 
-                    className="h-12 w-auto brightness-90 dark:brightness-200 dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.8)] dark:filter dark:contrast-150"
-                  />
-                </div>
+            {/* Footer Links Grid */}
+            <div className="grid grid-cols-2 gap-8 sm:gap-12 sm:grid-cols-5 pr-4">
+              {/* Categories */}
+              <div>
+                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Categories</h2>
+                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                  <li>
+                    <Link to="/category/self-development" className="hover:text-blue-600 transition-colors">Self Development</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/business" className="hover:text-blue-600 transition-colors">Business</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/mystery-thriller" className="hover:text-blue-600 transition-colors">Mystery & Crime Thriller</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/romance" className="hover:text-blue-600 transition-colors">Romance Novels</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/kids" className="hover:text-blue-600 transition-colors">Kids Books</Link>
+                  </li>
+                </ul>
               </div>
-              <div className="space-y-4">
-                <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Discover a world of books at your fingertips. Your one-stop destination for all your reading needs.
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-                    <FiPhone className="w-4 h-4" />
-                    <span className="text-base">+91 9962126356</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-                    <FiMail className="w-4 h-4" />
-                    <span className="text-base">support@freshbooks.in</span>
-                  </div>
-                </div>
+
+              {/* Useful Links */}
+              <div>
+                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Useful Links</h2>
+                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                  <li>
+                    <Link to="/dashboard" className="hover:text-blue-600 transition-colors">My Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/wishlist" className="hover:text-blue-600 transition-colors">My Wishlist</Link>
+                  </li>
+                  <li>
+                    <Link to="/orders" className="hover:text-blue-600 transition-colors">My Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/orders" className="hover:text-blue-600 transition-colors">Track Order</Link>
+                  </li>
+                  <li>
+                    <button onClick={() => setIsCareerPopupOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Career</button>
+                  </li>
+                </ul>
               </div>
-            </div>
 
-            {/* Quick Links */}
-            <div className="lg:ml-auto">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Quick Links</h3>
-              <ul className="space-y-4">
-                <li>
-                  <Link to="/" className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/books" className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                    Books
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about" className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    onClick={() => setIsContactOpen(true)}
-                    className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    Contact
-                  </button>
-                </li>
-              </ul>
-            </div>
+              {/* Quick Links */}
+              <div>
+                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Quick Links</h2>
+                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                  <li>
+                    <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/books" className="hover:text-blue-600 transition-colors">All Books</Link>
+                  </li>
+                  <li>
+                    <button onClick={() => setIsContactOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Contact Us</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setIsFranchisePopupOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Become a Franchisee</button>
+                  </li>
+                </ul>
+              </div>
 
-            {/* Legal */}
-            <div className="lg:ml-auto">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Legal</h3>
-              <ul className="space-y-4">
-                <li>
-                  <button 
-                    onClick={() => setIsPrivacyPolicyOpen(true)}
-                    className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    Privacy Policy
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setIsTermsOfServiceOpen(true)}
-                    className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    Terms of Service
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => setIsReturnPolicyOpen(true)}
-                    className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    Return Policy
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setIsPaymentMethodsOpen(true)}
-                    className="text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    Payment Methods
-                  </button>
-                </li>
-              </ul>
-            </div>
+              {/* Legal */}
+              <div>
+                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
+                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                  <li>
+                    <button onClick={() => setIsPrivacyPolicyOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Privacy Policy</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setIsTermsOfServiceOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Terms of Service</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setIsReturnPolicyOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Return Policy</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setIsPaymentMethodsOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Payment Methods</button>
+                  </li>
+                </ul>
+              </div>
 
-            {/* Social Links */}
-            <div className="lg:ml-auto">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Connect With Us</h3>
-              <div className="flex flex-col space-y-4">
+              {/* Chat with Us */}
+              <div>
+                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Chat with Us</h2>
                 <a
-                  href="https://facebook.com"
+                  href="https://wa.me/+919962126356"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                  className="inline-flex items-center px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                 >
-                  <FaFacebook className="w-5 h-5" />
-                  <span>Facebook</span>
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                >
-                  <FaTwitter className="w-5 h-5" />
-                  <span>Twitter</span>
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-base text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                >
-                  <FaInstagram className="w-5 h-5" />
-                  <span>Instagram</span>
+                  <FaWhatsapp className="w-5 h-5" />
+                  <span className="ml-2 text-sm whitespace-nowrap">WhatsApp Support</span>
                 </a>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Bottom Section */}
-          <div className="pt-8 mt-8 border-t border-gray-200/20 dark:border-gray-800/20">
-            <p className="text-base text-center text-gray-600 dark:text-gray-300">
-              © {new Date().getFullYear()} Freshbooks. All rights reserved. | Crafted by <span className="font-medium">Softrate Technologies (P) Ltd.</span>
-            </p>
+        <hr className="my-8 border-gray-200 dark:border-gray-700" />
+          
+        <div className="mx-auto w-full max-w-screen-xl p-4 pb-24 sm:pb-20">
+          <div className="sm:flex sm:items-center sm:justify-between">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              © {new Date().getFullYear()} Freshbooks. All rights reserved. | Crafted by <b>Softrate Technologies (P) Ltd.</b>
+            </span>
+            
+            {/* Social Links */}
+            <div className="flex mt-4 sm:mt-0 space-x-6">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white transition-colors">
+                <FaFacebook className="w-5 h-5" />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-400 dark:text-gray-400 dark:hover:text-white transition-colors">
+                <FaTwitter className="w-5 h-5" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-white transition-colors">
+                <FaInstagram className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
       </footer>
@@ -194,6 +178,83 @@ const Footer = () => {
         isOpen={isReturnPolicyOpen}
         onClose={() => setIsReturnPolicyOpen(false)}
       />
+      
+      {/* Career Popup */}
+      {isCareerPopupOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
+            <h2 className="text-2xl font-bold mb-4 text-blue-600">Join Our Team</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              Are you passionate about books and technology? At Freshbooks, we're building the future of online book retail.
+            </p>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              We're looking for talented individuals who share our vision of making books accessible to everyone.
+            </p>
+            <p className="mb-6 text-gray-700 dark:text-gray-300">
+              Send your resume to: <a href="mailto:careers@freshbooks.com" className="text-blue-600 hover:underline">careers@freshbooks.com</a>
+            </p>
+            <button
+              onClick={() => setIsCareerPopupOpen(false)}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Franchise Popup */}
+      {isFranchisePopupOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full p-6">
+            <h2 className="text-2xl font-bold mb-4 text-blue-600">Become A Freshbooks Partner</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Why Partner With Us?</h3>
+                <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start">
+                    <span className="mr-2">•</span>
+                    Access to extensive book collection
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">•</span>
+                    State-of-the-art inventory management system
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">•</span>
+                    Marketing and operational support
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">•</span>
+                    Proven business model
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xl mb-4 text-gray-800 dark:text-white">Start Your Journey With Us</h3>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  Join India's fastest-growing online bookstore network. Partner with Freshbooks and be part of the digital reading revolution.
+                </p>
+                <p className="mb-6 text-gray-700 dark:text-gray-300">
+                  For partnership inquiries, contact us at: <a href="mailto:franchise@freshbooks.com" className="text-blue-600 hover:underline">franchise@freshbooks.com</a>
+                </p>
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mr-4"
+                  onClick={() => window.location.href = 'mailto:franchise@freshbooks.com'}
+                >
+                  Send Inquiry
+                </button>
+                <button
+                  onClick={() => setIsFranchisePopupOpen(false)}
+                  className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

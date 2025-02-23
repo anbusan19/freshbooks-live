@@ -60,7 +60,7 @@ const BooksPage = () => {
     }
 
     return (
-        <div className="books-page-container min-h-screen pb-24 pt-16 px-4 md:px-8 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+        <div className="books-page-container min-h-screen pb-32 sm:pb-28 pt-16 px-4 md:px-8 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
             {/* Aural Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {/* Gradient Blobs */}
@@ -92,7 +92,7 @@ const BooksPage = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 animate-fade-in animation-delay-600">
                     {sortedBooks.map((book, index) => (
                         <div key={book._id} 
-                             className={`animate-fade-in transform transition-transform duration-300 hover:-translate-y-1`} 
+                             className={`animate-fade-in transform transition-transform duration-300 hover:-translate-y-1 w-full h-full`} 
                              style={{ animationDelay: `${(index % 5) * 100}ms` }}>
                             <BookCard book={book} />
                         </div>

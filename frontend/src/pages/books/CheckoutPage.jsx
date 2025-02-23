@@ -13,17 +13,16 @@ import TermsOfServicePopup from '../../components/TermsOfServicePopup';
 
 const CheckoutPage = () => {
     const [message, setMessage] = useState("");
-    const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
-    const [isTermsChecked, setIsTermsChecked] = useState(false);
+    const [isAgreementChecked, setIsAgreementChecked] = useState(false);
     const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
     const [isTermsOfServiceOpen, setIsTermsOfServiceOpen] = useState(false);
+    const [stateQuery, setStateQuery] = useState("");
+    const [showStateSuggestions, setShowStateSuggestions] = useState(false);
+    const indianStates = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
     const cartItems = useSelector(state => state.cart.cartItems);
     const subtotal = cartItems.reduce((acc, item) => acc + (item.newPrice * item.quantity), 0);
-    const gstAmount = cartItems.reduce((acc, item) => {
-        const itemGst = (item.newPrice * item.quantity) * (item.gst / 100);
-        return acc + itemGst;
-    }, 0);
-    const totalPrice = (subtotal + gstAmount).toFixed(2);
+    const shippingCharges = subtotal >= 1000 ? 0 : 100;
+    const totalPrice = (subtotal + shippingCharges).toFixed(2);
     const { currentUser } = useAuth();
     const {
         register,
@@ -108,7 +107,7 @@ const CheckoutPage = () => {
     };
 
     const onSubmit = async (data) => {
-        if (!isPrivacyChecked || !isTermsChecked) {
+        if (!isAgreementChecked) {
             Swal.fire({
                 title: "Agreement Required",
                 text: "Please agree to our Privacy Policy and Terms of Service to proceed",
@@ -188,15 +187,28 @@ const CheckoutPage = () => {
                                     <div className="flex items-center gap-2 sm:gap-3 bg-green-50/50 dark:bg-green-900/30 px-2 sm:px-4 py-2 rounded-lg">
                                         <FiTruck className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400" />
                                         <div>
-                                            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">GST</p>
-                                            <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">₹{gstAmount.toFixed(2)}</p>
+                                            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Shipping</p>
+                                            <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
+                                                {shippingCharges === 0 ? (
+                                                    <span className="text-green-600 dark:text-green-400">FREE</span>
+                                                ) : (
+                                                    `₹${shippingCharges}`
+                                                )}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="mt-4 p-3 bg-gray-50/50 dark:bg-gray-700/30 rounded-lg">
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-sm sm:text-base font-medium text-gray-800 dark:text-white">Total Amount</span>
-                                        <span className="text-lg sm:text-xl font-bold text-indigo-600 dark:text-indigo-400">₹{totalPrice}</span>
+                                    <div className="flex flex-col gap-1">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm sm:text-base font-medium text-gray-800 dark:text-white">Total Amount</span>
+                                            <span className="text-lg sm:text-xl font-bold text-indigo-600 dark:text-indigo-400">₹{totalPrice}</span>
+                                        </div>
+                                        {subtotal < 1000 && (
+                                            <p className="text-xs text-gray-600 dark:text-gray-400">
+                                                Add items worth ₹{(1000 - subtotal).toFixed(2)} more for free shipping
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -320,18 +332,44 @@ const CheckoutPage = () => {
                                             {errors.city && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">City is required</p>}
                                         </div>
 
-                                        <div>
+                                        <div className="relative">
                                             <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">State</label>
                                             <input
                                                 {...register("state", { required: true })}
                                                 type="text"
                                                 placeholder="e.g., Tamil Nadu"
+                                                value={stateQuery}
+                                                onChange={(e) => {
+                                                    setStateQuery(e.target.value);
+                                                    setShowStateSuggestions(true);
+                                                }}
                                                 className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
                                                          text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                                                          focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent
                                                          transition-all duration-200"
                                             />
                                             {errors.state && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">State is required</p>}
+                                            
+                                            {/* State Suggestions */}
+                                            {showStateSuggestions && stateQuery && (
+                                                <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                                    {indianStates
+                                                        .filter(state => state.toLowerCase().includes(stateQuery.toLowerCase()))
+                                                        .map((state, index) => (
+                                                            <button
+                                                                key={index}
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setStateQuery(state);
+                                                                    setShowStateSuggestions(false);
+                                                                }}
+                                                                className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                            >
+                                                                {state}
+                                                            </button>
+                                                        ))}
+                                                </div>
+                                            )}
                                         </div>
 
                                         <div>
@@ -371,16 +409,16 @@ const CheckoutPage = () => {
                                 </div>
 
                                 {/* Agreements Section */}
-                                <div className="mt-6 space-y-3">
+                                <div className="mt-6">
                                     <div className="flex items-start gap-2">
                                         <input
                                             type="checkbox"
-                                            id="privacy-policy"
-                                            checked={isPrivacyChecked}
-                                            onChange={(e) => setIsPrivacyChecked(e.target.checked)}
+                                            id="agreements"
+                                            checked={isAgreementChecked}
+                                            onChange={(e) => setIsAgreementChecked(e.target.checked)}
                                             className="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-indigo-400"
                                         />
-                                        <label htmlFor="privacy-policy" className="text-sm text-gray-600 dark:text-gray-300">
+                                        <label htmlFor="agreements" className="text-sm text-gray-600 dark:text-gray-300">
                                             I agree to the{' '}
                                             <button
                                                 type="button"
@@ -389,19 +427,7 @@ const CheckoutPage = () => {
                                             >
                                                 Privacy Policy
                                             </button>
-                                        </label>
-                                    </div>
-
-                                    <div className="flex items-start gap-2">
-                                        <input
-                                            type="checkbox"
-                                            id="terms-of-service"
-                                            checked={isTermsChecked}
-                                            onChange={(e) => setIsTermsChecked(e.target.checked)}
-                                            className="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-indigo-400"
-                                        />
-                                        <label htmlFor="terms-of-service" className="text-sm text-gray-600 dark:text-gray-300">
-                                            I agree to the{' '}
+                                            {' '}and{' '}
                                             <button
                                                 type="button"
                                                 onClick={() => setIsTermsOfServiceOpen(true)}

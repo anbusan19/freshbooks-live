@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { FiUser, FiLock, FiLogIn } from "react-icons/fi"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 import getBaseUrl from '../utils/baseURL'
@@ -9,6 +10,7 @@ import logo from '../assets/freshbooks-logo.png'
 const AdminLogin = () => {
     const [message, setMessage] = useState("")
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const {
         register,
         handleSubmit,
@@ -106,13 +108,24 @@ const AdminLogin = () => {
                     </div>
                                 <div className="relative group">
                                     <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 text-indigo-500 transition-colors group-focus-within:text-indigo-600" />
-                        <input
-                            {...register("password", { required: true })}
-                                        type="password"
+                                    <input
+                                        {...register("password", { required: true })}
+                                        type={showPassword ? "text" : "password"}
                                         placeholder="Password"
-                                        className="w-full bg-white/50 backdrop-blur-sm border border-gray-200 rounded-lg px-12 py-3 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-gray-400"
-                        />
-                    </div>
+                                        className="w-full bg-white/50 backdrop-blur-sm border border-gray-200 rounded-lg px-12 py-3 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-gray-400 pr-12"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                                    >
+                                        {showPassword ? (
+                                            <FaEyeSlash className="w-5 h-5" />
+                                        ) : (
+                                            <FaEye className="w-5 h-5" />
+                                        )}
+                                    </button>
+                                </div>
                             </div>
 
                             {message && <p className="text-red-500 text-sm">{message}</p>}

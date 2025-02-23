@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaEnvelope, FaLock, FaUserPlus } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaUserPlus, FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { useAuth } from '../context/AuthContext';
@@ -9,6 +9,7 @@ import logo from '../assets/freshbooks-navbar-logo.png';
 const Register = () => {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const { registerUser, signInWithGoogle } = useAuth();
     const navigate = useNavigate();
     const {
@@ -91,14 +92,25 @@ const Register = () => {
                                     <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
                                     <input
                                         {...register("password", { required: true })}
-                                        type="password"
+                                        type={showPassword ? "text" : "password"}
                                         placeholder="Password"
                                         className="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg px-10 py-3 
                                                  text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400
                                                  focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 
                                                  focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 
-                                                 transition-all"
+                                                 transition-all pr-12"
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
+                                    >
+                                        {showPassword ? (
+                                            <FaEyeSlash className="w-5 h-5" />
+                                        ) : (
+                                            <FaEye className="w-5 h-5" />
+                                        )}
+                                    </button>
                                 </div>
                             </div>
 
