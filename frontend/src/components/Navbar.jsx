@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoSearchOutline, IoLocationOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 import ThemeToggle from './ThemeToggle';
 import avatarImg from "../assets/avatar.png"
@@ -78,7 +78,7 @@ const Navbar = () => {
             <nav className="bg-gray-50/98 dark:bg-[#2A2A2E]/98 backdrop-blur-md border-b border-gray-200/30 dark:border-gray-600/20 shadow-lg transition-all duration-300">
                 <div className="w-full px-2 sm:px-4 lg:px-6">
                     <div className="flex justify-between items-center h-16">
-                        {/* Left side - Logo */}
+                        {/* Left side - Logo and Location */}
                         <div className="flex items-center gap-4">
                             <Link to="/" className="flex-shrink-0">
                                 <div className="relative">
@@ -95,6 +95,15 @@ const Navbar = () => {
                                     </div>
                                 </div>
                             </Link>
+                            <a 
+                                href="https://g.co/kgs/K2XM88M"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all"
+                                title="Visit our store"
+                            >
+                                <IoLocationOutline className="w-6 h-6" />
+                            </a>
                         </div>
 
                         {/* Middle - Search (Desktop) */}
