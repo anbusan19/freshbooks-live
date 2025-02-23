@@ -72,19 +72,19 @@ const OrderPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-8 px-3 sm:px-4 transition-colors duration-300">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-8 px-2 sm:px-4 transition-colors duration-300">
             <div className="max-w-7xl mx-auto">
                 {/* Header Section */}
-                <div className="mb-6 sm:mb-8 flex justify-between items-center">
+                <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div>
                         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">Your Orders</h1>
                         <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1">View and manage your order history</p>
                     </div>
                     <button
                         onClick={() => setIsReturnPolicyOpen(true)}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 
+                        className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 
                                  dark:text-indigo-400 dark:bg-indigo-900/30 rounded-lg hover:bg-indigo-100 
-                                 dark:hover:bg-indigo-900/50 transition-colors"
+                                 dark:hover:bg-indigo-900/50 transition-colors whitespace-nowrap"
                     >
                         <FiRotateCcw className="w-4 h-4" />
                         Return Policy
@@ -93,25 +93,25 @@ const OrderPage = () => {
 
                 {/* Orders List */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                    <div className="p-4 sm:p-6">
+                    <div className="p-3 sm:p-6">
                         {orders.length > 0 ? (
                             <div className="space-y-4 sm:space-y-6">
                                 {orders.map((order, index) => (
                                     <div 
                                         key={order._id}
-                                        className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 sm:p-6 transition-all duration-200
+                                        className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 sm:p-6 transition-all duration-200
                                                  hover:shadow-md border border-gray-200/50 dark:border-gray-600/50"
                                     >
                                         {/* Order Header */}
-                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
+                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 sm:mb-6">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/30 rounded-full">
+                                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex-shrink-0">
                                                     <span className="text-base sm:text-lg font-semibold text-indigo-600 dark:text-indigo-400">
                                                         #{index + 1}
                                                     </span>
                                                 </div>
-                                                <div>
-                                                    <h3 className="text-sm sm:text-base font-medium text-gray-800 dark:text-white">
+                                                <div className="min-w-0">
+                                                    <h3 className="text-sm sm:text-base font-medium text-gray-800 dark:text-white truncate">
                                                         Order #{order._id.slice(-8)}
                                                     </h3>
                                                     <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
@@ -123,74 +123,58 @@ const OrderPage = () => {
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-4">
-                                                <div className="text-right">
-                                                    <span className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 block">
-                                                        Total Amount
-                                                    </span>
-                                                    <p className="text-base sm:text-lg font-semibold text-indigo-600 dark:text-indigo-400">
-                                                        ₹{order.totalPrice}
-                                                    </p>
-                                                </div>
-                                                <DownloadInvoice order={{
-                                                    ...order,
-                                                    customerName: order.name,
-                                                    items: order.productIds.map(item => ({
-                                                        title: item.book?.title || 'Unknown Book',
-                                                        price: item.book?.price || 0,
-                                                        quantity: item.quantity || 1
-                                                    })),
-                                                    subtotal: order.totalPrice,
-                                                    tax: order.totalPrice * 0.1,
-                                                    totalAmount: order.totalPrice,
-                                                    shippingAddress: `${order.address.houseNo}, ${order.address.street}, ${order.address.area}, ${order.address.city}, ${order.address.state}, ${order.address.country} - ${order.address.zipcode}`
-                                                }} />
+                                            <div className="flex items-center gap-3 flex-wrap">
+                                                <DownloadInvoice order={order} />
+                                                <span className="text-sm sm:text-base font-medium text-gray-800 dark:text-white whitespace-nowrap">
+                                                    ₹{order.totalPrice}
+                                                </span>
                                             </div>
                                         </div>
 
-                                        {/* Order Details */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                                            {/* Customer Info and Address */}
-                                            <div className="space-y-4 md:col-span-2">
-                                                <div>
-                                                    <h4 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                                                        Customer Details
-                                                    </h4>
-                                                    <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4 space-y-2">
-                                                        <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200">
-                                                            <span className="font-medium">Name:</span> {order.name}
-                                                        </p>
-                                                        <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200">
-                                                            <span className="font-medium">Email:</span> {order.email}
-                                                        </p>
-                                                        <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200">
-                                                            <span className="font-medium">Phone:</span> {order.phone}
-                                                        </p>
-                                                    </div>
+                                        {/* Grid Layout */}
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                                            {/* Customer Info */}
+                                            <div className="space-y-3">
+                                                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                    Customer Details
+                                                </h4>
+                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 space-y-2">
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">
+                                                        <span className="font-medium">Name:</span> {order.name}
+                                                    </p>
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">
+                                                        <span className="font-medium">Email:</span> {order.email}
+                                                    </p>
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">
+                                                        <span className="font-medium">Phone:</span> {order.phone}
+                                                    </p>
                                                 </div>
-                                                
-                                                <div>
-                                                    <h4 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                                                        Shipping Address
-                                                    </h4>
-                                                    <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
-                                                        <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 space-y-1">
-                                                            <span className="block">{order.address.houseNo}, {order.address.street}</span>
-                                                            <span className="block">{order.address.area}</span>
-                                                            <span className="block">{order.address.city}, {order.address.state}</span>
-                                                            <span className="block">{order.address.country} - {order.address.zipcode}</span>
-                                                        </p>
-                                                    </div>
+                                            </div>
+
+                                            {/* Shipping Address */}
+                                            <div className="space-y-3">
+                                                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                    Shipping Address
+                                                </h4>
+                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 space-y-1">
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">{order.address?.houseNo}</p>
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">{order.address?.street}</p>
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">{order.address?.area}</p>
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">
+                                                        {order.address?.city}, {order.address?.state}
+                                                    </p>
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">{order.address?.country}</p>
+                                                    <p className="text-sm text-gray-800 dark:text-gray-200">PIN: {order.address?.zipcode}</p>
                                                 </div>
                                             </div>
 
                                             {/* Products */}
-                                            <div>
-                                                <h4 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                                            <div className="space-y-3 sm:col-span-2 lg:col-span-1">
+                                                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
                                                     Products ({order.productIds?.length || 0})
                                                 </h4>
-                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
-                                                    <div className="space-y-2">
+                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3">
+                                                    <div className="space-y-2 max-h-40 overflow-y-auto">
                                                         {order.productIds && order.productIds.length > 0 && order.productIds.map((item) => {
                                                             if (!item || !item.book) return null;
                                                             return (
@@ -201,21 +185,18 @@ const OrderPage = () => {
                                                                     <img 
                                                                         src={item.book.coverImage} 
                                                                         alt={item.book.title}
-                                                                        className="w-16 h-20 object-cover rounded-lg shadow-sm"
+                                                                        className="w-12 h-16 object-cover rounded"
                                                                     />
-                                                                    <div className="min-w-0 flex-1">
-                                                                        <p className="text-sm font-medium text-gray-800 dark:text-white truncate">
+                                                                    <div className="flex-1 min-w-0">
+                                                                        <h5 className="text-sm font-medium text-gray-800 dark:text-white truncate">
                                                                             {item.book.title}
+                                                                        </h5>
+                                                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                            Quantity: {item.quantity}
                                                                         </p>
-                                                                        <div className="flex items-center gap-2 mt-1">
-                                                                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                                                ₹{item.price}
-                                                                            </p>
-                                                                            <span className="text-xs text-gray-400 dark:text-gray-500">×</span>
-                                                                            <p className="text-xs font-medium text-gray-600 dark:text-gray-300">
-                                                                                {item.quantity || 1}
-                                                                            </p>
-                                                                        </div>
+                                                                        <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">
+                                                                            ₹{item.price * item.quantity}
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                             );
@@ -224,33 +205,28 @@ const OrderPage = () => {
                                                 </div>
                                             </div>
 
-                                            {/* Delivery Status */}
-                                            <div className="md:col-span-3">
-                                                <h4 className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                                            {/* Delivery Status - Full Width */}
+                                            <div className="col-span-full">
+                                                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
                                                     Delivery Status
                                                 </h4>
-                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3 sm:p-4">
-                                                    <div className="flex items-center justify-between">
+                                                <div className="bg-white dark:bg-gray-800/50 rounded-lg p-3">
+                                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                                         <div className="flex items-center gap-3">
                                                             <DeliveryStatusBadge status={order.deliveryStatus || 'pending'} />
                                                             
-                                                            {/* Track Order Button */}
-                                                            {order.deliveryStatus === 'out_for_delivery' && order.trackingUrl && (
+                                                            {order.trackingUrl && (
                                                                 <a
                                                                     href={order.trackingUrl}
                                                                     target="_blank"
                                                                     rel="noopener noreferrer"
-                                                                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 
-                                                                             hover:bg-indigo-700 rounded-lg transition-colors duration-200
-                                                                             dark:bg-indigo-500 dark:hover:bg-indigo-600"
+                                                                    className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
                                                                 >
-                                                                    <FiTruck className="w-4 h-4" />
                                                                     Track Order
                                                                 </a>
                                                             )}
                                                         </div>
-
-                                                        {/* Return Eligibility Badge */}
+                                                        
                                                         {isEligibleForReturn(order) && (
                                                             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full
                                                                          bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
