@@ -11,12 +11,11 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginBottom: 30,
+        marginBottom: 20,
     },
     logo: {
-        width: 130,
-        height: 45,
+        width: 120,
+        height: 40,
         objectFit: 'contain'
     },
     headerRight: {
@@ -25,36 +24,25 @@ const styles = StyleSheet.create({
     },
     invoiceInfo: {
         fontSize: 10,
-        color: '#666666',
+        color: '#333333',
         marginBottom: 4,
     },
-    invoiceTitle: {
-        fontSize: 24,
-        color: '#6366F1',
-        marginBottom: 20,
-        fontWeight: 'bold',
+    addressSection: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 30,
     },
-    companyInfo: {
-        marginBottom: 20,
-        backgroundColor: '#F9FAFB',
-        padding: 15,
-        borderRadius: 4,
+    addressBlock: {
+        width: '45%',
     },
-    billTo: {
-        marginBottom: 20,
-        backgroundColor: '#F9FAFB',
-        padding: 15,
-        borderRadius: 4,
-    },
-    sectionTitle: {
+    addressTitle: {
         fontSize: 10,
-        color: '#111827',
-        fontWeight: 'bold',
+        color: '#333333',
         marginBottom: 8,
     },
-    text: {
+    addressText: {
         fontSize: 10,
-        color: '#4B5563',
+        color: '#666666',
         marginBottom: 4,
     },
     table: {
@@ -63,82 +51,96 @@ const styles = StyleSheet.create({
     },
     tableHeader: {
         flexDirection: 'row',
-        backgroundColor: '#6366F1',
-        padding: 8,
-        color: '#FFFFFF',
-        fontWeight: 'bold',
+        borderBottomWidth: 1,
+        borderBottomColor: '#EEEEEE',
+        paddingBottom: 8,
+        marginBottom: 8,
     },
     tableRow: {
         flexDirection: 'row',
-        borderBottomColor: '#E5E7EB',
+        paddingVertical: 8,
         borderBottomWidth: 1,
-        padding: 8,
+        borderBottomColor: '#EEEEEE',
     },
-    itemColumn: {
+    productColumn: {
         flex: 2,
         fontSize: 10,
+        color: '#333333',
     },
-    qtyColumn: {
+    quantityColumn: {
         flex: 1,
         fontSize: 10,
+        color: '#333333',
         textAlign: 'center',
     },
-    priceColumn: {
+    rateColumn: {
         flex: 1,
         fontSize: 10,
+        color: '#333333',
         textAlign: 'right',
     },
-    totalColumn: {
+    amountColumn: {
         flex: 1,
         fontSize: 10,
+        color: '#333333',
         textAlign: 'right',
     },
     summarySection: {
         marginTop: 20,
-        paddingTop: 10,
+        alignItems: 'flex-end',
     },
     summaryRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 4,
+        justifyContent: 'flex-end',
+        marginBottom: 4,
     },
-    summaryText: {
+    summaryLabel: {
         fontSize: 10,
-        color: '#4B5563',
+        color: '#666666',
+        width: 100,
     },
-    summaryAmount: {
+    summaryValue: {
         fontSize: 10,
-        color: '#111827',
-        fontWeight: 'bold',
+        color: '#333333',
+        width: 100,
+        textAlign: 'right',
     },
-    totalAmount: {
+    totalRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: '#6366F1',
-        padding: 10,
+        justifyContent: 'flex-end',
         marginTop: 8,
-        borderRadius: 4,
-    },
-    totalAmountText: {
-        fontSize: 12,
-        color: '#FFFFFF',
-        fontWeight: 'bold',
+        paddingTop: 8,
+        borderTopWidth: 1,
+        borderTopColor: '#EEEEEE',
     },
     paymentDetails: {
-        marginTop: 20,
-        backgroundColor: '#F9FAFB',
-        padding: 15,
-        borderRadius: 4,
+        marginTop: 30,
+        paddingTop: 20,
+        borderTopWidth: 1,
+        borderTopColor: '#EEEEEE',
+    },
+    paymentTitle: {
+        fontSize: 10,
+        color: '#333333',
+        marginBottom: 8,
+    },
+    paymentText: {
+        fontSize: 10,
+        color: '#666666',
+        marginBottom: 4,
     },
     footer: {
-        marginTop: 30,
+        position: 'absolute',
+        bottom: 40,
+        left: 40,
+        right: 40,
         textAlign: 'center',
-        color: '#6B7280',
-        fontSize: 10,
-        borderTopWidth: 1,
-        borderTopColor: '#E5E7EB',
-        paddingTop: 20,
     },
+    footerText: {
+        fontSize: 10,
+        color: '#666666',
+        textAlign: 'center',
+    }
 });
 
 const InvoicePDF = ({ order }) => {
@@ -147,6 +149,14 @@ const InvoicePDF = ({ order }) => {
         month: 'long',
         day: 'numeric'
     });
+
+    // Calculate subtotal from order items
+    const subtotal = order.productIds.reduce((sum, item) => {
+        return sum + (item.price * (item.quantity || 1));
+    }, 0);
+
+    const shippingCost = 100.00;
+    const total = subtotal + shippingCost;
 
     return (
         <Document>
@@ -160,39 +170,43 @@ const InvoicePDF = ({ order }) => {
                     </View>
                 </View>
 
-                <Text style={styles.invoiceTitle}>INVOICE</Text>
-
-                {/* Company Info */}
-                <View style={styles.companyInfo}>
-                    <Text style={styles.sectionTitle}>Freshbooks</Text>
-                    <Text style={styles.text}>No: 86</Text>
-                    <Text style={styles.text}>Main Street</Text>
-                    <Text style={styles.text}>Phone: (123) 456-7890</Text>
-                    <Text style={styles.text}>Email: support@freshbooks.in</Text>
+                {/* Address Section */}
+                <View style={styles.addressSection}>
+                    <View style={styles.addressBlock}>
+                        <Text style={styles.addressTitle}>Bill From:</Text>
+                        <Text style={styles.addressText}>Freshbooks</Text>
+                        <Text style={styles.addressText}>No: 86, Main Street</Text>
+                        <Text style={styles.addressText}>Chennai, Tamil Nadu</Text>
+                        <Text style={styles.addressText}>Phone: (123) 456-7890</Text>
+                        <Text style={styles.addressText}>Email: support@freshbooks.in</Text>
+                    </View>
+                    <View style={styles.addressBlock}>
+                        <Text style={styles.addressTitle}>Bill To:</Text>
+                        <Text style={styles.addressText}>{order.name}</Text>
+                        <Text style={styles.addressText}>{order.address.houseNo}, {order.address.street}</Text>
+                        <Text style={styles.addressText}>{order.address.area}</Text>
+                        <Text style={styles.addressText}>{order.address.city}, {order.address.state}</Text>
+                        <Text style={styles.addressText}>India - {order.address.zipcode}</Text>
+                        <Text style={styles.addressText}>Phone: {order.phone}</Text>
+                    </View>
                 </View>
 
-                {/* Bill To */}
-                <View style={styles.billTo}>
-                    <Text style={styles.sectionTitle}>Bill To:</Text>
-                    <Text style={styles.text}>{order.customerName}</Text>
-                    <Text style={styles.text}>{order.shippingAddress}</Text>
-                    <Text style={styles.text}>Email: {order.email}</Text>
-                </View>
-
-                {/* Items Table */}
+                {/* Table */}
                 <View style={styles.table}>
                     <View style={styles.tableHeader}>
-                        <Text style={[styles.itemColumn, { color: '#FFFFFF' }]}>Item</Text>
-                        <Text style={[styles.qtyColumn, { color: '#FFFFFF' }]}>Qty</Text>
-                        <Text style={[styles.priceColumn, { color: '#FFFFFF' }]}>Price</Text>
-                        <Text style={[styles.totalColumn, { color: '#FFFFFF' }]}>Total</Text>
+                        <Text style={styles.productColumn}>Product/Service</Text>
+                        <Text style={styles.quantityColumn}>Quantity</Text>
+                        <Text style={styles.rateColumn}>Rate (Rs.)</Text>
+                        <Text style={styles.amountColumn}>Amount (Rs.)</Text>
                     </View>
                     {order.productIds.map((item, index) => (
                         <View key={index} style={styles.tableRow}>
-                            <Text style={styles.itemColumn}>{item.book?.title || 'Unknown Book'}</Text>
-                            <Text style={styles.qtyColumn}>{item.quantity || 1}</Text>
-                            <Text style={styles.priceColumn}>₹{item.price}</Text>
-                            <Text style={styles.totalColumn}>₹{(item.price * (item.quantity || 1)).toFixed(2)}</Text>
+                            <Text style={styles.productColumn}>{item.book?.title || 'Unknown Book'}</Text>
+                            <Text style={styles.quantityColumn}>{item.quantity || 1}</Text>
+                            <Text style={styles.rateColumn}>{item.price.toFixed(2)}</Text>
+                            <Text style={styles.amountColumn}>
+                                {(item.price * (item.quantity || 1)).toFixed(2)}
+                            </Text>
                         </View>
                     ))}
                 </View>
@@ -200,31 +214,31 @@ const InvoicePDF = ({ order }) => {
                 {/* Summary Section */}
                 <View style={styles.summarySection}>
                     <View style={styles.summaryRow}>
-                        <Text style={styles.summaryText}>Subtotal:</Text>
-                        <Text style={styles.summaryAmount}>₹{order.totalPrice}</Text>
+                        <Text style={styles.summaryLabel}>Subtotal:</Text>
+                        <Text style={styles.summaryValue}>Rs. {subtotal.toFixed(2)}</Text>
                     </View>
                     <View style={styles.summaryRow}>
-                        <Text style={styles.summaryText}>Tax (10%):</Text>
-                        <Text style={styles.summaryAmount}>₹{(order.totalPrice * 0.1).toFixed(2)}</Text>
+                        <Text style={styles.summaryLabel}>Shipping:</Text>
+                        <Text style={styles.summaryValue}>Rs. {shippingCost.toFixed(2)}</Text>
                     </View>
-                    <View style={styles.totalAmount}>
-                        <Text style={styles.totalAmountText}>Total Amount:</Text>
-                        <Text style={styles.totalAmountText}>₹{(order.totalPrice * 1.1).toFixed(2)}</Text>
+                    <View style={styles.totalRow}>
+                        <Text style={styles.summaryLabel}>Total:</Text>
+                        <Text style={styles.summaryValue}>Rs. {total.toFixed(2)}</Text>
                     </View>
                 </View>
 
                 {/* Payment Details */}
                 <View style={styles.paymentDetails}>
-                    <Text style={styles.sectionTitle}>Payment Details:</Text>
-                    <Text style={styles.text}>Payment ID: {order.paymentId}</Text>
-                    <Text style={styles.text}>Payment Method: Online</Text>
-                    <Text style={styles.text}>Payment Status: {order.paymentStatus}</Text>
+                    <Text style={styles.paymentTitle}>Payment Details:</Text>
+                    <Text style={styles.paymentText}>Payment ID: {order.paymentId}</Text>
+                    <Text style={styles.paymentText}>Payment Mode: Online</Text>
+                    <Text style={styles.paymentText}>Payment Status: {order.paymentStatus}</Text>
                 </View>
 
                 {/* Footer */}
                 <View style={styles.footer}>
-                    <Text>Thank you for shopping with Freshbooks!</Text>
-                    <Text style={{ marginTop: 5 }}>For any queries, please contact support@freshbooks.in</Text>
+                    <Text style={styles.footerText}>Thank you for shopping with Freshbooks!</Text>
+                    <Text style={styles.footerText}>For any queries, please contact support@freshbooks.in</Text>
                 </View>
             </Page>
         </Document>
