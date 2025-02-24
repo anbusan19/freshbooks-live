@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/freshbooks-navbar-logo.png';
+import AnimatedLogo from './AnimatedLogo';
 
 const LogoLoader = () => {
   return (
@@ -11,7 +11,9 @@ const LogoLoader = () => {
 
       {/* Logo and Tagline */}
       <div className="logo-loader">
-        <img src={logo} alt="Freshbooks" className="logo-fade" />
+        <div className="w-[300px]">
+          <AnimatedLogo />
+        </div>
         <h2 className="tagline-fade">DISCOVER THE DIFFERENCE</h2>
       </div>
     </div>
