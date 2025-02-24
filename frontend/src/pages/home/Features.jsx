@@ -5,7 +5,7 @@ const features = [
     {
         icon: FiTruck,
         title: "Free Delivery",
-        description: "Free shipping on all orders over $50"
+        description: "Free shipping on all orders over ₹1000"
     },
     {
         icon: FiAward,
@@ -30,7 +30,7 @@ const features = [
     {
         icon: FiCreditCard,
         title: "Easy Returns",
-        description: "Hassle-free 30-day returns"
+        description: "Hassle-free 3-day returns"
     }
 ];
 

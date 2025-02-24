@@ -242,7 +242,7 @@ const InvoicePDF = ({ order }) => {
                     <Text style={styles.paymentTitle}>Payment Details:</Text>
                     <Text style={styles.paymentText}>Payment ID: {order.paymentId || 'N/A'}</Text>
                     <Text style={styles.paymentText}>Payment Mode: Online</Text>
-                    <Text style={styles.paymentText}>Payment Status: {order.paymentStatus || 'N/A'}</Text>
+                    <Text style={styles.paymentText}>Payment Status: Completed</Text>
                 </View>
 
                 {/* Footer */}

@@ -7,11 +7,14 @@ import Loading from '../../components/Loading';
 import getBaseUrl from '../../utils/baseURL';
 import RevenueChart from './RevenueChart';
 import '../../styles/shared-gradients.css';
+import RecentOrders from './RecentOrders';
+import { useGetAllOrdersQuery } from '../../redux/features/orders/ordersApi';
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
     const navigate = useNavigate();
+    const { data: orders = [], isLoading } = useGetAllOrdersQuery();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +36,45 @@ const Dashboard = () => {
     }, []);
 
     if (loading) return <Loading />;
+
+    // Calculate monthly and weekly sales data
+    const calculateSales = () => {
+        const monthlySales = [];
+        const weeklySales = [];
+        const now = new Date();
+
+        // Process orders for sales data
+        orders.forEach(order => {
+            const orderDate = new Date(order.createdAt);
+            const monthStr = `${orderDate.getFullYear()}-${String(orderDate.getMonth() + 1).padStart(2, '0')}`;
+            
+            // Monthly sales
+            const monthIndex = monthlySales.findIndex(m => m._id === monthStr);
+            if (monthIndex === -1) {
+                monthlySales.push({ _id: monthStr, totalSales: order.totalPrice });
+            } else {
+                monthlySales[monthIndex].totalSales += order.totalPrice;
+            }
+
+            // Weekly sales (only for current month)
+            if (orderDate.getMonth() === now.getMonth() && orderDate.getFullYear() === now.getFullYear()) {
+                const weekStart = new Date(orderDate);
+                weekStart.setDate(orderDate.getDate() - orderDate.getDay()); // Start of the week (Sunday)
+                const weekStr = weekStart.toISOString();
+
+                const weekIndex = weeklySales.findIndex(w => w.startDate === weekStr);
+                if (weekIndex === -1) {
+                    weeklySales.push({ startDate: weekStr, totalSales: order.totalPrice });
+                } else {
+                    weeklySales[weekIndex].totalSales += order.totalPrice;
+                }
+            }
+        });
+
+        return { monthlySales, weeklySales };
+    };
+
+    const { monthlySales, weeklySales } = calculateSales();
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-3 sm:py-8 px-2 sm:px-4 transition-colors duration-300">
@@ -100,46 +142,18 @@ const Dashboard = () => {
                     </div>
 
                     {/* Charts Section */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-6">
                         {/* Revenue Chart */}
-                        <div className="glass-card rounded-lg sm:rounded-xl p-3 sm:p-6">
-                            <h2 className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4">Revenue Overview</h2>
-                            <div className="h-48 sm:h-80">
-                                <RevenueChart monthlySales={data.monthlySales || []} weeklySales={data.weeklySales || []} />
+                        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Revenue Overview</h2>
+                            <div className="h-[400px]">
+                                <RevenueChart monthlySales={monthlySales} weeklySales={weeklySales} />
                             </div>
                         </div>
 
                         {/* Recent Orders */}
-                        <div className="glass-card rounded-lg sm:rounded-xl p-3 sm:p-6">
-                            <h2 className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4">Recent Orders</h2>
-                            <div className="space-y-2 sm:space-y-4">
-                                {data.monthlySales && data.monthlySales.length > 0 ? (
-                                    data.monthlySales.slice(0, 4).map((monthData, index) => (
-                                        <div key={monthData._id} className="flex items-center justify-between p-2 sm:p-4 bg-gray-50/50 dark:bg-gray-700/30 rounded-lg backdrop-blur-sm">
-                                            <div className="flex items-center gap-2 sm:gap-3">
-                                                <div className="w-6 h-6 sm:w-10 sm:h-10 rounded-lg bg-indigo-100/50 dark:bg-indigo-900/30 flex items-center justify-center">
-                                                    <FiShoppingBag className="w-3 h-3 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400" />
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
-                                                        {monthData._id}
-                                                    </p>
-                                                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                        {monthData.totalOrders} orders
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
-                                                ₹{monthData.totalSales.toLocaleString()}
-                                            </span>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                                        No recent orders
-                                    </div>
-                                )}
-                            </div>
+                        <div className="lg:col-span-1">
+                            <RecentOrders orders={orders} />
                         </div>
                     </div>
                 </div>
