@@ -7,7 +7,7 @@ import 'swiper/css/free-mode';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import '../../styles/shared-gradients.css';
 
-const genres = ["Self-Help", "Fiction", "Business", "Psychology", "Philosophy"];
+const genres = ["Self-Development", "Business", "Mystery & CrimeThriller", "Romance", "Kids book"];
 
 const TopSellers = () => {
     const [selectedCategory, setSelectedCategory] = useState("Self-Help");

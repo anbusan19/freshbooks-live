@@ -65,7 +65,7 @@ const Wishlist = () => {
                             Start adding some books to your wishlist!
                         </p>
                         <Link
-                            to="/"
+                            to="/books"
                             className="inline-flex items-center px-6 md:px-8 py-3 md:py-4 rounded-lg md:rounded-xl
                                      bg-gradient-to-r from-indigo-600 to-purple-600
                                      hover:from-indigo-700 hover:to-purple-700

@@ -15,6 +15,15 @@
   --transition-duration: 200ms;
 }
 
+/* Prevent horizontal overscroll */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  overscroll-behavior-x: none;
+  -webkit-overflow-scrolling: touch;
+}
+
 body {
   @apply bg-surface-light dark:bg-black text-primary-dark dark:text-white;
   transition: background-color var(--transition-duration), color var(--transition-duration);

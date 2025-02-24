@@ -153,21 +153,21 @@ const Navbar = () => {
                             {/* Mobile Search Button */}
                             <button 
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                                className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                                className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-1.5 sm:p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                             >
-                                <IoSearchOutline className="w-6 h-6" />
+                                <IoSearchOutline className="w-5 h-5 sm:w-6 sm:h-6" />
                             </button>
                             
                             <ThemeToggle />
 
-                            {/* Wishlist - Hidden on small screens */}
+                            {/* Wishlist */}
                             <Link 
                                 to="/wishlist" 
-                                className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
+                                className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
                             >
-                                <HiOutlineHeart className="w-6 h-6" />
+                                <HiOutlineHeart className="w-5 h-5 sm:w-6 sm:h-6" />
                                 {wishlistItems?.length > 0 && (
-                                    <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                                    <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center">
                                         {wishlistItems.length}
                                     </span>
                                 )}
@@ -176,35 +176,35 @@ const Navbar = () => {
                             {/* Cart */}
                             <Link 
                                 to="/cart" 
-                                className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
+                                className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all relative"
                             >
-                                <HiOutlineShoppingBag className="w-6 h-6" />
+                                <HiOutlineShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
                                 {cartItems?.length > 0 && (
-                                    <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                                    {cartItems.length}
-                                </span>
-                            )}
-                        </Link>
+                                    <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center">
+                                        {cartItems.length}
+                                    </span>
+                                )}
+                            </Link>
 
                             {/* User Menu */}
                             <div className="relative" ref={dropdownRef}>
                                 {currentUser ? (
-                                <button
+                                    <button
                                         onClick={() => setIsOpen(!isOpen)}
-                                        className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all overflow-hidden"
+                                        className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all overflow-hidden"
                                     >
                                         <img
                                             src={currentUser.photoURL || avatarImg}
                                             alt="User"
-                                            className="w-8 h-8 rounded-full"
+                                            className="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
                                         />
-                                </button>
+                                    </button>
                                 ) : (
                                     <Link
                                         to="/login"
-                                        className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all"
+                                        className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all"
                                     >
-                                        <HiOutlineUser className="w-6 h-6" />
+                                        <HiOutlineUser className="w-5 h-5 sm:w-6 sm:h-6" />
                                     </Link>
                                 )}
 

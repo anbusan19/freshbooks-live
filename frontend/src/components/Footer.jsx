@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FaFacebook, FaInstagram } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6"
 import { FaWhatsapp } from "react-icons/fa"
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import navbarLogo from "../assets/freshbooks-footer-logo.png"
 import PrivacyPolicyPopup from './PrivacyPolicyPopup'
 import PaymentMethodsPopup from './PaymentMethodsPopup'
@@ -18,6 +18,11 @@ const Footer = () => {
   const [isReturnPolicyOpen, setIsReturnPolicyOpen] = useState(false);
   const [isCareerPopupOpen, setIsCareerPopupOpen] = useState(false);
   const [isFranchisePopupOpen, setIsFranchisePopupOpen] = useState(false);
+  const location = useLocation();
+
+  // Add bottom padding only for the books page
+  const isAllBooksPage = location.pathname === '/books';
+  const bottomPaddingClass = isAllBooksPage ? 'pb-24 sm:pb-20' : 'pb-6 sm:pb-8';
 
   return (
     <>
@@ -137,7 +142,7 @@ const Footer = () => {
 
         <hr className="my-8 border-gray-200 dark:border-gray-700" />
           
-        <div className="mx-auto w-full max-w-screen-xl px-2 sm:px-4 lg:px-6 pb-24 sm:pb-20">
+        <div className={`mx-auto w-full max-w-screen-xl px-2 sm:px-4 lg:px-6 ${bottomPaddingClass}`}>
           <div className="sm:flex sm:items-center sm:justify-between">
             <span className="text-sm text-gray-600 dark:text-gray-400">
               © {new Date().getFullYear()} Freshbooks. All rights reserved. | Crafted by <b>Softrate Technologies (P) Ltd.</b>
