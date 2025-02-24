@@ -1,7 +1,8 @@
 import React from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 
 const ContactPopup = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
@@ -64,26 +65,26 @@ const ContactPopup = ({ isOpen, onClose }) => {
                             <h4 className="font-medium text-gray-900 dark:text-white mb-3">Follow Us</h4>
                             <div className="flex gap-4">
                                 <a
-                                    href="https://facebook.com"
+                                    href="https://www.facebook.com/freshbooks.in"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                                    className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                                 >
                                     <FaFacebook className="w-6 h-6" />
                                 </a>
                                 <a
-                                    href="https://twitter.com"
+                                    href="https://x.com/freshbooksindia"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                                    className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                                 >
-                                    <FaTwitter className="w-6 h-6" />
+                                    <FaXTwitter className="w-6 h-6" />
                                 </a>
                                 <a
-                                    href="https://instagram.com"
+                                    href="https://instagram.com/freshbooks.in"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                                    className="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
                                 >
                                     <FaInstagram className="w-6 h-6" />
                                 </a>

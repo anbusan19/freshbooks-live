@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useGetAllOrdersQuery, useUpdateDeliveryStatusMutation } from '../../../redux/features/orders/ordersApi';
 import Loading from '../../../components/Loading';
-import { FiPackage, FiCreditCard, FiTruck, FiCheck, FiClock, FiSearch } from 'react-icons/fi';
+import { FiPackage, FiCreditCard, FiTruck, FiCheck, FiClock, FiSearch, FiCalendar } from 'react-icons/fi';
 import OrderStatusProgress from '../../../components/OrderStatusProgress';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const DeliveryStatusBadge = ({ status }) => {
     const getStatusStyles = () => {
@@ -49,23 +51,17 @@ const AdminOrders = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [filterStatus, setFilterStatus] = useState('all');
-    const [timePeriod, setTimePeriod] = useState('all');
+    const [selectedDate, setSelectedDate] = useState(null);
     const [trackingUrl, setTrackingUrl] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
 
-    const getFilteredOrdersByTime = (orders) => {
-        const currentDate = new Date();
-        const oneWeekAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
-        const oneMonthAgo = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);
-
-        switch (timePeriod) {
-            case 'week':
-                return orders.filter(order => new Date(order.createdAt) >= oneWeekAgo);
-            case 'month':
-                return orders.filter(order => new Date(order.createdAt) >= oneMonthAgo);
-            default:
-                return orders;
-        }
+    const getFilteredOrdersByDate = (orders) => {
+        if (!selectedDate) return orders;
+        
+        return orders.filter(order => {
+            const orderDate = new Date(order.createdAt);
+            return orderDate.toDateString() === selectedDate.toDateString();
+        });
     };
 
     const filteredOrders = orders.filter(order => {
@@ -86,7 +82,7 @@ const AdminOrders = () => {
         return matchesSearch && matchesStatus;
     });
 
-    const timeFilteredOrders = getFilteredOrdersByTime(filteredOrders);
+    const dateFilteredOrders = getFilteredOrdersByDate(filteredOrders);
 
     const handleStatusUpdate = async (orderId, newStatus) => {
         try {
@@ -121,19 +117,23 @@ const AdminOrders = () => {
                 
                 {/* Search and Filter Section */}
                 <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-3">
-                    {/* Time Period Filter */}
-                    <select
-                        value={timePeriod}
-                        onChange={(e) => setTimePeriod(e.target.value)}
-                        className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 
-                                 bg-white dark:bg-gray-800 text-gray-900 dark:text-white
-                                 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
-                                 text-sm"
-                    >
-                        <option value="all">All Time</option>
-                        <option value="week">Past Week</option>
-                        <option value="month">Past Month</option>
-                    </select>
+                    {/* Date Picker */}
+                    <div className="relative w-[150px]">
+                        <DatePicker
+                            selected={selectedDate}
+                            onChange={(date) => setSelectedDate(date)}
+                            dateFormat="dd/MM/yyyy"
+                            isClearable
+                            placeholderText="Select Date"
+                            className="px-3 pr-16 py-2 rounded-lg border border-gray-200 dark:border-gray-700 
+                                     bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                     focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
+                                     text-sm w-full"
+                        />
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2">
+                            <FiCalendar className="w-4 h-4 text-gray-400 pointer-events-none" />
+                        </div>
+                    </div>
 
                     {/* Status Filter */}
                     <select
@@ -185,7 +185,7 @@ const AdminOrders = () => {
                         </div>
                         <div>
                             <p className="text-sm text-gray-600 dark:text-gray-400">Filtered Orders</p>
-                            <p className="text-xl font-semibold text-gray-900 dark:text-white">{timeFilteredOrders.length}</p>
+                            <p className="text-xl font-semibold text-gray-900 dark:text-white">{dateFilteredOrders.length}</p>
                         </div>
                     </div>
                 </div>
@@ -197,7 +197,7 @@ const AdminOrders = () => {
                         <div>
                             <p className="text-sm text-gray-600 dark:text-gray-400">Delivered Orders</p>
                             <p className="text-xl font-semibold text-gray-900 dark:text-white">
-                                {timeFilteredOrders.filter(order => order.deliveryStatus === 'delivered').length}
+                                {dateFilteredOrders.filter(order => order.deliveryStatus === 'delivered').length}
                             </p>
                         </div>
                     </div>
@@ -217,7 +217,7 @@ const AdminOrders = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                            {timeFilteredOrders.map((order) => (
+                            {dateFilteredOrders.map((order) => (
                                 <tr key={order._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                                     <td className="px-6 py-4">
                                         <div className="text-sm">

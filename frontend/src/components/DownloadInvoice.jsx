@@ -7,7 +7,7 @@ const DownloadInvoice = ({ order }) => {
     return (
         <PDFDownloadLink
             document={<InvoicePDF order={order} />}
-            fileName={`invoice-${order._id}.pdf`}
+            fileName={`freshbooks-invoice-${order._id}.pdf`}
         >
             {({ blob, url, loading, error }) => (
                 <button

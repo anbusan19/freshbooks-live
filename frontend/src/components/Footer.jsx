@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa"
+import { FaFacebook, FaInstagram } from "react-icons/fa"
+import { FaXTwitter } from "react-icons/fa6"
+import { FaWhatsapp } from "react-icons/fa"
 import { Link } from 'react-router-dom'
 import navbarLogo from "../assets/freshbooks-navbar-logo.png"
 import PrivacyPolicyPopup from './PrivacyPolicyPopup'
@@ -20,7 +22,7 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-white dark:bg-gray-900 relative z-30">
-        <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+        <div className="mx-auto w-full max-w-screen-xl px-2 sm:px-4 lg:px-6 py-6 lg:py-8">
           <div className="md:flex md:justify-between gap-12">
             {/* Logo Section */}
             <div className="mb-6 md:mb-0 max-w-xs">
@@ -135,7 +137,7 @@ const Footer = () => {
 
         <hr className="my-8 border-gray-200 dark:border-gray-700" />
           
-        <div className="mx-auto w-full max-w-screen-xl p-4 pb-24 sm:pb-20">
+        <div className="mx-auto w-full max-w-screen-xl px-2 sm:px-4 lg:px-6 pb-24 sm:pb-20">
           <div className="sm:flex sm:items-center sm:justify-between">
             <span className="text-sm text-gray-600 dark:text-gray-400">
               © {new Date().getFullYear()} Freshbooks. All rights reserved. | Crafted by <b>Softrate Technologies (P) Ltd.</b>
@@ -143,13 +145,13 @@ const Footer = () => {
             
             {/* Social Links */}
             <div className="flex mt-4 sm:mt-0 space-x-6">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white transition-colors">
+              <a href="https://www.facebook.com/freshbooks.in" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white transition-colors">
                 <FaFacebook className="w-5 h-5" />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-400 dark:text-gray-400 dark:hover:text-white transition-colors">
-                <FaTwitter className="w-5 h-5" />
+              <a href="https://x.com/freshbooksindia" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">
+                <FaXTwitter className="w-5 h-5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-white transition-colors">
+              <a href="https://instagram.com/freshbooks.in" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-white transition-colors">
                 <FaInstagram className="w-5 h-5" />
               </a>
             </div>

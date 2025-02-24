@@ -16,6 +16,7 @@ const orderRoutes = require("./src/orders/order.route");
 const userRoutes = require("./src/users/user.route");
 const adminRoutes = require("./src/stats/admin.stats");
 const bannerRoutes = require("./src/banners/banner.routes");
+const couponRoutes = require("./routes/couponRoutes");
 
 async function main() {
   await mongoose.connect(process.env.DB_URL);
@@ -24,6 +25,7 @@ async function main() {
   app.use("/api/auth", userRoutes);
   app.use("/api/admin", adminRoutes);
   app.use("/api/banners", bannerRoutes);
+  app.use("/api/coupons", couponRoutes);
 }
 
 main()

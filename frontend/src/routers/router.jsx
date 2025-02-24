@@ -22,6 +22,7 @@ import ManageBanners from "../pages/dashboard/banners/ManageBanners";
 import AdminOrders from "../pages/dashboard/admin/AdminOrders";
 import ForgotPassword from "../components/ForgotPassword";
 import ResetPassword from "../components/ResetPassword";
+import CouponManagement from "../pages/dashboard/admin/CouponManagement";
 
 const router = createBrowserRouter([
     {
@@ -124,6 +125,12 @@ const router = createBrowserRouter([
           path: "orders",
           element: <AdminRoute>
             <AdminOrders/>
+          </AdminRoute>
+        },
+        {
+          path: "manage-coupons",
+          element: <AdminRoute>
+            <CouponManagement/>
           </AdminRoute>
         }
       ]

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { HiViewGridAdd } from "react-icons/hi";
 import { MdOutlineManageHistory } from "react-icons/md";
-import { FiGrid, FiLogOut, FiSearch, FiBell, FiMoon, FiSun, FiImage, FiShoppingBag } from "react-icons/fi";
+import { FiGrid, FiLogOut, FiSearch, FiBell, FiMoon, FiSun, FiImage, FiShoppingBag, FiTag } from "react-icons/fi";
 import './Dashboard.css';
 
 const DashboardLayout = () => {
@@ -128,27 +128,29 @@ const DashboardLayout = () => {
               <span className="hidden lg:block text-sm font-medium">Manage Banners</span>
             </div>
           </Link>
+
+          <Link
+            to="/dashboard/manage-coupons"
+            className="group flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 text-gray-600 dark:text-gray-300 
+                     bg-transparent hover:bg-white/80 dark:hover:bg-gray-700/80 rounded-lg sm:rounded-xl 
+                     transition-all duration-300"
+          >
+            <div className="relative z-10 flex items-center gap-3 w-full">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-orange-50/50 dark:bg-orange-900/30">
+                <FiTag className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 dark:text-orange-400" />
+              </div>
+              <span className="hidden lg:block text-sm font-medium">Manage Coupons</span>
+            </div>
+          </Link>
         </nav>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 relative">
+      <div className="flex-1 relative flex flex-col min-h-screen">
         {/* Header */}
         <header className="h-14 sm:h-16 bg-white/80 dark:bg-gray-800/80 border-b border-gray-200/50 dark:border-gray-700/50 px-3 sm:px-4 flex items-center justify-between backdrop-blur-xl z-10">
-          {/* Search */}
-          <div className="flex-1 max-w-lg hidden sm:block">
-            <div className="relative">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full pl-10 pr-4 py-2 bg-white/50 dark:bg-gray-700/50 border-0 rounded-lg
-                         text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400
-                         focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
-                         transition-all backdrop-blur-sm"
-              />
-            </div>
-          </div>
+          {/* Empty div to maintain flex spacing */}
+          <div className="flex-1"></div>
 
           {/* Right Section */}
           <div className="flex items-center gap-2 sm:gap-4">
@@ -158,12 +160,6 @@ const DashboardLayout = () => {
               className="p-1.5 sm:p-2 text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-300"
             >
               {isDark ? <FiSun className="w-4 h-4 sm:w-5 sm:h-5" /> : <FiMoon className="w-4 h-4 sm:w-5 sm:h-5" />}
-            </button>
-
-            {/* Notifications */}
-            <button className="relative p-1.5 sm:p-2 text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-300">
-              <FiBell className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full"></span>
             </button>
 
             {/* Logout */}
@@ -178,9 +174,16 @@ const DashboardLayout = () => {
         </header>
 
         {/* Page Content */}
-        <main className="p-3 sm:p-6 relative z-10">
+        <main className="flex-1 p-3 sm:p-6 relative z-10">
           <Outlet />
         </main>
+
+        {/* Footer */}
+        <footer className="mt-auto py-4 px-6 border-t border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl">
+          <p className="text-sm text-center text-gray-600 dark:text-gray-400">
+            © {new Date().getFullYear()} Freshbooks. All rights reserved. | <span className="font-bold">Crafted by Softrate Technologies (P) Ltd.</span>
+          </p>
+        </footer>
       </div>
     </div>
   );
