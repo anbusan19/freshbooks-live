@@ -27,7 +27,7 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-white dark:bg-gray-900 relative z-30">
-        <div className="mx-auto w-full max-w-screen-xl px-2 sm:px-4 lg:px-6 py-6 lg:py-8">
+        <div className="max-w-[1920px] mx-auto w-full px-2 sm:px-4 lg:px-6 py-6 lg:py-8">
           <div className="md:flex md:justify-between gap-12">
             {/* Logo Section */}
             <div className="mb-6 md:mb-0 max-w-xs">
@@ -145,7 +145,7 @@ const Footer = () => {
         <div className={`mx-auto w-full max-w-screen-xl px-2 sm:px-4 lg:px-6 ${bottomPaddingClass}`}>
           <div className="sm:flex sm:items-center sm:justify-between">
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              © {new Date().getFullYear()} Freshbooks. All rights reserved. | Crafted by <b>Softrate Technologies (P) Ltd.</b>
+              © {new Date().getFullYear()} freshbooks™. All rights reserved. | Crafted by <b>Softrate Technologies (P) Ltd.</b>
             </span>
             
             {/* Social Links */}

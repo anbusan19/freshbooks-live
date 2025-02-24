@@ -3,7 +3,7 @@ import { FiPackage } from 'react-icons/fi';
 
 const RecentOrders = ({ orders = [] }) => {
     // Get the 5 most recent orders
-    const recentOrders = orders
+    const recentOrders = [...orders]
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 5);
 

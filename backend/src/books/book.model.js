@@ -17,23 +17,11 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: [
-            'self-help',
-            'personal-development',
-            'finance',
+            'self-development',
             'business',
-            'strategy',
-            'psychology',
-            'behavioral-economics',
-            'history',
-            'anthropology',
-            'philosophy',
-            'productivity',
-            'communication',
-            'memoir',
-            'entrepreneurship',
-            'fiction',
-            'horror',
-            'adventure'
+            'mystery&crimethriller',
+            'romance',
+            'kids-book'
         ]
     },
     trending: {

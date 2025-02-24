@@ -6,24 +6,20 @@ import './BooksPage.css';
 
 const categories = [
     "All Books",
-    "Self-Help",
-    "Personal Development",
-    "Finance",
+    "Self Development",
     "Business",
-    "Strategy",
-    "Psychology",
-    "Behavioral Economics",
-    "History",
-    "Anthropology",
-    "Philosophy",
-    "Productivity",
-    "Communication",
-    "Memoir",
-    "Entrepreneurship",
-    "Fiction",
-    "Horror",
-    "Adventure"
+    "Mystery & Crime Thriller",
+    "Romance",
+    "Kids Book"
 ];
+
+const categoryMapping = {
+    "Self Development": "self-development",
+    "Business": "business",
+    "Mystery & Crime Thriller": "mystery&crimethriller",
+    "Romance": "romance",
+    "Kids Book": "kids-book"
+};
 
 const BooksPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("All Books");
@@ -33,7 +29,7 @@ const BooksPage = () => {
     // Filter books by category
     const filteredBooks = selectedCategory === "All Books"
         ? books
-        : books.filter(book => book.category.toLowerCase() === selectedCategory.toLowerCase());
+        : books.filter(book => book.category === categoryMapping[selectedCategory]);
 
     // Sort books based on selection
     const sortedBooks = [...filteredBooks].sort((a, b) => {

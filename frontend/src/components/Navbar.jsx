@@ -76,7 +76,7 @@ const Navbar = () => {
     return (
         <header className="sticky top-0 z-50 w-full">
             <nav className="bg-gray-50/98 dark:bg-[#2A2A2E]/98 backdrop-blur-md border-b border-gray-200/30 dark:border-gray-600/20 shadow-lg transition-all duration-300">
-                <div className="w-full px-2 sm:px-4 lg:px-6">
+                <div className="max-w-[1920px] mx-auto px-2 sm:px-4 lg:px-6">
                     <div className="flex justify-between items-center h-16">
                         {/* Left side - Logo */}
                         <div className="flex items-center gap-4">

@@ -74,6 +74,7 @@ const AddBook = () => {
 
         const newBookData = {
             ...data,
+            gst: Number(data.gst || 0),
             coverImage: imageUrl
         }
         try {
@@ -149,9 +150,9 @@ const AddBook = () => {
           name="category"
           options={[
             { value: '', label: 'Choose A Category' },
-            { value: 'self-development', label: 'Self-development' },
+            { value: 'self-development', label: 'Self Development' },
             { value: 'business', label: 'Business' },
-            { value: 'mystery&crimethriller', label: 'Mystery & CrimeThriller' },
+            { value: 'mystery&crimethriller', label: 'Mystery & Crime Thriller' },
             { value: 'romance', label: 'Romance' },
             { value: 'kids-book', label: 'Kids Book' },
           ]}

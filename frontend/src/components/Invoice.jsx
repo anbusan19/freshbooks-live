@@ -191,7 +191,7 @@ const InvoicePDF = ({ order }) => {
                 <View style={styles.addressSection}>
                     <View style={styles.addressBlock}>
                         <Text style={styles.addressTitle}>Bill From:</Text>
-                        <Text style={styles.addressText}>Freshbooks™</Text>
+                        <Text style={styles.addressText}>freshbooks™</Text>
                         <Text style={styles.addressText}>No: 15A, N Mada Street</Text>
                         <Text style={styles.addressText}>Lalitha Nagar, Thiruvanmiyur</Text>
                         <Text style={styles.addressText}>Chennai, Tamil Nadu, 600041</Text>
@@ -267,7 +267,7 @@ const InvoicePDF = ({ order }) => {
 
                 {/* Footer */}
                 <View style={styles.footer}>
-                    <Text style={styles.footerText}>Thank you for shopping with Freshbooks™</Text>
+                    <Text style={styles.footerText}>Thank you for shopping with freshbooks™</Text>
                     <Text style={styles.footerText}>For any queries, please contact support@freshbooks.in</Text>
                 </View>
             </Page>

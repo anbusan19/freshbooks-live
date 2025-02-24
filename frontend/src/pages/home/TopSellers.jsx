@@ -7,15 +7,23 @@ import 'swiper/css/free-mode';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import '../../styles/shared-gradients.css';
 
-const genres = ["Self-Development", "Business", "Mystery & CrimeThriller", "Romance", "Kids book"];
+const genres = ["All", "Self Development", "Business", "Mystery & Crime Thriller", "Romance", "Kids Book"];
+
+const categoryMapping = {
+    "Self Development": "self-development",
+    "Business": "business",
+    "Mystery & Crime Thriller": "mystery&crimethriller",
+    "Romance": "romance",
+    "Kids Book": "kids-book"
+};
 
 const TopSellers = () => {
-    const [selectedCategory, setSelectedCategory] = useState("Self-Help");
+    const [selectedCategory, setSelectedCategory] = useState("All");
     const { data: books = [] } = useFetchAllBooksQuery();
   
     const filteredBooks = books
         .filter(book => book.trending)
-        .filter(book => selectedCategory ? book.category === selectedCategory.toLowerCase() : true);
+        .filter(book => selectedCategory === "All" ? true : book.category === categoryMapping[selectedCategory]);
 
     return (
         <section className='relative py-4 sm:py-8 px-2 sm:px-4 bg-gray-50/50 dark:bg-gray-900/50'>

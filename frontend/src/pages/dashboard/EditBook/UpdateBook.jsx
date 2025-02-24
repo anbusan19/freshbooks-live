@@ -23,10 +23,13 @@ const UpdateBook = () => {
     if (bookData) {
       setValue('title', bookData.title);
       setValue('description', bookData.description);
+      setValue('author', bookData.author);
       setValue('category', bookData?.category);
       setValue('trending', bookData.trending);
+      setValue('rating', bookData.rating);
       setValue('oldPrice', bookData.oldPrice);
       setValue('newPrice', bookData.newPrice);
+      setValue('gst', bookData.gst || 0);
       setValue('coverImage', bookData.coverImage);
       setImageUrl(bookData.coverImage);
       setImageFileName(bookData.coverImage.split('/').pop());
@@ -70,10 +73,13 @@ const UpdateBook = () => {
     const updateBookData = {
       title: data.title,
       description: data.description,
+      author: data.author,
       category: data.category,
       trending: data.trending,
+      rating: Number(bookData.rating),
       oldPrice: Number(data.oldPrice),
       newPrice: Number(data.newPrice),
+      gst: Number(data.gst || 0),
       coverImage: imageUrl || bookData.coverImage,
     };
     try {
@@ -125,9 +131,9 @@ const UpdateBook = () => {
           name="category"
           options={[
             { value: '', label: 'Choose A Category' },
-            { value: 'self-development', label: 'Self-development' },
+            { value: 'self-development', label: 'Self Development' },
             { value: 'business', label: 'Business' },
-            { value: 'mystery&crimethriller', label: 'Mystery & CrimeThriller' },
+            { value: 'mystery&crimethriller', label: 'Mystery & Crime Thriller' },
             { value: 'romance', label: 'Romance' },
             { value: 'kids-book', label: 'Kids Book' },
           ]}
@@ -170,7 +176,6 @@ const UpdateBook = () => {
           register={register}
         />
 
-        {/* GST Percentage */}
         <InputField
           label="GST Percentage"
           name="gst"
