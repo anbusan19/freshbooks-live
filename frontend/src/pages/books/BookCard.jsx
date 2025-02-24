@@ -70,7 +70,7 @@ const BookCard = ({book}) => {
 
                 <div className="flex-1 flex flex-col min-h-0">
                     <Link to={`/books/${book._id}`}>
-                        <h3 className="text-sm font-bold text-gray-800 dark:text-white mb-0.5 line-clamp-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" title={book?.title}>
+                        <h3 className="text-sm font-bold text-gray-800 dark:text-white mb-0.5 truncate hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" title={book?.title}>
                             {book?.title}
                         </h3>
                     </Link>

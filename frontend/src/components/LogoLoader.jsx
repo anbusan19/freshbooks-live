@@ -9,12 +9,11 @@ const LogoLoader = () => {
       <div className="loader-bubble loader-bubble-2"></div>
       <div className="loader-bubble loader-bubble-3"></div>
 
-      {/* Logo and Tagline */}
+      {/* Logo */}
       <div className="logo-loader">
         <div className="w-[300px]">
           <AnimatedLogo />
         </div>
-        <h2 className="tagline-fade">DISCOVER THE DIFFERENCE</h2>
       </div>
     </div>
   );
