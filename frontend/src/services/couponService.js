@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://appsail-50024742513.development.catalystappsail.in/api';
+const API_URL = import.meta.env.VITE_PROD_BACKEND_BASEURL;
 
 export const couponService = {
     // Create new coupon

@@ -44,7 +44,7 @@ const UpdateBook = () => {
         data.append('upload_preset', 'freshbooks');
         data.append('cloud_name', 'dh5fgqqte');
         
-        const res = await fetch("https://api.cloudinary.com/v1_1/dh5fgqqte/image/upload", {
+        const res = await fetch(`${import.meta.env.VITE_CLOUDINARY_URL}`, {
             method: 'POST',
             body: data
         });

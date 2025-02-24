@@ -63,7 +63,7 @@ const CheckoutPage = () => {
     const handlePayment = async (orderData) => {
         try {
             // Create Razorpay order
-            const response = await axios.post(`https://appsail-50024742513.development.catalystappsail.in/api/orders/create-razorpay-order`, {
+            const response = await axios.post(`${import.meta.env.VITE_PROD_BACKEND_BASEURL}/api/orders/create-razorpay-order`, {
                 amount: totalPrice
             });
 
