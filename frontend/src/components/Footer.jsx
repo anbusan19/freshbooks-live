@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6"
 import { FaWhatsapp } from "react-icons/fa"
 import { Link } from 'react-router-dom'
-import navbarLogo from "../assets/freshbooks-navbar-logo.png"
+import navbarLogo from "../assets/freshbooks-footer-logo.png"
 import PrivacyPolicyPopup from './PrivacyPolicyPopup'
 import PaymentMethodsPopup from './PaymentMethodsPopup'
 import TermsOfServicePopup from './TermsOfServicePopup'
@@ -128,7 +128,7 @@ const Footer = () => {
                   className="inline-flex items-center px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                 >
                   <FaWhatsapp className="w-5 h-5" />
-                  <span className="ml-2 text-sm whitespace-nowrap">WhatsApp Support</span>
+                  <span className="ml-2 text-sm whitespace-nowrap">Support</span>
                 </a>
               </div>
             </div>

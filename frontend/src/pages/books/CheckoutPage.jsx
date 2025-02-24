@@ -459,36 +459,42 @@ const CheckoutPage = () => {
 
                             {/* Coupon Section */}
                             <div className="p-4 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow">
-                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-3 flex items-center gap-2">
-                                    <FiTag className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                                <h3 className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 flex items-center gap-2">
+                                    <FiTag className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400" />
                                     Apply Coupon
                                 </h3>
                                 {!appliedCoupon ? (
-                                    <div className="flex gap-2">
-                                        <input
-                                            type="text"
-                                            value={couponCode}
-                                            onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                                            placeholder="Enter coupon code"
-                                            className="flex-1 px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700
-                                                     text-base text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
-                                                     focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent"
-                                        />
+                                    <div className="flex flex-col sm:flex-row gap-2">
+                                        <div className="flex-1">
+                                            <input
+                                                type="text"
+                                                value={couponCode}
+                                                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                                placeholder="Enter coupon code"
+                                                className="w-full px-3 sm:px-4 py-2 rounded-lg bg-white/50 dark:bg-gray-800/50 
+                                                         border border-gray-200 dark:border-gray-700
+                                                         text-sm sm:text-base text-gray-900 dark:text-white 
+                                                         placeholder-gray-500 dark:placeholder-gray-400
+                                                         focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 
+                                                         focus:border-transparent"
+                                            />
+                                        </div>
                                         <button
                                             type="button"
                                             onClick={handleApplyCoupon}
                                             disabled={validatingCoupon || !couponCode.trim()}
-                                            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 
-                                                     disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
+                                            className="w-full sm:w-24 px-4 py-2 bg-indigo-600 text-white rounded-lg 
+                                                     hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed 
+                                                     transition-colors duration-200 text-sm sm:text-base"
                                         >
-                                            {validatingCoupon ? "Applying..." : "Apply"}
+                                            {validatingCoupon ? "..." : "Apply"}
                                         </button>
                                     </div>
                                 ) : (
                                     <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/30 p-3 rounded-lg">
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-800 dark:text-white">
-                                                Applied Coupon: <span className="text-green-600 dark:text-green-400">{appliedCoupon.code}</span>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-sm font-medium text-gray-800 dark:text-white truncate">
+                                                Applied: <span className="text-green-600 dark:text-green-400">{appliedCoupon.code}</span>
                                             </p>
                                             <p className="text-xs text-gray-600 dark:text-gray-300">
                                                 {appliedCoupon.discountType === 'percentage' 
@@ -500,7 +506,7 @@ const CheckoutPage = () => {
                                         <button
                                             type="button"
                                             onClick={removeCoupon}
-                                            className="text-red-600 hover:text-red-700 text-sm font-medium"
+                                            className="ml-3 text-red-600 hover:text-red-700 text-sm font-medium"
                                         >
                                             Remove
                                         </button>
