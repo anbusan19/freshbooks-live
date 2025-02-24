@@ -85,10 +85,10 @@ const BooksPage = () => {
                 </div>
 
                 {/* Books Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 animate-fade-in animation-delay-600">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 px-4 sm:px-6 animate-fade-in animation-delay-600">
                     {sortedBooks.map((book, index) => (
                         <div key={book._id} 
-                             className={`animate-fade-in transform transition-transform duration-300 hover:-translate-y-1 w-full h-full`} 
+                             className={`animate-fade-in transform transition-transform duration-300 hover:-translate-y-1 w-full`} 
                              style={{ animationDelay: `${(index % 5) * 100}ms` }}>
                             <BookCard book={book} />
                         </div>

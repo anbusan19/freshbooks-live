@@ -43,11 +43,11 @@ const BookCard = ({book}) => {
     };
 
     return (
-        <div className="bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl rounded-lg shadow-sm p-2.5 relative overflow-hidden h-full flex flex-col transition-all duration-300 border border-gray-200/20 dark:border-gray-800/20 hover:scale-[1.02]">
+        <div className="bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl rounded-lg shadow-sm p-2.5 relative overflow-hidden flex flex-col transition-all duration-300 border border-gray-200/20 dark:border-gray-800/20 hover:scale-[1.02] h-full">
             {/* Content Container */}
             <div className="flex-1 flex flex-col relative z-10">
                 {/* Image Container */}
-                <div className="relative w-full h-[180px] xs:h-[200px] sm:h-[260px] md:h-[280px] lg:h-[320px] mb-2 sm:mb-3 overflow-hidden rounded-lg">
+                <div className="relative w-full aspect-[3/4] mb-2 sm:mb-3 overflow-hidden rounded-lg">
                     <Link to={`/books/${book._id}`}>
                         <img
                             src={`${book.coverImage}`}
@@ -70,7 +70,7 @@ const BookCard = ({book}) => {
 
                 <div className="flex-1 flex flex-col min-h-0">
                     <Link to={`/books/${book._id}`}>
-                        <h3 className="text-sm font-bold text-gray-800 dark:text-white mb-0.5 truncate hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" title={book?.title}>
+                        <h3 className="text-sm font-bold text-gray-800 dark:text-white mb-0.5 line-clamp-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" title={book?.title}>
                             {book?.title}
                         </h3>
                     </Link>
@@ -105,7 +105,7 @@ const BookCard = ({book}) => {
                             )}
                         </div>
                         
-                        {/* Add to Bag Button - Full width on mobile */}
+                        {/* Add to Bag Button */}
                         <button
                             onClick={() => handleAddToCart(book)}
                             className="w-full flex items-center justify-center gap-2 py-1.5 rounded-lg bg-indigo-100/80 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400 
