@@ -79,7 +79,7 @@ const AdminLogin = () => {
             <div className="flex items-center gap-12 max-w-4xl w-full relative z-10">
                 {/* Brand Logo Section with larger logo */}
                 <div className="hidden lg:flex flex-col items-center space-y-8 w-80">
-                    <img src={logo} alt="Freshbooks Logo" className="logo-animation" />
+                    <img src={logo} alt="Freshbooks Logo" className="w-60 h-auto" />
                     <div className="text-center">
                         <h1 className="text-4xl font-bold text-gray-800 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                             Admin Portal

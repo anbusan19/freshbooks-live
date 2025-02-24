@@ -51,9 +51,11 @@ const BannerCarousel = () => {
                             dynamicBullets: true
                         }}
                         autoplay={{
-                            delay: 5000,
+                            delay: 3000,
                             disableOnInteraction: false,
+                            pauseOnMouseEnter: true
                         }}
+                        loop={true}
                         breakpoints={{
                             // Mobile view - 1 slide, full width
                             0: {
@@ -76,14 +78,14 @@ const BannerCarousel = () => {
                     >
                         {banners.map((banner) => (
                             <SwiperSlide key={banner._id}>
-                                <div className="relative w-full">
+                                <div className="relative w-full group">
                                     {/* Aspect ratio container */}
-                                    <div className="relative w-full pb-[56.25%]">
+                                    <div className="relative w-full pb-[56.25%] overflow-hidden rounded-lg">
                                         {/* Banner Image */}
                                         <img
                                             src={banner.image}
                                             alt={banner.title}
-                                            className="absolute inset-0 w-full h-full object-cover"
+                                            className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105"
                                         />
                                     </div>
                                 </div>
