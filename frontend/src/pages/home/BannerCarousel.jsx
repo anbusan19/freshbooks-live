@@ -1,13 +1,13 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { useGetActiveBannersQuery } from '../../redux/features/banners/bannersApi';
+import { useGetAllBannersQuery } from '../../redux/features/banners/bannersApi';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const BannerCarousel = () => {
-    const { data: banners = [], isLoading, error } = useGetActiveBannersQuery();
+    const { data: banners = [], isLoading, error } = useGetAllBannersQuery();
 
     if (isLoading) {
         return (
