@@ -113,6 +113,19 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: '#EEEEEE',
     },
+    totalLabel: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#333333',
+        width: 100,
+    },
+    totalValue: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#333333',
+        width: 100,
+        textAlign: 'right',
+    },
     paymentDetails: {
         marginTop: 30,
         paddingTop: 20,
@@ -144,11 +157,14 @@ const styles = StyleSheet.create({
 });
 
 const InvoicePDF = ({ order }) => {
-    const today = new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const orderNumber = order._id?.slice(-6) || 'NA';
+    const userPrefix = order.email?.substring(0, 3).toUpperCase() || 'XXX';
+    
+    // Format: YYYYMM-ORDERNUMBER-USERPREFIX
+    const invoiceNumber = `${year}${month}-${orderNumber}-${userPrefix}`;
 
     // Ensure we have default values for all numeric fields
     const subtotal = order.subtotal || 0;
@@ -162,8 +178,12 @@ const InvoicePDF = ({ order }) => {
                 <View style={styles.header}>
                     <Image style={styles.logo} src={logo} />
                     <View style={styles.headerRight}>
-                        <Text style={styles.invoiceInfo}>Invoice #{order._id?.slice(-8) || 'N/A'}</Text>
-                        <Text style={styles.invoiceInfo}>Date: {today}</Text>
+                        <Text style={styles.invoiceInfo}>Invoice #{invoiceNumber}</Text>
+                        <Text style={styles.invoiceInfo}>Date: {today.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}</Text>
                     </View>
                 </View>
 
@@ -232,8 +252,8 @@ const InvoicePDF = ({ order }) => {
                         </View>
                     )}
                     <View style={styles.totalRow}>
-                        <Text style={styles.summaryLabel}>Total:</Text>
-                        <Text style={styles.summaryValue}>Rs. {totalPrice.toFixed(2)}</Text>
+                        <Text style={styles.totalLabel}>Total:</Text>
+                        <Text style={styles.totalValue}>Rs. {totalPrice.toFixed(2)}</Text>
                     </View>
                 </View>
 
