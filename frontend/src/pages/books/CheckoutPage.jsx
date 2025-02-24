@@ -195,10 +195,14 @@ const CheckoutPage = () => {
                 quantity: item.quantity || 1,
                 price: item.newPrice
             })),
+            subtotal: subtotal,
+            shippingCharges: shippingCharges,
             totalPrice: parseFloat(totalPrice),
             coupon: appliedCoupon ? {
                 code: appliedCoupon.code,
-                discount: finalDiscount
+                discountType: appliedCoupon.discountType,
+                discountValue: appliedCoupon.discountValue,
+                discountAmount: finalDiscount
             } : null
         };
         

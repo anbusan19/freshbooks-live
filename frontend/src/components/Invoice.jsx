@@ -150,13 +150,10 @@ const InvoicePDF = ({ order }) => {
         day: 'numeric'
     });
 
-    // Calculate subtotal from order items
-    const subtotal = order.productIds.reduce((sum, item) => {
-        return sum + (item.price * (item.quantity || 1));
-    }, 0);
-
-    const shippingCost = 100.00;
-    const total = subtotal + shippingCost;
+    // Ensure we have default values for all numeric fields
+    const subtotal = order.subtotal || 0;
+    const shippingCharges = order.shippingCharges || 0;
+    const totalPrice = order.totalPrice || 0;
 
     return (
         <Document>
@@ -165,7 +162,7 @@ const InvoicePDF = ({ order }) => {
                 <View style={styles.header}>
                     <Image style={styles.logo} src={logo} />
                     <View style={styles.headerRight}>
-                        <Text style={styles.invoiceInfo}>Invoice #{order._id.slice(-8)}</Text>
+                        <Text style={styles.invoiceInfo}>Invoice #{order._id?.slice(-8) || 'N/A'}</Text>
                         <Text style={styles.invoiceInfo}>Date: {today}</Text>
                     </View>
                 </View>
@@ -175,19 +172,20 @@ const InvoicePDF = ({ order }) => {
                     <View style={styles.addressBlock}>
                         <Text style={styles.addressTitle}>Bill From:</Text>
                         <Text style={styles.addressText}>Freshbooks</Text>
-                        <Text style={styles.addressText}>No: 86, Main Street</Text>
-                        <Text style={styles.addressText}>Chennai, Tamil Nadu</Text>
-                        <Text style={styles.addressText}>Phone: (123) 456-7890</Text>
+                        <Text style={styles.addressText}>No: 15A, N Mada Street</Text>
+                        <Text style={styles.addressText}>Lalitha Nagar, Thiruvanmiyur</Text>
+                        <Text style={styles.addressText}>Chennai, Tamil Nadu, 600041</Text>
+                        <Text style={styles.addressText}>Phone: +91 9962126356</Text>
                         <Text style={styles.addressText}>Email: support@freshbooks.in</Text>
                     </View>
                     <View style={styles.addressBlock}>
                         <Text style={styles.addressTitle}>Bill To:</Text>
-                        <Text style={styles.addressText}>{order.name}</Text>
-                        <Text style={styles.addressText}>{order.address.houseNo}, {order.address.street}</Text>
-                        <Text style={styles.addressText}>{order.address.area}</Text>
-                        <Text style={styles.addressText}>{order.address.city}, {order.address.state}</Text>
-                        <Text style={styles.addressText}>India - {order.address.zipcode}</Text>
-                        <Text style={styles.addressText}>Phone: {order.phone}</Text>
+                        <Text style={styles.addressText}>{order.name || 'N/A'}</Text>
+                        <Text style={styles.addressText}>{order.address?.houseNo || ''}, {order.address?.street || ''}</Text>
+                        <Text style={styles.addressText}>{order.address?.area || ''}</Text>
+                        <Text style={styles.addressText}>{order.address?.city || ''}, {order.address?.state || ''}</Text>
+                        <Text style={styles.addressText}>India - {order.address?.zipcode || ''}</Text>
+                        <Text style={styles.addressText}>Phone: {order.phone || 'N/A'}</Text>
                     </View>
                 </View>
 
@@ -199,13 +197,13 @@ const InvoicePDF = ({ order }) => {
                         <Text style={styles.rateColumn}>Rate (Rs.)</Text>
                         <Text style={styles.amountColumn}>Amount (Rs.)</Text>
                     </View>
-                    {order.productIds.map((item, index) => (
+                    {(order.productIds || []).map((item, index) => (
                         <View key={index} style={styles.tableRow}>
                             <Text style={styles.productColumn}>{item.book?.title || 'Unknown Book'}</Text>
                             <Text style={styles.quantityColumn}>{item.quantity || 1}</Text>
-                            <Text style={styles.rateColumn}>{item.price.toFixed(2)}</Text>
+                            <Text style={styles.rateColumn}>{(item.price || 0).toFixed(2)}</Text>
                             <Text style={styles.amountColumn}>
-                                {(item.price * (item.quantity || 1)).toFixed(2)}
+                                {((item.price || 0) * (item.quantity || 1)).toFixed(2)}
                             </Text>
                         </View>
                     ))}
@@ -217,22 +215,34 @@ const InvoicePDF = ({ order }) => {
                         <Text style={styles.summaryLabel}>Subtotal:</Text>
                         <Text style={styles.summaryValue}>Rs. {subtotal.toFixed(2)}</Text>
                     </View>
-                    <View style={styles.summaryRow}>
-                        <Text style={styles.summaryLabel}>Shipping:</Text>
-                        <Text style={styles.summaryValue}>Rs. {shippingCost.toFixed(2)}</Text>
-                    </View>
+                    {shippingCharges > 0 && (
+                        <View style={styles.summaryRow}>
+                            <Text style={styles.summaryLabel}>Shipping:</Text>
+                            <Text style={styles.summaryValue}>Rs. {shippingCharges.toFixed(2)}</Text>
+                        </View>
+                    )}
+                    {order.coupon && (
+                        <View style={[styles.summaryRow, { color: '#059669' }]}>
+                            <Text style={[styles.summaryLabel, { color: '#059669' }]}>
+                                Discount ({order.coupon.code || ''}):
+                            </Text>
+                            <Text style={[styles.summaryValue, { color: '#059669' }]}>
+                                -Rs. {(order.coupon.discountAmount || 0).toFixed(2)}
+                            </Text>
+                        </View>
+                    )}
                     <View style={styles.totalRow}>
                         <Text style={styles.summaryLabel}>Total:</Text>
-                        <Text style={styles.summaryValue}>Rs. {total.toFixed(2)}</Text>
+                        <Text style={styles.summaryValue}>Rs. {totalPrice.toFixed(2)}</Text>
                     </View>
                 </View>
 
                 {/* Payment Details */}
                 <View style={styles.paymentDetails}>
                     <Text style={styles.paymentTitle}>Payment Details:</Text>
-                    <Text style={styles.paymentText}>Payment ID: {order.paymentId}</Text>
+                    <Text style={styles.paymentText}>Payment ID: {order.paymentId || 'N/A'}</Text>
                     <Text style={styles.paymentText}>Payment Mode: Online</Text>
-                    <Text style={styles.paymentText}>Payment Status: {order.paymentStatus}</Text>
+                    <Text style={styles.paymentText}>Payment Status: {order.paymentStatus || 'N/A'}</Text>
                 </View>
 
                 {/* Footer */}

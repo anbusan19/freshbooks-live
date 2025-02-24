@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi';
 import Loading from '../../components/Loading';
-import { FiPackage, FiTruck, FiCheck, FiClock, FiRotateCcw } from 'react-icons/fi';
+import { FiPackage, FiTruck, FiCheck, FiClock, FiRotateCcw, FiTag } from 'react-icons/fi';
 import DownloadInvoice from '../../components/DownloadInvoice';
 import ReturnPolicyModal from '../../components/ReturnPolicyModal';
 import OrderStatusProgress from '../../components/OrderStatusProgress';
@@ -185,12 +185,12 @@ const OrderPage = () => {
                                                             return (
                                                                 <div 
                                                                     key={item.book._id}
-                                                                    className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2"
+                                                                    className="flex items-center gap-3"
                                                                 >
                                                                     <img 
                                                                         src={item.book.coverImage} 
                                                                         alt={item.book.title}
-                                                                        className="w-12 h-16 object-cover rounded"
+                                                                        className="w-12 h-16 object-cover rounded shadow-sm"
                                                                     />
                                                                     <div className="flex-1 min-w-0">
                                                                         <h5 className="text-sm font-medium text-gray-800 dark:text-white truncate">
@@ -206,6 +206,36 @@ const OrderPage = () => {
                                                                 </div>
                                                             );
                                                         })}
+                                                    </div>
+
+                                                    {/* Price Breakdown */}
+                                                    <div className="mt-4 pt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+                                                        <div className="flex justify-between text-sm">
+                                                            <span className="text-gray-600 dark:text-gray-400">Subtotal:</span>
+                                                            <span className="font-medium text-gray-900 dark:text-white">₹{order.subtotal}</span>
+                                                        </div>
+                                                        
+                                                        {order.shippingCharges > 0 && (
+                                                            <div className="flex justify-between text-sm">
+                                                                <span className="text-gray-600 dark:text-gray-400">Shipping:</span>
+                                                                <span className="font-medium text-gray-900 dark:text-white">₹{order.shippingCharges}</span>
+                                                            </div>
+                                                        )}
+
+                                                        {order.coupon && (
+                                                            <div className="flex justify-between text-sm text-green-600 dark:text-green-400">
+                                                                <span className="flex items-center gap-1">
+                                                                    <FiTag className="w-4 h-4" />
+                                                                    Discount ({order.coupon.code}):
+                                                                </span>
+                                                                <span className="font-medium">-₹{order.coupon.discountAmount}</span>
+                                                            </div>
+                                                        )}
+
+                                                        <div className="flex justify-between text-sm font-medium pt-2 border-t border-gray-200 dark:border-gray-700">
+                                                            <span className="text-gray-900 dark:text-white">Total:</span>
+                                                            <span className="text-indigo-600 dark:text-indigo-400">₹{order.totalPrice}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

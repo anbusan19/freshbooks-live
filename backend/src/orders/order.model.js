@@ -60,6 +60,30 @@ const orderSchema = new mongoose.Schema({
             required: true
         }
     }],
+    subtotal: {
+        type: Number,
+        required: true,
+    },
+    coupon: {
+        code: {
+            type: String,
+        },
+        discountType: {
+            type: String,
+            enum: ['percentage', 'fixed'],
+        },
+        discountValue: {
+            type: Number,
+        },
+        discountAmount: {
+            type: Number,
+        }
+    },
+    shippingCharges: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     totalPrice: {
         type: Number,
         required: true,

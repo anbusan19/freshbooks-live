@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGetAllOrdersQuery, useUpdateDeliveryStatusMutation } from '../../../redux/features/orders/ordersApi';
 import Loading from '../../../components/Loading';
-import { FiPackage, FiCreditCard, FiTruck, FiCheck, FiClock, FiSearch, FiCalendar } from 'react-icons/fi';
+import { FiPackage, FiCreditCard, FiTruck, FiCheck, FiClock, FiSearch, FiCalendar, FiTag } from 'react-icons/fi';
 import OrderStatusProgress from '../../../components/OrderStatusProgress';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -286,6 +286,36 @@ const AdminOrders = () => {
                                                     }`}>
                                                     {order.paymentStatus}
                                                 </span>
+
+                                                {/* Price Breakdown */}
+                                                <div className="mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700 pt-4">
+                                                    <div className="flex justify-between">
+                                                        <span className="text-gray-600 dark:text-gray-400">Subtotal:</span>
+                                                        <span className="font-medium">₹{order.subtotal}</span>
+                                                    </div>
+                                                    
+                                                    {order.shippingCharges > 0 && (
+                                                        <div className="flex justify-between">
+                                                            <span className="text-gray-600 dark:text-gray-400">Shipping:</span>
+                                                            <span className="font-medium">₹{order.shippingCharges}</span>
+                                                        </div>
+                                                    )}
+
+                                                    {order.coupon && (
+                                                        <div className="flex justify-between text-green-600 dark:text-green-400">
+                                                            <span className="flex items-center gap-1">
+                                                                <FiTag className="w-4 h-4" />
+                                                                Discount ({order.coupon.code}):
+                                                            </span>
+                                                            <span className="font-medium">-₹{order.coupon.discountAmount}</span>
+                                                        </div>
+                                                    )}
+
+                                                    <div className="flex justify-between font-medium text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+                                                        <span>Total:</span>
+                                                        <span>₹{order.totalPrice}</span>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             {/* Delivery Status */}
