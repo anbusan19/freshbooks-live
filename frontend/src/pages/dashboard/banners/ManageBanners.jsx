@@ -283,13 +283,14 @@ const ManageBanners = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Image</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Image (16:9 ratio recommended)</label>
                                 <input
                                     type="file"
                                     onChange={handleFileUpload}
                                     className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     accept="image/*"
                                 />
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">For best results, use a 16:9 aspect ratio (e.g., 1920x1080px)</p>
                                 {uploading && <p className="text-sm text-gray-500 mt-1">Uploading...</p>}
                                 {formData.image && (
                                     <img src={formData.image} alt="Preview" className="mt-2 h-32 object-cover rounded-lg" />

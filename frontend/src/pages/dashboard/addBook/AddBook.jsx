@@ -212,7 +212,7 @@ const AddBook = () => {
 
         {/* Cover Image Upload */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Cover Image</label>
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Cover Image (1.6:1 ratio recommended)</label>
           <input 
             type="file" 
             accept="image/*" 
@@ -224,8 +224,12 @@ const AddBook = () => {
                      dark:file:bg-gray-700 dark:file:text-gray-200
                      hover:file:bg-blue-100 dark:hover:file:bg-gray-600" 
           />
-          {imageFileName && <p className="text-sm text-gray-500 dark:text-gray-400">Selected: {imageFileName}</p>}
-          {uploading && <p className="text-sm text-gray-500 dark:text-gray-400">Uploading...</p>}
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">For best results, use a 1.6:1 aspect ratio (e.g., 1800x2700px)</p>
+          {imageFileName && <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Selected: {imageFileName}</p>}
+          {uploading && <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Uploading...</p>}
+          {imageUrl && (
+            <img src={imageUrl} alt="Cover Preview" className="mt-2 h-48 object-cover rounded-lg" />
+          )}
         </div>
 
         {/* Submit Button */}
