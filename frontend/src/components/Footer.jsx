@@ -53,19 +53,19 @@ const Footer = () => {
                 <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Categories</h2>
                 <ul className="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                   <li>
-                    <Link to="/category/self-development" className="hover:text-blue-600 transition-colors">Self Development</Link>
+                    <Link to="/books?category=self-development" className="hover:text-blue-600 transition-colors">Self Development</Link>
                   </li>
                   <li>
-                    <Link to="/category/business" className="hover:text-blue-600 transition-colors">Business</Link>
+                    <Link to="/books?category=business" className="hover:text-blue-600 transition-colors">Business</Link>
                   </li>
                   <li>
-                    <Link to="/category/mystery-thriller" className="hover:text-blue-600 transition-colors">Mystery & Crime Thriller</Link>
+                    <Link to="/books?category=mystery&crimethriller" className="hover:text-blue-600 transition-colors">Mystery & Crime Thriller</Link>
                   </li>
                   <li>
-                    <Link to="/category/romance" className="hover:text-blue-600 transition-colors">Romance Novels</Link>
+                    <Link to="/books?category=romance" className="hover:text-blue-600 transition-colors">Romance Novels</Link>
                   </li>
                   <li>
-                    <Link to="/category/kids" className="hover:text-blue-600 transition-colors">Kids Books</Link>
+                    <Link to="/books?category=kids-book" className="hover:text-blue-600 transition-colors">Kids Books</Link>
                   </li>
                 </ul>
               </div>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import BookCard from './BookCard';
 import { FiChevronDown } from 'react-icons/fi';
+import { useSearchParams } from 'react-router-dom';
 import './BooksPage.css';
 
 const categories = [
@@ -14,22 +15,49 @@ const categories = [
 ];
 
 const categoryMapping = {
-    "Self Development": "self-development",
-    "Business": "business",
-    "Mystery & Crime Thriller": "mystery&crimethriller",
-    "Romance": "romance",
-    "Kids Book": "kids-book"
+    "self-development": "Self Development",
+    "business": "Business",
+    "mystery&crimethriller": "Mystery & Crime Thriller",
+    "romance": "Romance",
+    "kids-book": "Kids Book"
 };
 
 const BooksPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState("All Books");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const categoryParam = searchParams.get('category');
+    const [selectedCategory, setSelectedCategory] = useState(
+        categoryParam ? (categoryMapping[categoryParam] || "All Books") : "All Books"
+    );
     const { data: books = [], isLoading } = useFetchAllBooksQuery();
     const [sortBy, setSortBy] = useState("default");
+
+    // Update selected category when URL parameter changes
+    useEffect(() => {
+        if (categoryParam) {
+            setSelectedCategory(categoryMapping[categoryParam] || "All Books");
+        } else {
+            setSelectedCategory("All Books");
+        }
+    }, [categoryParam]);
+
+    // Handle category change
+    const handleCategoryChange = (category) => {
+        setSelectedCategory(category);
+        if (category === "All Books") {
+            searchParams.delete('category');
+        } else {
+            const urlCategory = Object.entries(categoryMapping).find(([key, value]) => value === category)?.[0];
+            if (urlCategory) {
+                searchParams.set('category', urlCategory);
+            }
+        }
+        setSearchParams(searchParams);
+    };
 
     // Filter books by category
     const filteredBooks = selectedCategory === "All Books"
         ? books
-        : books.filter(book => book.category === categoryMapping[selectedCategory]);
+        : books.filter(book => book.category === Object.entries(categoryMapping).find(([key, value]) => value === selectedCategory)?.[0]);
 
     // Sort books based on selection
     const sortedBooks = [...filteredBooks].sort((a, b) => {
@@ -115,7 +143,7 @@ const BooksPage = () => {
                     <div className="relative flex-1">
                         <select
                             value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            onChange={(e) => handleCategoryChange(e.target.value)}
                             className="w-full appearance-none bg-white/90 dark:bg-[#1a1a1a]/90 text-gray-800 dark:text-gray-200
                                      border border-gray-200/20 dark:border-gray-800/20 rounded-lg px-3 py-2
                                      focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30

@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     logo: {
-        width: 120,
-        height: 40,
+        width: 140,
+        height: 60,
         objectFit: 'contain'
     },
     headerRight: {
@@ -179,11 +179,6 @@ const InvoicePDF = ({ order }) => {
                     <Image style={styles.logo} src={logo} />
                     <View style={styles.headerRight}>
                         <Text style={styles.invoiceInfo}>Invoice #{invoiceNumber}</Text>
-                        <Text style={styles.invoiceInfo}>Date: {today.toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}</Text>
                     </View>
                 </View>
 
