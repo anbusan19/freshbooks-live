@@ -33,9 +33,15 @@ export const couponService = {
         return response.data;
     },
 
-    // Validate coupon
+    // Validate coupon code
     validateCoupon: async (code) => {
         const response = await axios.post(`${API_URL}/api/coupons/validate`, { code });
+        return response.data;
+    },
+
+    // Use coupon code (increment usage count)
+    useCoupon: async (code) => {
+        const response = await axios.post(`${API_URL}/api/coupons/use`, { code });
         return response.data;
     }
 }; 

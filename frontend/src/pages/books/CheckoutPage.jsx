@@ -177,6 +177,16 @@ const CheckoutPage = () => {
             return;
         }
 
+        // Update coupon usage if one is applied
+        if (appliedCoupon) {
+            try {
+                await couponService.useCoupon(appliedCoupon.code);
+            } catch (error) {
+                console.error("Error updating coupon usage:", error);
+                // Continue with order even if coupon update fails
+            }
+        }
+
         const orderData = {
             name: data.name,
             email: currentUser?.email,

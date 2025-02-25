@@ -140,4 +140,52 @@ exports.validateCoupon = async (req, res) => {
             error: error.message
         });
     }
-}; 
+};
+
+// Use coupon
+exports.useCoupon = async (req, res) => {
+    try {
+        const { code } = req.body;
+        const coupon = await Coupon.findOne({ code: code.toUpperCase() });
+
+        if (!coupon) {
+            return res.status(404).json({
+                success: false,
+                error: 'Coupon not found'
+            });
+        }
+
+        // Check if coupon is still valid
+        const now = new Date();
+        if (!coupon.isActive || 
+            (coupon.startDate && coupon.startDate > now) || 
+            (coupon.endDate && coupon.endDate < now)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Coupon is not active or has expired'
+            });
+        }
+
+        // Check usage limit
+        if (coupon.usageLimit && coupon.usageCount >= coupon.usageLimit) {
+            return res.status(400).json({
+                success: false,
+                error: 'Coupon usage limit exceeded'
+            });
+        }
+
+        // Increment usage count
+        coupon.usageCount = (coupon.usageCount || 0) + 1;
+        await coupon.save();
+
+        res.status(200).json({
+            success: true,
+            coupon
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            error: error.message
+        });
+    }
+};

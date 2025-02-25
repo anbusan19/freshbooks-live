@@ -6,7 +6,8 @@ const {
     getCoupon,
     updateCoupon,
     deleteCoupon,
-    validateCoupon
+    validateCoupon,
+    useCoupon
 } = require('../controllers/couponController');
 
 // Admin routes
@@ -16,7 +17,8 @@ router.get('/:id', getCoupon);
 router.put('/:id', updateCoupon);
 router.delete('/:id', deleteCoupon);
 
-// Public route for validating coupons
+// Public routes
 router.post('/validate', validateCoupon);
+router.post('/use', useCoupon);
 
-module.exports = router; 
+module.exports = router;
