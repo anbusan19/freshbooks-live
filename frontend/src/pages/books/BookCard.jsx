@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../redux/features/cart/cartSlice'
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice'
 import Swal from 'sweetalert2'
+import { slugify } from '../../utils/slugify';
 
 const BookCard = ({book}) => {
     const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const BookCard = ({book}) => {
             <div className="flex-1 flex flex-col relative z-10">
                 {/* Image Container */}
                 <div className="relative w-full aspect-[3/4] mb-2 sm:mb-3 overflow-hidden rounded-lg">
-                    <Link to={`/books/${book._id}`}>
+                    <Link to={`/books/${slugify(book.title)}`}>
                         <img
                             src={`${book.coverImage}`}
                             alt={book.title}
@@ -69,7 +70,7 @@ const BookCard = ({book}) => {
                 </div>
 
                 <div className="flex-1 flex flex-col min-h-0">
-                    <Link to={`/books/${book._id}`}>
+                    <Link to={`/books/${slugify(book.title)}`}>
                         <h3 className="text-sm font-bold text-gray-800 dark:text-white mb-0.5 truncate hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" title={book?.title}>
                             {book?.title}
                         </h3>

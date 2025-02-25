@@ -2,18 +2,25 @@ import React from 'react';
 import { FiShoppingCart, FiHeart, FiStar } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { useFetchBookByIdQuery } from '../../redux/features/books/booksApi';
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice';
+import { deslugify } from '../../utils/slugify';
 import Swal from 'sweetalert2';
 import '../../styles/shared-gradients.css';
 
 const SingleBook = () => {
-    const {id} = useParams();
-    const {data: book, isLoading, isError} = useFetchBookByIdQuery(id);
+    const { title } = useParams();
+    const { data: books = [], isLoading, isError } = useFetchAllBooksQuery();
     const dispatch = useDispatch();
     const wishlistItems = useSelector(state => state.wishlist.items);
-    const isInWishlist = wishlistItems.some(item => item.id === id);
+    
+    // Find the book by matching the deslugified title
+    const book = books.find(book => 
+        book.title.toLowerCase().replace(/[^\w\s-]/g, '') === deslugify(title).toLowerCase().replace(/[^\w\s-]/g, '')
+    );
+    
+    const isInWishlist = wishlistItems.some(item => item.id === (book?._id || ''));
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
@@ -27,7 +34,7 @@ const SingleBook = () => {
 
     const toggleWishlist = () => {
         if (isInWishlist) {
-            dispatch(removeFromWishlist(id));
+            dispatch(removeFromWishlist(book?._id));
             Swal.fire({
                 icon: 'success',
                 title: 'Removed from wishlist',
@@ -54,6 +61,12 @@ const SingleBook = () => {
     if(isError) return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="text-2xl text-red-600 dark:text-red-400">Error loading book information</div>
+        </div>
+    );
+
+    if(!book) return (
+        <div className="min-h-screen flex items-center justify-center">
+            <div className="text-2xl text-gray-600 dark:text-gray-300">Book not found</div>
         </div>
     );
 

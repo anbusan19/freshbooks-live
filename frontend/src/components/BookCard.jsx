@@ -5,6 +5,7 @@ import { addToCart } from '../redux/features/cart/cartSlice';
 import { addToWishlist, removeFromWishlist } from '../redux/features/wishlist/wishlistSlice';
 import { FiHeart } from 'react-icons/fi';
 import Swal from 'sweetalert2';
+import { slugify } from '../utils/slugify';
 
 const BookCard = ({ book }) => {
     const cardRef = useRef(null);
@@ -78,7 +79,7 @@ const BookCard = ({ book }) => {
                 </button>
 
                 {/* Book Image */}
-                <Link to={`/books/${book._id}`} className="block relative aspect-[3/4] overflow-hidden">
+                <Link to={`/books/${slugify(book.title)}`} className="block relative aspect-[3/4] overflow-hidden">
                     <img
                         src={book.coverImage}
                         alt={book.title}
@@ -89,7 +90,7 @@ const BookCard = ({ book }) => {
                 {/* Book Details */}
                 <div className="p-3 sm:p-4">
                     <Link 
-                        to={`/books/${book._id}`}
+                        to={`/books/${slugify(book.title)}`}
                         className="text-sm sm:text-base font-bold text-gray-800 dark:text-white hover:text-indigo-600 
                                  dark:hover:text-indigo-400 transition-colors line-clamp-1"
                     >
