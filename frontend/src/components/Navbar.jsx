@@ -10,6 +10,8 @@ import { useAuth } from "../context/AuthContext";
 import { setSearchTerm, setSearchResults, setIsSearching, clearSearch } from "../redux/features/search/searchSlice";
 import { useFetchAllBooksQuery } from "../redux/features/books/booksApi";
 import navbarLogo from "../assets/freshbooks-navbar-logo.png"
+import navbarDarkLogo from "../assets/freshbooks-navbar-darkmode-logo.png"
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +28,7 @@ const Navbar = () => {
     const isSearching = useSelector((state) => state.search.isSearching);
     const dispatch = useDispatch();
     const { data: books = [] } = useFetchAllBooksQuery();
+    const { darkMode } = useTheme();
 
     const handleLogout = async () => {
         try {
@@ -82,17 +85,11 @@ const Navbar = () => {
                         <div className="flex items-center gap-4">
                             <Link to="/" className="flex-shrink-0">
                                 <div className="relative">
-                                    {/* Left-side stronger glow */}
-                                    <div className="absolute -left-4 -top-4 bottom-0 w-12 dark:bg-white/30 dark:blur-2xl dark:rounded-full"></div>
-                                    {/* Main glow */}
-                                    <div className="absolute inset-0 dark:bg-white/20 dark:blur-2xl dark:rounded-full"></div>
-                                    <div className="relative p-1.5">
-                                        <img 
-                                            src={navbarLogo}
-                                            alt="Freshbooks" 
-                                            className="h-10 w-auto brightness-90 dark:brightness-200 dark:drop-shadow-[0_0_30px_rgba(255,255,255,0.8)] dark:filter dark:contrast-150"
-                                        />
-                                    </div>
+                                    <img 
+                                        src={darkMode ? navbarDarkLogo : navbarLogo}
+                                        alt="Freshbooks" 
+                                        className="h-10 w-auto"
+                                    />
                                 </div>
                             </Link>
                         </div>
@@ -101,8 +98,8 @@ const Navbar = () => {
                         <div className="hidden lg:block flex-1 max-w-xl mx-4">
                             <div className="relative" ref={searchRef}>
                                 <IoSearchOutline className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
-                        <input 
-                            type="text" 
+                                <input 
+                                    type="text" 
                                     value={searchTerm}
                                     onChange={handleSearchInput}
                                     placeholder="Search your Favourite Books or Authors"
@@ -146,7 +143,7 @@ const Navbar = () => {
                                     </div>
                                 )}
                             </div>
-                    </div>
+                        </div>
 
                         {/* Right side - Icons */}
                         <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
@@ -223,13 +220,13 @@ const Navbar = () => {
                                         >
                                             Dashboard
                                         </Link>
-                                            <Link
+                                        <Link
                                             to="/orders"
                                             className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50"
                                             onClick={() => setIsOpen(false)}
                                         >
                                             Orders
-                                            </Link>
+                                        </Link>
                                         <button
                                             onClick={handleLogout}
                                             className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800/50"

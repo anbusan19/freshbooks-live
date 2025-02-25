@@ -3,12 +3,14 @@ import { FaFacebook, FaInstagram } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6"
 import { FaWhatsapp } from "react-icons/fa"
 import { Link, useLocation } from 'react-router-dom'
-import navbarLogo from "../assets/freshbooks-footer-logo.png"
+import footerLogo from "../assets/freshbooks-footer-logo.png"
+import footerDarkLogo from "../assets/freshbooks-navbar-darkmode-logo.png"
 import PrivacyPolicyPopup from './PrivacyPolicyPopup'
 import PaymentMethodsPopup from './PaymentMethodsPopup'
 import TermsOfServicePopup from './TermsOfServicePopup'
 import ContactPopup from './ContactPopup'
 import ReturnPolicyModal from './ReturnPolicyModal'
+import { useTheme } from '../context/ThemeContext'
 
 const Footer = () => {
   const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
@@ -19,6 +21,7 @@ const Footer = () => {
   const [isCareerPopupOpen, setIsCareerPopupOpen] = useState(false);
   const [isFranchisePopupOpen, setIsFranchisePopupOpen] = useState(false);
   const location = useLocation();
+  const { darkMode } = useTheme();
 
   // Add bottom padding only for the books page
   const isAllBooksPage = location.pathname === '/books';
@@ -32,7 +35,11 @@ const Footer = () => {
             {/* Logo Section */}
             <div className="mb-8 md:mb-0 md:flex-shrink-0 md:w-64">
               <Link to="/" className="flex items-center">
-                <img src={navbarLogo} className="h-12 w-auto" alt="Freshbooks Logo" />
+                <img 
+                  src={darkMode ? footerDarkLogo : footerLogo} 
+                  className="h-12 w-auto" 
+                  alt="Freshbooks Logo" 
+                />
               </Link>
               <p className="mt-6 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                 Discover a world of books at your fingertips. Your one-stop destination for all your reading needs.

@@ -12,9 +12,9 @@ const ThemeToggle = () => {
             aria-label="Toggle dark mode"
         >
             {darkMode ? (
-                <HiSun className="w-5 h-5 text-primary-light" />
+                <HiMoon className="w-5 h-5 text-primary-light" />
             ) : (
-                <HiMoon className="w-5 h-5 text-primary-dark" />
+                <HiSun className="w-5 h-5 text-primary-dark" />
             )}
         </button>
     );
