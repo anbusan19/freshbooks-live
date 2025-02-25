@@ -4,6 +4,7 @@ import './App.css'
 import Footer from './components/Footer'
 import LogoLoader from './components/LogoLoader'
 import Navbar from './components/Navbar'
+import ToastManager from './components/ToastManager';
 import { AuthProvide } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 
@@ -32,6 +33,7 @@ function App() {
           </main>
           <Footer />
         </div>
+        <ToastManager />
       </AuthProvide>
     </ThemeProvider>
   )

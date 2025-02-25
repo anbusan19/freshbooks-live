@@ -13,33 +13,17 @@ const BookCard = ({book}) => {
     const wishlistItems = useSelector(state => state.wishlist.items);
     const isInWishlist = wishlistItems.some(item => item.id === book._id);
 
-    const handleAddToCart = () => {
-        dispatch(addToCart(book));
-        Swal.fire({
-            icon: 'success',
-            title: 'Added to bag',
-            showConfirmButton: false,
-            timer: 1500
-        });
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product));
     }
 
     const toggleWishlist = () => {
         if (isInWishlist) {
             dispatch(removeFromWishlist(book._id));
-            Swal.fire({
-                icon: 'success',
-                title: 'Removed from wishlist',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            window.showToast('removeWishlist', 'Removed from wishlist');
         } else {
             dispatch(addToWishlist({...book, id: book._id}));
-            Swal.fire({
-                icon: 'success',
-                title: 'Added to wishlist',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            window.showToast('addWishlist', 'Added to wishlist');
         }
     };
 

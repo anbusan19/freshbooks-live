@@ -6,7 +6,6 @@ import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice';
 import { deslugify } from '../../utils/slugify';
-import Swal from 'sweetalert2';
 import '../../styles/shared-gradients.css';
 
 const SingleBook = () => {
@@ -24,31 +23,15 @@ const SingleBook = () => {
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
-        Swal.fire({
-            icon: 'success',
-            title: 'Added to cart',
-            showConfirmButton: false,
-            timer: 1500
-        });
     }
 
     const toggleWishlist = () => {
         if (isInWishlist) {
-            dispatch(removeFromWishlist(book?._id));
-            Swal.fire({
-                icon: 'success',
-                title: 'Removed from wishlist',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            dispatch(removeFromWishlist(book._id));
+            window.showToast('removeWishlist', 'Removed from wishlist');
         } else {
             dispatch(addToWishlist({...book, id: book._id}));
-            Swal.fire({
-                icon: 'success',
-                title: 'Added to wishlist',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            window.showToast('addWishlist', 'Added to wishlist');
         }
     };
 

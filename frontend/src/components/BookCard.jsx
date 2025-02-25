@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/features/cart/cartSlice';
 import { addToWishlist, removeFromWishlist } from '../redux/features/wishlist/wishlistSlice';
 import { FiHeart } from 'react-icons/fi';
-import Swal from 'sweetalert2';
 import { slugify } from '../utils/slugify';
 
 const BookCard = ({ book }) => {
@@ -32,31 +31,15 @@ const BookCard = ({ book }) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart(book));
-        Swal.fire({
-            icon: 'success',
-            title: 'Added to cart!',
-            showConfirmButton: false,
-            timer: 1500
-        });
     };
 
     const toggleWishlist = () => {
         if (isInWishlist) {
-            dispatch(removeFromWishlist(book));
-            Swal.fire({
-                icon: 'success',
-                title: 'Removed from wishlist!',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            dispatch(removeFromWishlist(book._id));
+            window.showToast('removeWishlist', 'Removed from wishlist');
         } else {
-            dispatch(addToWishlist(book));
-            Swal.fire({
-                icon: 'success',
-                title: 'Added to wishlist!',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            dispatch(addToWishlist({...book, id: book._id}));
+            window.showToast('addWishlist', 'Added to wishlist');
         }
     };
 

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Swal  from "sweetalert2";
 
 const initialState = {
     cartItems: []
@@ -13,27 +12,20 @@ const cartSlice = createSlice({
             const existingItem = state.cartItems.find(item => item._id === action.payload._id);
             if(!existingItem) {
                 state.cartItems.push({ ...action.payload, quantity: 1 })
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Product Added to the Cart",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
+                if (window.showToast) {
+                    window.showToast('addCart', 'Product Added to the Cart');
+                }
             } else {
-                Swal.fire({
-                    title: "Already Added to the Cart",
-                    text: "You can adjust the quantity in the cart page",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "OK!"
-                  })
+                if (window.showToast) {
+                    window.showToast('addCart', 'Already Added to the Cart');
+                }
             }
         },
         removeFromCart: (state, action) => {
             state.cartItems = state.cartItems.filter(item => item._id !== action.payload._id)
+            if (window.showToast) {
+                window.showToast('removeCart', 'Removed from Cart');
+            }
         },
         clearCart: (state) => {
             state.cartItems = []
@@ -42,12 +34,18 @@ const cartSlice = createSlice({
             const item = state.cartItems.find(item => item._id === action.payload);
             if (item) {
                 item.quantity += 1;
+                if (window.showToast) {
+                    window.showToast('updateCart', 'Quantity updated in Cart');
+                }
             }
         },
         decrementQuantity: (state, action) => {
             const item = state.cartItems.find(item => item._id === action.payload);
             if (item && item.quantity > 1) {
                 item.quantity -= 1;
+                if (window.showToast) {
+                    window.showToast('updateCart', 'Quantity updated in Cart');
+                }
             }
         },
         updateQuantity: (state, action) => {
@@ -55,6 +53,9 @@ const cartSlice = createSlice({
             const item = state.cartItems.find(item => item._id === id);
             if (item) {
                 item.quantity = Math.max(1, quantity);
+                if (window.showToast) {
+                    window.showToast('updateCart', 'Quantity updated in Cart');
+                }
             }
         }
     }
