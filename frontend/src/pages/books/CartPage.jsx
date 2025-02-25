@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { clearCart, removeFromCart, incrementQuantity, decrementQuantity, updateQuantity } from '../../redux/features/cart/cartSlice';
 import { FiTrash2, FiShoppingBag, FiMinus, FiPlus } from 'react-icons/fi';
-import Swal from 'sweetalert2';
 import '../../styles/shared-gradients.css';
 
 const CartPage = () => {
@@ -19,34 +18,15 @@ const CartPage = () => {
 
     const handleRemoveFromCart = (product) => {
         dispatch(removeFromCart(product));
-        Swal.fire({
-            icon: 'success',
-            title: 'Removed from cart',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        window.showToast('removeCart', 'Removed from cart');
     }
 
     const handleClearCart = () => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "This will remove all items from your cart!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, clear it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(clearCart());
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Cart cleared!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-        });
+        const confirmClear = window.confirm("Are you sure you want to clear your cart?");
+        if (confirmClear) {
+            dispatch(clearCart());
+            window.showToast('removeCart', 'Cart cleared!');
+        }
     }
 
     const handleQuantityChange = (e, id) => {

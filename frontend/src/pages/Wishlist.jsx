@@ -4,7 +4,6 @@ import { removeFromWishlist } from '../redux/slices/wishlistSlice';
 import { addToCart } from '../redux/features/cart/cartSlice';
 import { FiShoppingCart, FiTrash2, FiHeart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import '../styles/shared-gradients.css';
 
 const Wishlist = () => {
@@ -13,22 +12,12 @@ const Wishlist = () => {
 
     const handleRemoveFromWishlist = (bookId) => {
         dispatch(removeFromWishlist(bookId));
-        Swal.fire({
-            icon: 'success',
-            title: 'Removed from wishlist',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        window.showToast('removeWishlist', 'Removed from wishlist');
     };
 
     const handleAddToCart = (book) => {
         dispatch(addToCart(book));
-        Swal.fire({
-            icon: 'success',
-            title: 'Added to cart',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        window.showToast('addCart', 'Added to cart');
     };
 
     return (
