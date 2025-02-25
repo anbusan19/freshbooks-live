@@ -30,8 +30,8 @@ const ManageBanners = () => {
             setUploading(true);
             const data = new FormData();
             data.append('file', file);
-            data.append('upload_preset', 'freshbooks');
-            data.append('cloud_name', 'dh5fgqqte');
+            data.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+            data.append('cloud_name', import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
 
             const res = await fetch(import.meta.env.VITE_CLOUDINARY_URL, {
                 method: 'POST',

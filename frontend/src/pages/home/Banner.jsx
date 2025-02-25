@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom";
-import book1 from "../../assets/books/book-1.png";
-import book2 from "../../assets/books/book-2.png";
-import book3 from "../../assets/books/book-3.png";
-import book4 from "../../assets/books/book-4.png";
-import book5 from "../../assets/books/book-5.png";
-import book6 from "../../assets/books/book-6.png";
-import book7 from "../../assets/books/book-7.png";
-import book8 from "../../assets/books/book-8.png";
-import book9 from "../../assets/books/book-9.png";
-import book10 from "../../assets/books/book-10.png";
+import book1 from "../../assets/books/book-1.jpg";
+import book2 from "../../assets/books/book-2.jpg";
+import book3 from "../../assets/books/book-3.jpg";
+import book4 from "../../assets/books/book-4.jpg";
+import book5 from "../../assets/books/book-5.jpg";
+import book6 from "../../assets/books/book-6.jpg";
+import book7 from "../../assets/books/book-7.jpg";
+import book8 from "../../assets/books/book-8.jpg";
+import book9 from "../../assets/books/book-9.jpg";
+import book10 from "../../assets/books/book-10.jpg";
+import book11 from "../../assets/books/book-11.jpg";
+import book12 from "../../assets/books/book-12.jpg";
 
 const Banner = () => {
-    const firstRowBooks = [book1, book2, book3, book4, book5, book1, book2, book3, book4, book5];
-    const secondRowBooks = [book6, book7, book8, book9, book10, book6, book7, book8, book9, book10];
+    const firstRowBooks = [book1, book2, book3, book4, book5, book6, book1, book2, book3, book4];
+    const secondRowBooks = [book7, book8, book9, book10, book11, book12, book7, book8, book9, book10];
 
     return (
         <section className="relative py-4 sm:py-8 px-2 sm:px-4 bg-gray-50/50 dark:bg-gray-900/50">
