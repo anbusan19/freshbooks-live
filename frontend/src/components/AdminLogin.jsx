@@ -33,7 +33,7 @@ const AdminLogin = () => {
                 }, 3600 * 1000)
 
                 alert("Admin Login successful!")
-                navigate("/dashboard")
+                navigate("/admin-dashboard")
             }
         } catch (error) {
             setMessage("Please provide a valid username and password")
@@ -148,7 +148,7 @@ const AdminLogin = () => {
 
                         <div className="mt-8 text-center">
                             <p className="text-sm text-gray-500">
-                                ©2025 Freshbooks. All rights reserved.
+                                2025 Freshbooks. All rights reserved.
                             </p>
                         </div>
                     </div>

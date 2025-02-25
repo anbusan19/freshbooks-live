@@ -27,10 +27,10 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-white dark:bg-gray-900 relative z-30">
-        <div className="max-w-[1920px] mx-auto w-full px-2 sm:px-4 lg:px-6 py-6 lg:py-8">
-          <div className="md:flex md:justify-between gap-12">
+        <div className="max-w-[1920px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <div className="md:flex md:justify-between md:space-x-8 lg:space-x-12">
             {/* Logo Section */}
-            <div className="mb-6 md:mb-0 max-w-xs">
+            <div className="mb-8 md:mb-0 md:flex-shrink-0 md:w-64">
               <Link to="/" className="flex items-center">
                 <img src={navbarLogo} className="h-12 w-auto" alt="Freshbooks Logo" />
               </Link>
@@ -40,11 +40,11 @@ const Footer = () => {
             </div>
 
             {/* Footer Links Grid */}
-            <div className="grid grid-cols-2 gap-8 sm:gap-12 sm:grid-cols-5 pr-4">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-8 xl:gap-x-12 flex-grow">
               {/* Categories */}
               <div>
-                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Categories</h2>
-                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Categories</h2>
+                <ul className="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                   <li>
                     <Link to="/category/self-development" className="hover:text-blue-600 transition-colors">Self Development</Link>
                   </li>
@@ -65,10 +65,10 @@ const Footer = () => {
 
               {/* Useful Links */}
               <div>
-                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Useful Links</h2>
-                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Useful Links</h2>
+                <ul className="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                   <li>
-                    <Link to="/dashboard" className="hover:text-blue-600 transition-colors">My Dashboard</Link>
+                    <Link to="/user-dashboard" className="hover:text-blue-600 transition-colors">My Dashboard</Link>
                   </li>
                   <li>
                     <Link to="/wishlist" className="hover:text-blue-600 transition-colors">My Wishlist</Link>
@@ -87,8 +87,8 @@ const Footer = () => {
 
               {/* Quick Links */}
               <div>
-                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Quick Links</h2>
-                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Quick Links</h2>
+                <ul className="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                   <li>
                     <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
                   </li>
@@ -106,8 +106,8 @@ const Footer = () => {
 
               {/* Legal */}
               <div>
-                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
-                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
+                <ul className="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                   <li>
                     <button onClick={() => setIsPrivacyPolicyOpen(true)} className="hover:text-blue-600 transition-colors text-sm">Privacy Policy</button>
                   </li>
@@ -125,7 +125,7 @@ const Footer = () => {
 
               {/* Chat with Us */}
               <div>
-                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Chat with Us</h2>
+                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">Chat with Us</h2>
                 <a
                   href="https://wa.me/+919962126356"
                   target="_blank"
@@ -142,14 +142,14 @@ const Footer = () => {
 
         <hr className="my-8 border-gray-200 dark:border-gray-700" />
           
-        <div className={`mx-auto w-full max-w-screen-xl px-2 sm:px-4 lg:px-6 ${bottomPaddingClass}`}>
-          <div className="sm:flex sm:items-center sm:justify-between">
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              © {new Date().getFullYear()} freshbooks™. All rights reserved. | Crafted by <b>Softrate Technologies (P) Ltd.</b>
+        <div className={`mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8 ${bottomPaddingClass}`}>
+          <div className="sm:flex sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+            <span className="text-sm text-gray-600 dark:text-gray-400 block text-center sm:text-left">
+              &copy; {new Date().getFullYear()} freshbooks&trade;. All rights reserved. | Crafted by <b>Softrate Technologies (P) Ltd.</b>
             </span>
             
             {/* Social Links */}
-            <div className="flex mt-4 sm:mt-0 space-x-6">
+            <div className="flex justify-center sm:justify-start space-x-6">
               <a href="https://www.facebook.com/freshbooks.in" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white transition-colors">
                 <FaFacebook className="w-5 h-5" />
               </a>

@@ -23,6 +23,7 @@ import AdminOrders from "../pages/dashboard/admin/AdminOrders";
 import ForgotPassword from "../components/ForgotPassword";
 import ResetPassword from "../components/ResetPassword";
 import CouponManagement from "../pages/dashboard/admin/CouponManagement";
+import AdminRedirect from "../components/AdminRedirect";
 
 const router = createBrowserRouter([
     {
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
     },
     {
       path: "/dashboard",
+      element: <AdminRedirect/>
+    },
+    {
+      path: "/admin-dashboard",
       element: <AdminRoute>
         <DashboardLayout/>
       </AdminRoute>,

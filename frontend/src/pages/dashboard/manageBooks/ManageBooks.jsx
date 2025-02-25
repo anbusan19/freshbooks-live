@@ -120,7 +120,7 @@ const ManageBooks = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <div className="flex items-center gap-3">
                                                         <Link
-                                                            to={`/dashboard/edit-book/${book._id}`}
+                                                            to={`/admin-dashboard/edit-book/${book._id}`}
                                                             className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 transition-colors"
                                                         >
                                                             <FiEdit2 className="w-5 h-5" />

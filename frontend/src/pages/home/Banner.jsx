@@ -24,7 +24,7 @@ const Banner = () => {
                     <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-8
                                  bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600
                                  filter drop-shadow-lg animate-fade-in">
-                        Discover Your Next Favorite Book
+                        Discover The Difference with freshbooks™ 
                     </h1>
                     <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-8 leading-relaxed animate-fade-in animation-delay-200">
                         Explore our vast collection of books across all genres. From bestsellers to hidden gems, find your perfect read today.

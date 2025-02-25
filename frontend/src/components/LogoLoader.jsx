@@ -3,17 +3,10 @@ import AnimatedLogo from './AnimatedLogo';
 
 const LogoLoader = () => {
   return (
-    <div className="logo-loader-container">
-      {/* Background Bubbles */}
-      <div className="loader-bubble loader-bubble-1"></div>
-      <div className="loader-bubble loader-bubble-2"></div>
-      <div className="loader-bubble loader-bubble-3"></div>
-
+    <div className="fixed inset-0 flex items-center justify-center bg-white">
       {/* Logo */}
-      <div className="logo-loader">
-        <div className="w-[300px]">
-          <AnimatedLogo />
-        </div>
+      <div className="w-[300px]">
+        <AnimatedLogo />
       </div>
     </div>
   );

@@ -1,19 +1,29 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { useGetAllBannersQuery } from '../../redux/features/banners/bannersApi';
+import { useGetActiveBannersQuery } from '../../redux/features/banners/bannersApi';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const BannerCarousel = () => {
-    const { data: banners = [], isLoading, error } = useGetAllBannersQuery();
+    const { data: banners = [], isLoading, error } = useGetActiveBannersQuery();
 
     if (isLoading) {
         return (
             <div className="py-4 sm:py-16 px-0 sm:px-4 relative">
                 <div className="max-w-7xl mx-auto text-center">
                     <p className="text-gray-600 dark:text-gray-300">Loading banners...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="py-4 sm:py-16 px-0 sm:px-4 relative">
+                <div className="max-w-7xl mx-auto text-center">
+                    <p className="text-gray-600 dark:text-gray-300">Failed to load banners.</p>
                 </div>
             </div>
         );
@@ -42,10 +52,7 @@ const BannerCarousel = () => {
                         modules={[Navigation, Pagination, Autoplay]}
                         spaceBetween={20}
                         slidesPerView={1}
-                        navigation={{
-                            enabled: true,
-                            hideOnMobile: true
-                        }}
+                        navigation
                         pagination={{
                             clickable: true,
                             dynamicBullets: true
@@ -98,4 +105,4 @@ const BannerCarousel = () => {
     );
 };
 
-export default BannerCarousel; 
+export default BannerCarousel;
